@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sinapse.lab — Educação em Neurociência</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<div class="bg-noise"></div>
+
+<!-- NAV -->
+<header class="nav" id="siteNav">
+  <div class="nav-inner">
+    <div class="logo">SINAPSE<span>.lab</span></div>
+    <nav class="tabs" id="tabs">
+      <button class="tab-link active" data-target="inicio">Início</button>
+      <button class="tab-link" data-target="neuroplasticidade">Neuroplasticidade</button>
+      <button class="tab-link" data-target="quimica">Processos Químicos</button>
+      <button class="tab-link" data-target="molecular">Modelo Molecular</button>
+      <button class="tab-link" data-target="emocoes">Emoções</button>
+      <button class="tab-link" data-target="variantes">Áreas da Neurociência</button>
+      <button class="tab-link" data-target="cerebro3d">Cérebro 3D</button>
+    </nav>
+    <button class="btn-login" id="openLogin">Entrar</button>
+    <button class="hamburger" id="hamburger">☰</button>
+  </div>
+</header>
+
+<!-- HERO -->
+<section id="inicio" class="hero page active">
+  <div class="hero-content">
+    <span class="hero-logo">SINAPSE<span>.lab</span></span>
+    <h1>O cérebro que <em>muda</em> enquanto você aprende</h1>
+    <p>Um laboratório digital para entender neurônios, sinapses, química cerebral e comportamento — explore o cérebro em 3D, monte moléculas e teste seus conhecimentos no Desafio Neural.</p>
+    <div class="hero-actions">
+      <button class="btn-primary" id="heroLoginBtn">Fazer login</button>
+    </div>
+  </div>
+</section>
+
+<!-- NEUROPLASTICIDADE -->
+<section id="neuroplasticidade" class="block page">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="kicker">Tópico 01</span>
+      <h2>Neuroplasticidade: o cérebro nunca está pronto</h2>
+      <p>A cada nova experiência, aprendizado ou repetição, seu cérebro se reorganiza — fortalecendo umas conexões e enfraquecendo outras.</p>
+    </div>
+    <div class="split-grid">
+      <div class="split-text reveal">
+        <p><strong>Neuroplasticidade</strong> é a capacidade do sistema nervoso de alterar sua estrutura e função em resposta à experiência, ao aprendizado, a lesões ou a mudanças no ambiente.</p>
+        <p>Existem dois grandes tipos: a <strong>plasticidade estrutural</strong>, que envolve a formação ou eliminação de sinapses e até de neurônios, e a <strong>plasticidade funcional</strong>, que redistribui tarefas entre áreas do cérebro.</p>
+        <p>Na infância, o cérebro passa por <strong>períodos críticos</strong> — janelas em que certas habilidades são aprendidas com muito mais facilidade. No nível celular, a <strong>potenciação de longo prazo (LTP)</strong> fortalece sinapses usadas com frequência, enquanto a <strong>poda sináptica</strong> elimina conexões desnecessárias.</p>
+        <p><strong>Na prática:</strong> músicos têm áreas motoras e auditivas mais desenvolvidas; taxistas que decoram cidades inteiras mostram um hipocampo maior; e a reabilitação após AVC usa repetição intensiva para induzir essa reorganização.</p>
+      </div>
+      <div class="curio-stack reveal">
+        <div class="curio-card"><span>Aprender algo novo fortalece as conexões entre os neurônios envolvidos naquela habilidade.</span></div>
+        <div class="curio-card"><span>Repetir uma tarefa faz com que os circuitos neurais envolvidos nela se tornem mais eficientes.</span></div>
+        <div class="curio-card"><span>A neuroplasticidade permite que o cérebro modifique suas conexões em resposta às experiências e ao aprendizado.</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROCESSOS QUIMICOS -->
+<section id="quimica" class="block page">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="kicker">Tópico 02</span>
+      <h2>Os bastidores químicos de cada pensamento</h2>
+      <p>Toda sensação, decisão ou emoção depende de uma cascata elétrica e química acontecendo em milissegundos. Clique nos elementos do diagrama abaixo.</p>
+    </div>
+    <div class="split-grid synapse-wrap reveal" style="margin-bottom:48px;">
+      <div class="split-text">
+        <p>Quando um neurônio dispara, um <strong>potencial de ação</strong> percorre seu axônio até o terminal sináptico. Ali, canais de cálcio se abrem, e vesículas cheias de neurotransmissores se fundem com a membrana, liberando essas moléculas na fenda sináptica.</p>
+        <p>O neurotransmissor atravessa esse espaço microscópico e se liga a receptores no neurônio seguinte — o que pode excitar ou inibir esse segundo neurônio. Em seguida, o sinal é encerrado por <strong>recaptação</strong> ou por enzimas que degradam a molécula.</p>
+        <p>Quando uma sinapse é ativada repetidamente, ela libera mais neurotransmissor e cria mais receptores — a base química da potenciação de longo prazo citada na aba de neuroplasticidade.</p>
+      </div>
+      <div class="diagram-box" id="synapseDiagram">
+        <span class="diagram-badge">1</span>
+        <svg viewBox="0 0 320 220" fill="none">
+          <rect x="10" y="14" width="90" height="192" rx="30" fill="#22133b" stroke="#3d1f78"/>
+          <rect x="220" y="14" width="90" height="192" rx="30" fill="#22133b" stroke="#3d1f78"/>
+          <text x="14" y="8" fill="#c9a3ff" font-size="11" font-family="JetBrains Mono">Pré-sináptico</text>
+          <text x="216" y="8" fill="#c9a3ff" font-size="11" font-family="JetBrains Mono">Pós-sináptico</text>
+          <circle class="hit-vesicula" data-key="vesicula" cx="90" cy="72" r="10" fill="#a020f0" style="cursor:pointer;"/>
+          <circle class="hit-vesicula" data-key="vesicula" cx="90" cy="103" r="10" fill="#a020f0" style="cursor:pointer;"/>
+          <circle class="hit-vesicula" data-key="vesicula" cx="90" cy="134" r="10" fill="#a020f0" style="cursor:pointer;"/>
+          <circle class="pulse-dot" r="3.5" fill="#c66bff" style="offset-path: path('M100 103 L 218 103');"/>
+          <circle class="pulse-dot" r="3.5" fill="#e9d5ff" style="offset-path: path('M100 72 L 218 72'); animation-delay:.6s;"/>
+          <rect class="hit-fenda" data-key="fenda" x="100" y="45" width="118" height="130" fill="transparent" style="cursor:pointer;"/>
+          <rect class="hit-receptor" data-key="receptor" x="248" y="62" width="18" height="24" rx="5" fill="#050308" stroke="#050308" style="cursor:pointer;"/>
+          <rect class="hit-receptor" data-key="receptor" x="248" y="92" width="18" height="24" rx="5" fill="#050308" stroke="#050308" style="cursor:pointer;"/>
+        </svg>
+        <p class="diagram-hint">clique na vesícula, na fenda ou no receptor</p>
+
+        <div class="synapse-popover" id="synapsePopover">
+          <button class="modal-close" id="closeSynapsePopover">✕</button>
+          <h3 id="synapseModalTitle">Fenda sináptica</h3>
+          <p id="synapseModalText"></p>
+        </div>
+      </div>
+    </div>
+    <div class="card-grid" id="neurotransmitterGrid">
+      <div class="info-card reveal">
+        <div class="info-icon">Da</div>
+        <h3>Dopamina</h3>
+        <p>Ligada à motivação, recompensa e controle do movimento. Envolvida no vício e reduzida no Parkinson.</p>
+        <span class="tagline">via mesolímbica</span>
+      </div>
+      <div class="info-card reveal">
+        <div class="info-icon">Se</div>
+        <h3>Serotonina</h3>
+        <p>Regula humor, sono e apetite. É o principal alvo dos antidepressivos ISRS.</p>
+        <span class="tagline">núcleos da rafe</span>
+      </div>
+      <div class="info-card reveal">
+        <div class="info-icon">GA</div>
+        <h3>GABA</h3>
+        <p>Principal neurotransmissor inibitório — reduz a excitabilidade neuronal. Alvo de ansiolíticos.</p>
+        <span class="tagline">inibitório</span>
+      </div>
+      <div class="info-card reveal">
+        <div class="info-icon">Gl</div>
+        <h3>Glutamato</h3>
+        <p>Principal neurotransmissor excitatório. Essencial para aprendizado, memória e potenciação de longo prazo.</p>
+        <span class="tagline">excitatório</span>
+      </div>
+      <div class="info-card reveal">
+        <div class="info-icon">Ac</div>
+        <h3>Acetilcolina</h3>
+        <p>Envolvida em memória, atenção e contração muscular. Reduzida em pacientes com Alzheimer.</p>
+        <span class="tagline">memória</span>
+      </div>
+      <div class="info-card reveal">
+        <div class="info-icon">No</div>
+        <h3>Noradrenalina</h3>
+        <p>Comanda o estado de alerta e a resposta de "luta ou fuga" diante de ameaças.</p>
+        <span class="tagline">alerta</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MODELO MOLECULAR 2D -->
+<section id="molecular" class="block page">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="kicker">Tópico 03</span>
+      <h2>Modelo molecular interativo</h2>
+      <p>Escolha um neurotransmissor para ver sua estrutura química simplificada — <strong>ou ative o modo comparação para ver dois lado a lado.</strong></p>
+    </div>
+    <div class="molecule-toolbar reveal">
+      <div class="molecule-picker" id="moleculePicker">
+        <button class="molecule-btn active" data-key="dopamina">Dopamina</button>
+        <button class="molecule-btn" data-key="serotonina">Serotonina</button>
+        <button class="molecule-btn" data-key="gaba">GABA</button>
+        <button class="molecule-btn" data-key="glutamato">Glutamato</button>
+        <button class="molecule-btn" data-key="noradrenalina">Noradrenalina</button>
+        <button class="molecule-btn" data-key="acetilcolina">Acetilcolina</button>
+      </div>
+      <label class="compare-toggle"><input type="checkbox" id="compareToggle"> compara duas moléculas</label>
+    </div>
+    <div class="molecule-stage" id="moleculeStage">
+      <div class="molecule-panel" id="moleculePanelA"></div>
+      <div class="molecule-panel" id="moleculePanelB" hidden></div>
+    </div>
+    <p class="mol-disclaimer reveal">* Representações 2D simplificadas para fins educativos — não seguem escala ou geometria exata de ligação.</p>
+  </div>
+</section>
+
+<!-- SONO E MEMORIA -->
+<section id="sono" class="block page">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="kicker">Tópico 04</span>
+      <h2>Sono: a fábrica noturna da memória</h2>
+      <p>Dormir não é "desligar" o cérebro — é quando ele reorganiza, consolida e faz a limpeza de tudo o que foi vivido no dia.</p>
+    </div>
+    <div class="split-grid" style="margin-bottom:36px;">
+      <div class="split-text reveal">
+        <p>Seu corpo segue um <strong>ritmo circadiano</strong> de aproximadamente 24 horas, controlado por um relógio biológico no hipotálamo. Ele regula a liberação de <strong>melatonina</strong> à noite e de <strong>cortisol</strong> pela manhã.</p>
+        <p>Durante o sono de ondas lentas, o hipocampo "replica" em alta velocidade os padrões de atividade neural do dia, transferindo memórias recentes para um armazenamento mais estável no córtex.</p>
+      </div>
+    </div>
+    <div class="card-grid">
+      <div class="info-card reveal">
+        <div class="info-icon">N1</div>
+        <h3>Sono leve (N1–N2)</h3>
+        <p>Transição entre vigília e sono profundo; a atividade cerebral desacelera e o corpo relaxa.</p>
+      </div>
+      <div class="info-card reveal">
+        <div class="info-icon">N3</div>
+        <h3>Sono profundo</h3>
+        <p>Fase em que o hipocampo consolida memórias no córtex, transferindo-as para armazenamento estável.</p>
+      </div>
+      <div class="info-card reveal">
+        <div class="info-icon">RE</div>
+        <h3>Sono REM</h3>
+        <p>Fase dos sonhos vívidos; associada à consolidação de memórias emocionais e a ganhos de criatividade.</p>
+      </div>
+      <div class="info-card reveal">
+        <div class="info-icon">Gl</div>
+        <h3>Sistema glinfático</h3>
+        <p>Durante o sono profundo, o cérebro remove resíduos metabólicos, incluindo a proteína beta-amiloide.</p>
+      </div>
+      <div class="info-card reveal">
+        <div class="info-icon">Pv</div>
+        <h3>Privação de sono</h3>
+        <p>Poucas horas de sono prejudicam a atenção, o humor e a capacidade de formar novas memórias.</p>
+      </div>
+      <div class="info-card reveal">
+        <div class="info-icon">Ciclo</div>
+        <h3>Ciclos de 90 min</h3>
+        <p>Uma noite típica passa por 4 a 6 ciclos, alternando entre fases leves, profundas e REM.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EMOÇÕES -->
+<section id="emocoes" class="block page">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="kicker">Tópico 05</span>
+      <h2>Emoções e o sistema límbico</h2>
+      <p>Antes de você "pensar" sobre um perigo, uma rede de estruturas mais antigas do cérebro já reagiu a ele.</p>
+    </div>
+    <div class="split-grid" style="margin-bottom:36px;">
+      <div class="split-text reveal">
+        <p>O neurocientista Joseph LeDoux descreveu duas rotas para o medo: a <strong>via rápida</strong>, direto até a amígdala, e a <strong>via lenta</strong>, que passa pelo córtex para uma avaliação mais racional.</p>
+        <p>Em estresse, o hipotálamo aciona o <strong>eixo HPA</strong>, liberando cortisol. O <strong>córtex pré-frontal</strong> normalmente regula a amígdala — mas sob estresse extremo essa regulação enfraquece.</p>
+      </div>
+    </div>
+    <div class="card-grid">
+      <div class="info-card reveal">
+        <div class="info-icon">Am</div>
+        <h3>Amígdala</h3>
+        <p>Detecta ameaças e atribui carga emocional às experiências, muitas vezes antes da consciência processar a situação.</p>
+      </div>
+      <div class="info-card reveal">
+        <div class="info-icon">Hc</div>
+        <h3>Hipocampo</h3>
+        <p>Liga emoção e contexto à memória — por isso lembramos com mais força de momentos emocionalmente intensos.</p>
+      </div>
+      <div class="info-card reveal">
+        <div class="info-icon">Cc</div>
+        <h3>Córtex cingulado</h3>
+        <p>Monitora conflitos entre emoção e razão, ajudando a regular impulsos e reações.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- VARIANTES -->
+<section id="variantes" class="block page">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="kicker">Fundamento</span>
+      <h2>As muitas frentes da neurociência</h2>
+      <p>"Neurociência" não é uma área só — é um conjunto de disciplinas que estudam o sistema nervoso em escalas diferentes.</p>
+    </div>
+    <div class="card-grid">
+      <div class="info-card reveal">
+        <div class="info-icon">Cg</div>
+        <h3>Neurociência Cognitiva</h3>
+        <p>Estuda como o cérebro produz memória, atenção, linguagem e tomada de decisão.</p>
+      </div>
+      <div class="info-card reveal">
+        <div class="info-icon">Cp</div>
+        <h3>Neurociência Computacional</h3>
+        <p>Usa modelos matemáticos e simulações para entender como circuitos neurais processam informação.</p>
+      </div>
+      <div class="info-card reveal">
+        <div class="info-icon">Mc</div>
+        <h3>Neurociência Molecular e Celular</h3>
+        <p>Investiga neurônios, genes e moléculas — a base física da plasticidade sináptica.</p>
+      </div>
+      <div class="info-card reveal">
+        <div class="info-icon">Cl</div>
+        <h3>Neurociência Clínica</h3>
+        <p>Aplica esse conhecimento ao diagnóstico e tratamento de doenças neurológicas e psiquiátricas.</p>
+      </div>
+      <div class="info-card reveal">
+        <div class="info-icon">Bh</div>
+        <h3>Neurociência Comportamental</h3>
+        <p>Relaciona circuitos cerebrais a comportamentos observáveis, de reflexos a decisões complexas.</p>
+      </div>
+      <div class="info-card reveal">
+        <div class="info-icon">Sc</div>
+        <h3>Neurociência Social e Afetiva</h3>
+        <p>Explora como o cérebro processa emoções, empatia e interações entre pessoas.</p>
+      </div>
+      <div class="info-card reveal">
+        <div class="info-icon">Dv</div>
+        <h3>Neurociência do Desenvolvimento</h3>
+        <p>Estuda como o sistema nervoso se forma e amadurece, da gestação à velhice.</p>
+      </div>
+      <div class="info-card reveal">
+        <div class="info-icon">Ne</div>
+        <h3>Neuroengenharia</h3>
+        <p>Cria interfaces cérebro-máquina, próteses neurais e dispositivos que leem ou estimulam a atividade cerebral.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CEREBRO 3D INTEGRADO -->
+<section id="cerebro3d" class="block page">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="kicker">Explorador Interativo</span>
+      <h2>Gire, explore e clique no cérebro</h2>
+      <p>Representação 3D estilizada, construída direto na página — arraste para girar e clique nos pontos para abrir os detalhes de cada região, sem sair desta aba.</p>
+    </div>
+    <div class="brain-stage reveal">
+      <canvas id="brainCanvas"></canvas>
+      <div id="hotspotLayer"></div>
+      <div class="brain-hint">arraste para girar · clique nos pontos</div>
+    </div>
+  </div>
+</section>
+
+<!-- DESAFIO NEURAL -->
+<section id="jogo" class="block page">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="kicker">Coloque a mão na massa</span>
+      <h2>🧠 Desafio Neural</h2>
+      <p>Quatro fases para testar o que você aprendeu: monte a sinapse, reconheça neurotransmissores, associe regiões do cérebro e resolva o desafio final.</p>
+    </div>
+    <div class="game-shell reveal">
+      <div class="game-topbar">
+        <div class="game-progress"><div class="game-progress-fill" id="gameProgressFill"></div></div>
+        <div class="game-meta">
+          <span id="gamePhaseLabel">Fase 1 de 4</span>
+          <span id="gameScoreLabel">Pontuação: 0</span>
+        </div>
+      </div>
+      <div id="gameArena" class="game-arena"></div>
+    </div>
+  </div>
+</section>
+
+<!-- CIENTISTAS -->
+<section id="cientistas" class="block page">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="kicker">Referências</span>
+      <h2>Quem construiu a neurociência</h2>
+      <p>Nomes cujas descobertas ainda sustentam o que sabemos sobre o cérebro hoje.</p>
+    </div>
+    <div class="scientist-grid">
+      <div class="scientist-card reveal">
+        <div class="avatar">SC</div>
+        <div>
+          <h3>Santiago Ramón y Cajal</h3>
+          <span class="years">1852 – 1934 · Espanha</span>
+          <p>Considerado o pai da neurociência moderna, foi o primeiro a descrever o neurônio como unidade individual. Nobel de Fisiologia ou Medicina em 1906.</p>
+        </div>
+      </div>
+      <div class="scientist-card reveal">
+        <div class="avatar">DH</div>
+        <div>
+          <h3>Donald Hebb</h3>
+          <span class="years">1904 – 1985 · Canadá</span>
+          <p>Propôs em 1949 o princípio que resume a base da plasticidade sináptica: neurônios que disparam juntos, se conectam mais fortemente.</p>
+        </div>
+      </div>
+      <div class="scientist-card reveal">
+        <div class="avatar">RL</div>
+        <div>
+          <h3>Rita Levi-Montalcini</h3>
+          <span class="years">1909 – 2012 · Itália</span>
+          <p>Descobriu o Fator de Crescimento Neural (NGF), essencial para entender como neurônios crescem e sobrevivem. Nobel em 1986.</p>
+        </div>
+      </div>
+      <div class="scientist-card reveal">
+        <div class="avatar">EK</div>
+        <div>
+          <h3>Eric Kandel</h3>
+          <span class="years">1929 · Áustria/EUA</span>
+          <p>Mapeou os mecanismos moleculares da memória usando o molusco Aplysia. Nobel em 2000.</p>
+        </div>
+      </div>
+      <div class="scientist-card reveal">
+        <div class="avatar">BM</div>
+        <div>
+          <h3>Brenda Milner</h3>
+          <span class="years">1918 · Reino Unido/Canadá</span>
+          <p>Por meio do paciente H.M., mostrou que memória de curto e longo prazo dependem de sistemas cerebrais distintos.</p>
+        </div>
+      </div>
+      <div class="scientist-card reveal">
+        <div class="avatar">CG</div>
+        <div>
+          <h3>Camillo Golgi</h3>
+          <span class="years">1843 – 1926 · Itália</span>
+          <p>Criou a técnica de coloração que tornou possível visualizar neurônios individuais ao microscópio.</p>
+        </div>
+      </div>
+      <div class="scientist-card reveal">
+        <div class="avatar">HH</div>
+        <div>
+          <h3>Hermann von Helmholtz</h3>
+          <span class="years">1821 – 1894 · Alemanha</span>
+          <p>Foi o primeiro a medir a velocidade de condução de um impulso nervoso, provando que o sinal neural não é instantâneo.</p>
+        </div>
+      </div>
+      <div class="scientist-card reveal">
+        <div class="avatar">JO</div>
+        <div>
+          <h3>John O'Keefe</h3>
+          <span class="years">1939 · Reino Unido/EUA</span>
+          <p>Descobriu as "células de lugar" no hipocampo, que formam um mapa espacial interno do ambiente. Nobel em 2014.</p>
+        </div>
+      </div>
+    </div>
+    <p class="photo-note reveal">* Avatares estilizados no lugar de fotografias reais, por respeito a direitos autorais de imagem.</p>
+  </div>
+</section>
+
+<footer>
+  <div class="logo">SINAPSE<span>.lab</span></div>
+  <span class="footer-tag">edutec</span>
+</footer>
+
+<!-- LOGIN MODAL -->
+<div class="modal-overlay" id="loginOverlay">
+  <div class="modal" id="loginModalCard">
+    <button class="modal-close" id="closeLogin">✕</button>
+    <h3 id="loginTitle">Bem-vindo <em>de volta</em></h3>
+    <form id="loginForm">
+      <div class="field">
+        <label for="loginEmail">E-mail</label>
+        <input id="loginEmail" type="email" placeholder="xxx@gmail.com" required>
+      </div>
+      <div class="field">
+        <label for="loginPass">Senha</label>
+        <input id="loginPass" type="password" placeholder="••••••••••••••" required>
+      </div>
+      <div class="field" id="confirmPassField" hidden>
+        <label for="loginPassConfirm">Confirmar senha</label>
+        <input id="loginPassConfirm" type="password" placeholder="••••••••••••••">
+      </div>
+      <button class="modal-submit" type="submit" id="loginSubmitBtn">Entrar</button>
+      <button type="button" class="modal-link" id="forgotPassBtn">Esqueci minha senha</button>
+      <p class="modal-msg" id="loginMsg">Login simulado — conecte este formulário ao seu backend de autenticação.</p>
+    </form>
+    <button type="button" class="modal-toggle" id="toggleSignup">Ainda não tem conta? <span>Cadastre-se</span></button>
+  </div>
+</div>
+
+<!-- BRAIN REGION MODAL -->
+<div class="modal-overlay" id="brainOverlay">
+  <div class="modal modal-wide">
+    <button class="modal-close" id="closeBrainModal">✕</button>
+    <span class="tag" id="brainModalTag">região</span>
+    <h3 id="brainModalTitle">Região</h3>
+    <div class="brain-modal-grid">
+      <div><span class="bm-label">Função</span><p id="brainModalFuncao"></p></div>
+      <div><span class="bm-label">Curiosidade</span><p id="brainModalCuriosidade"></p></div>
+      <div><span class="bm-label">Comportamento</span><p id="brainModalComportamento"></p></div>
+      <div><span class="bm-label">Neurotransmissores</span><p id="brainModalNeuro"></p></div>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.128/examples/js/loaders/DRACOLoader.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.128/examples/js/loaders/GLTFLoader.js"></script>
+<script src="app.js"></script>
+<script src="molecular.js"></script>
+<script src="game.js"></script>
+</body>
+</html>
