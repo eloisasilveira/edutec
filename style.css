@@ -9,6 +9,8 @@
     --ink: #f6eef8;
     --pink-text: #ffb8e3;
     --pink-strong: #ff3b9e;
+    --brand-pink: #E7337E;
+    --brand-purple: #B76AD9;
     --pink-dim: rgba(255,184,227,.6);
     --card: #24101e;
     --card-fill: #2e1035;
@@ -88,9 +90,10 @@
   }
   .logo{ display:flex; align-items:center; gap:11px; font-family:var(--font-display); font-weight:700; font-size:18px; letter-spacing:.01em; white-space:nowrap; background:none; border:none; color:#fff; padding:0; }
   .logo .dotgrid{ display:grid; grid-template-columns:repeat(3,7px); grid-template-rows:repeat(3,7px); gap:2px; }
-  .logo .dotgrid span{ width:7px; height:7px; border-radius:50%; background:#a533e7; transition:background .3s; }
-  body[data-view="inicio"] .logo .dotgrid span{ background:#ff2ead; }
-  .logo .lab{ color:#e7337e; font-weight:400; }
+  .logo .dotgrid span{ width:7px; height:7px; border-radius:50%; background:var(--brand-purple); transition:background .3s; }
+  body[data-view="inicio"] .logo .dotgrid span{ background:var(--brand-pink); }
+  .logo .lab{ color:var(--brand-purple); font-weight:400; }
+  body[data-view="inicio"] .logo .lab{ color:var(--brand-pink); }
 
   .tabs{ list-style:none; display:flex; align-items:center; gap:4px; margin:0; padding:0; overflow-x:auto; scrollbar-width:none; }
   .tabs::-webkit-scrollbar{ display:none; }
@@ -327,6 +330,18 @@
   .brand-text{ font-family:var(--font-display); font-size:21px; font-weight:700; color:rgba(255,255,255,.42); letter-spacing:.01em; }
   .brand-text .lab{ font-weight:400; color:rgba(199,168,255,.75); }
   .brand-tag{ font-family:var(--font-mono); font-size:11.5px; letter-spacing:.14em; color:rgba(221,162,255,.4); text-transform:lowercase; }
+
+  /* Início: logo central SINAPSE.lab + edutec em rosa */
+  body[data-view="inicio"] .brand-lockup-hero .brand-dot{
+    background:radial-gradient(circle at 35% 35%, #ff7aa9, var(--brand-pink));
+    box-shadow:0 0 14px rgba(231,51,126,.9);
+  }
+  body[data-view="inicio"] .brand-lockup-hero .brand-text .lab{
+    color:var(--brand-pink);
+  }
+  body[data-view="inicio"] .brand-lockup-hero .brand-tag{
+    color:rgba(231,51,126,.78);
+  }
 
   /* ============ Responsive ============ */
   @media (max-width: 880px){
