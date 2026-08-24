@@ -1,8 +1,4 @@
-  /* ============ Tokens ============
-     SINAPSE.lab is a fixed dark neon brand lifted 1:1 from the product's
-     Figma file — it deliberately commits to one visual world (black void +
-     magenta/violet synapse glow), so tokens are painted explicitly rather
-     than adapted to the viewer's light/dark preference. */
+
   :root{
     --bg: #030006;
     --bg-secondary: #16081a;
@@ -50,12 +46,7 @@
   button{ font-family:inherit; cursor:pointer; }
   a{ color:inherit; }
 
-  /* ============ Ambient background ============
-     Início gets the bold two-tone glow from the hero shader in Figma.
-     Every other view uses Figma's real "esfumado" layer: three soft violet
-     radial blobs (positions/radii lifted straight from the gradient
-     transforms) sitting under a 44%-opacity dark scrim, which is why they
-     read as faint, irregular "bolinhas" instead of one clean vignette. */
+ 
   .bg-blobs{
     position:fixed; inset:0; z-index:0; pointer-events:none; overflow:hidden;
     transition:opacity .4s;
@@ -72,7 +63,7 @@
   .bg-blobs::before{ top:-14vmax; right:-8vmax; }
   .bg-blobs::after{ bottom:-18vmax; left:-12vmax; width:44vmax; height:44vmax; }
 
-  /* Início uses the real hero background exported from Figma. */
+  
   body[data-view="inicio"] .bg-blobs{
     background:#000 url("bg-inicio.jpg") center / cover no-repeat;
   }
