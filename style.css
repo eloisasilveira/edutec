@@ -138,7 +138,6 @@
   }
   .pill-btn:hover{ transform:translateY(-1px); box-shadow:0 0 42px rgba(220,60,150,.55); background:rgba(255,55,148,.34); }
 
-  /* ============ Neurociência ============ */
   .neuro-title{ font-size:clamp(1.7rem,2.6vw,2.5rem); font-weight:700; margin-bottom:32px; max-width:36ch; color:#fff; }
   .neuro-grid{ display:grid; grid-template-columns:1.72fr 1fr; gap:40px; align-items:stretch; }
   .neuro-text{ display:flex; flex-direction:column; gap:16px; max-width:64ch; color:#fff; font-size:16px; line-height:1.65; }
@@ -217,7 +216,7 @@
     color:#e167ff; line-height:1.4; text-align:left;
   }
 
-  /* ============ Modelo molecular ============ */
+
   .modelo-head p{ max-width:64ch; color:var(--muted); font-size:1rem; line-height:1.6; margin-top:14px; }
   .compare-toggle{
     display:flex; align-items:center; gap:10px; margin-top:26px; font-size:14.5px; color:var(--ink);
@@ -256,7 +255,7 @@
     text-align:center; color:var(--muted-2); font-size:14.5px;
   }
 
-  /* ============ Auth overlay ============ */
+  
   .overlay{
     position:fixed; inset:0; z-index:300; display:flex; align-items:center; justify-content:center;
     background:rgba(3,0,6,.5); backdrop-filter:blur(6px); -webkit-backdrop-filter:blur(6px);
@@ -294,7 +293,7 @@
   .auth-switch:hover{ color:#fff; }
   .auth-note{ text-align:center; font-size:12.5px; color:var(--muted-2); margin-top:14px; }
 
-  /* ============ Toast ============ */
+ 
   .toast{
     position:fixed; left:50%; bottom:30px; transform:translate(-50%, 20px);
     background:#1c0a22; border:1px solid var(--border-glow); color:var(--ink);
@@ -303,9 +302,6 @@
   }
   .toast.show{ opacity:1; transform:translate(-50%, 0); }
 
-  /* ============ Brand lockup (dot + SINAPSE .lab + edutec) ============
-     Appears above the hero title on Início, and again in the footer of
-     every page — values lifted from the "final" node in Figma. */
   .brand-lockup{
     position:relative; z-index:1;
     display:flex; flex-direction:column; align-items:center; gap:6px;
@@ -322,7 +318,7 @@
   .brand-text .lab{ font-weight:400; color:rgba(199,168,255,.75); }
   .brand-tag{ font-family:var(--font-mono); font-size:11.5px; letter-spacing:.14em; color:rgba(221,162,255,.4); text-transform:lowercase; }
 
-  /* Início: logo central SINAPSE.lab + edutec em rosa */
+ 
   body[data-view="inicio"] .brand-lockup-hero .brand-dot{
     background:radial-gradient(circle at 35% 35%, #ff7aa9, var(--brand-pink));
     box-shadow:0 0 14px rgba(231,51,126,.9);
@@ -334,7 +330,7 @@
     color:rgba(231,51,126,.78);
   }
 
-  /* ============ Responsive ============ */
+ 
   @media (max-width: 880px){
     .neuro-grid, .proc-grid{ grid-template-columns:1fr; }
     .stat-stack{ height:auto; }
