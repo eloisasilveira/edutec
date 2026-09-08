@@ -1,12 +1,14 @@
-
+  /* ============ Tokens ============
+     SINAPSE.lab is a fixed dark neon brand lifted 1:1 from the product's
+     Figma file — it deliberately commits to one visual world (black void +
+     magenta/violet synapse glow), so tokens are painted explicitly rather
+     than adapted to the viewer's light/dark preference. */
   :root{
     --bg: #030006;
     --bg-secondary: #16081a;
     --ink: #f6eef8;
     --pink-text: #ffb8e3;
     --pink-strong: #ff3b9e;
-    --brand-pink: #E7337E;
-    --brand-purple: #B76AD9;
     --pink-dim: rgba(255,184,227,.6);
     --card: #24101e;
     --card-fill: #2e1035;
@@ -46,7 +48,12 @@
   button{ font-family:inherit; cursor:pointer; }
   a{ color:inherit; }
 
- 
+  /* ============ Ambient background ============
+     Início gets the bold two-tone glow from the hero shader in Figma.
+     Every other view uses Figma's real "esfumado" layer: three soft violet
+     radial blobs (positions/radii lifted straight from the gradient
+     transforms) sitting under a 44%-opacity dark scrim, which is why they
+     read as faint, irregular "bolinhas" instead of one clean vignette. */
   .bg-blobs{
     position:fixed; inset:0; z-index:0; pointer-events:none; overflow:hidden;
     transition:opacity .4s;
@@ -63,7 +70,7 @@
   .bg-blobs::before{ top:-14vmax; right:-8vmax; }
   .bg-blobs::after{ bottom:-18vmax; left:-12vmax; width:44vmax; height:44vmax; }
 
-  
+  /* Início uses the real hero background exported from Figma. */
   body[data-view="inicio"] .bg-blobs{
     background:#000 url("bg-inicio.jpg") center / cover no-repeat;
   }
@@ -81,10 +88,9 @@
   }
   .logo{ display:flex; align-items:center; gap:11px; font-family:var(--font-display); font-weight:700; font-size:18px; letter-spacing:.01em; white-space:nowrap; background:none; border:none; color:#fff; padding:0; }
   .logo .dotgrid{ display:grid; grid-template-columns:repeat(3,7px); grid-template-rows:repeat(3,7px); gap:2px; }
-  .logo .dotgrid span{ width:7px; height:7px; border-radius:50%; background:var(--brand-purple); transition:background .3s; }
-  body[data-view="inicio"] .logo .dotgrid span{ background:var(--brand-pink); }
-  .logo .lab{ color:var(--brand-purple); font-weight:400; }
-  body[data-view="inicio"] .logo .lab{ color:var(--brand-pink); }
+  .logo .dotgrid span{ width:7px; height:7px; border-radius:50%; background:#a533e7; transition:background .3s; }
+  body[data-view="inicio"] .logo .dotgrid span{ background:#ff2ead; }
+  .logo .lab{ color:#e7337e; font-weight:400; }
 
   .tabs{ list-style:none; display:flex; align-items:center; gap:4px; margin:0; padding:0; overflow-x:auto; scrollbar-width:none; }
   .tabs::-webkit-scrollbar{ display:none; }
@@ -138,6 +144,7 @@
   }
   .pill-btn:hover{ transform:translateY(-1px); box-shadow:0 0 42px rgba(220,60,150,.55); background:rgba(255,55,148,.34); }
 
+  /* ============ Neurociência ============ */
   .neuro-title{ font-size:clamp(1.7rem,2.6vw,2.5rem); font-weight:700; margin-bottom:32px; max-width:36ch; color:#fff; }
   .neuro-grid{ display:grid; grid-template-columns:1.72fr 1fr; gap:40px; align-items:stretch; }
   .neuro-text{ display:flex; flex-direction:column; gap:16px; max-width:64ch; color:#fff; font-size:16px; line-height:1.65; }
@@ -216,7 +223,7 @@
     color:#e167ff; line-height:1.4; text-align:left;
   }
 
-
+  /* ============ Modelo molecular ============ */
   .modelo-head p{ max-width:64ch; color:var(--muted); font-size:1rem; line-height:1.6; margin-top:14px; }
   .compare-toggle{
     display:flex; align-items:center; gap:10px; margin-top:26px; font-size:14.5px; color:var(--ink);
@@ -255,7 +262,42 @@
     text-align:center; color:var(--muted-2); font-size:14.5px;
   }
 
-  
+  /* ============ Emoções / Áreas / Cérebro 3D ============ */
+  .area-lead{ max-width:60ch; color:var(--pink-text); font-size:1rem; line-height:1.6; margin-top:16px; }
+
+  .area-grid{
+    display:grid; grid-template-columns:repeat(3, 1fr); gap:28px; margin-top:44px;
+  }
+  .area-card{
+    background:#2e1135; border:none; border-radius:30px;
+    padding:32px 30px; display:flex; flex-direction:column; gap:16px; min-height:210px;
+  }
+  .area-card h3{ font-size:1.3rem; font-weight:700; color:#fff; line-height:1.25; }
+  .area-card p{ font-size:15px; line-height:1.6; color:var(--muted); }
+
+  .eyebrow3d{
+    display:inline-block; font-family:var(--font-mono); font-size:13px; letter-spacing:.14em;
+    text-transform:uppercase; color:var(--pink-text);
+  }
+
+  .brain3d-panel{
+    margin-top:40px; border-radius:40px; border:1px solid #a533e7;
+    background:rgba(46,17,53,.55); box-shadow:0 30px 90px rgba(132,0,248,.28);
+    overflow:hidden; height:min(78vh, 780px); min-height:420px;
+  }
+  .brain3d-frame{ width:100%; height:100%; border:0; display:block; background:#0c0212; }
+  .brain3d-note{
+    margin-top:18px; font-size:13px; line-height:1.6; color:var(--muted-2); max-width:70ch;
+  }
+  .brain3d-note code{ font-family:var(--font-mono); color:var(--pink-text); }
+  .brain3d-note a{ color:var(--pink-text); text-decoration:underline; text-underline-offset:2px; }
+
+  @media (max-width:900px){
+    .area-grid{ grid-template-columns:1fr; }
+    .brain3d-panel{ height:60vh; border-radius:26px; }
+  }
+
+  /* ============ Auth overlay ============ */
   .overlay{
     position:fixed; inset:0; z-index:300; display:flex; align-items:center; justify-content:center;
     background:rgba(3,0,6,.5); backdrop-filter:blur(6px); -webkit-backdrop-filter:blur(6px);
@@ -293,7 +335,7 @@
   .auth-switch:hover{ color:#fff; }
   .auth-note{ text-align:center; font-size:12.5px; color:var(--muted-2); margin-top:14px; }
 
- 
+  /* ============ Toast ============ */
   .toast{
     position:fixed; left:50%; bottom:30px; transform:translate(-50%, 20px);
     background:#1c0a22; border:1px solid var(--border-glow); color:var(--ink);
@@ -302,6 +344,9 @@
   }
   .toast.show{ opacity:1; transform:translate(-50%, 0); }
 
+  /* ============ Brand lockup (dot + SINAPSE .lab + edutec) ============
+     Appears above the hero title on Início, and again in the footer of
+     every page — values lifted from the "final" node in Figma. */
   .brand-lockup{
     position:relative; z-index:1;
     display:flex; flex-direction:column; align-items:center; gap:6px;
@@ -318,19 +363,7 @@
   .brand-text .lab{ font-weight:400; color:rgba(199,168,255,.75); }
   .brand-tag{ font-family:var(--font-mono); font-size:11.5px; letter-spacing:.14em; color:rgba(221,162,255,.4); text-transform:lowercase; }
 
- 
-  body[data-view="inicio"] .brand-lockup-hero .brand-dot{
-    background:radial-gradient(circle at 35% 35%, #ff7aa9, var(--brand-pink));
-    box-shadow:0 0 14px rgba(231,51,126,.9);
-  }
-  body[data-view="inicio"] .brand-lockup-hero .brand-text .lab{
-    color:var(--brand-pink);
-  }
-  body[data-view="inicio"] .brand-lockup-hero .brand-tag{
-    color:rgba(231,51,126,.78);
-  }
-
- 
+  /* ============ Responsive ============ */
   @media (max-width: 880px){
     .neuro-grid, .proc-grid{ grid-template-columns:1fr; }
     .stat-stack{ height:auto; }
