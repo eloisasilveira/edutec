@@ -217,18 +217,12 @@
     <div class="wrap">
       <span class="eyebrow3d">Explorador interativo</span>
       <h2 class="neuro-title" style="max-width:22ch; margin-top:10px;">Gire, explore e clique no cérebro</h2>
-      <p class="area-lead">Representação 3D real, incorporada via BioDigital — arraste para girar, use o menu de busca ou clique diretamente nas estruturas para ver o nome e a descrição de cada região.</p>
+      <p class="area-lead">Modelo 3D anatômico real, direto na página — arraste para girar e clique nos pontos brilhantes para abrir os detalhes de cada região, sem sair desta aba.</p>
 
-      <div class="brain3d-panel">
-        <iframe
-          class="brain3d-frame"
-          title="Modelo 3D do cérebro — BioDigital Human"
-          src="https://human.biodigital.com/viewer/?id=6suK&ui-anatomy-descriptions=true&ui-anatomy-pronunciations=false&ui-anatomy-labels=true&ui-audio=false&ui-chapter-list=false&ui-fullscreen=true&ui-help=false&ui-info=true&ui-label-list=true&ui-layers=true&ui-skin-layers=false&ui-loader=circle&ui-menu=true&ui-nav=true&ui-search=true&ui-tools=true&initial.none=true&disable-scroll=false&dk=44dA"
-          allow="fullscreen"
-          loading="lazy"
-        ></iframe>
+      <div class="brain3d-panel" id="brainPanel">
+        <canvas id="brainCanvas"></canvas>
+        <span class="brain3d-hint">arraste para girar · clique nos pontos</span>
       </div>
-      <p class="brain3d-note">O visualizador é fornecido pela <a href="https://www.biodigital.com" target="_blank" rel="noopener">BioDigital</a> — carrega o conteúdo público deles diretamente no navegador. Se vocês tiverem uma conta/chave de desenvolvedor da BioDigital, dá pra trocar o <code>id</code> do iframe pelo modelo específico de vocês.</p>
     </div>
   </section>
 
@@ -274,6 +268,9 @@
 
 <div class="toast" id="toast"></div>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js"></script>
+<script src="GLTFLoader.js"></script>
+<script src="brain-data.js"></script>
 <script src="script.js"></script>
 </body>
 </html>

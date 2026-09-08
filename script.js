@@ -11,6 +11,11 @@
     window.scrollTo({ top: 0, behavior: 'auto' });
     closeAuth();
     closeTooltip();
+    if (name === 'cerebro3d'){
+      if (window.__startBrain3D) window.__startBrain3D();
+    } else if (window.__stopBrain3D){
+      window.__stopBrain3D();
+    }
   }
   document.body.dataset.view = 'inicio';
   tabs.forEach(function(t){ t.addEventListener('click', function(){ goTo(t.dataset.nav); }); });
@@ -68,13 +73,17 @@
     tooltip.classList.remove('open');
     popoverBackdrop.classList.remove('open');
   }
+  function openTooltip(title, body){
+    tooltipTitle.textContent = title;
+    tooltipBody.textContent = body;
+    tooltip.classList.add('open');
+    popoverBackdrop.classList.add('open');
+  }
+  window.openTooltip = openTooltip;
   document.querySelectorAll('[data-key]').forEach(function(el){
     el.addEventListener('click', function(e){
       var t = TIPS[el.dataset.key];
-      tooltipTitle.textContent = t[0];
-      tooltipBody.textContent = t[1];
-      tooltip.classList.add('open');
-      popoverBackdrop.classList.add('open');
+      openTooltip(t[0], t[1]);
       e.stopPropagation();
     });
   });
@@ -268,4 +277,235 @@
   });
 
   renderMolecules();
+})();
+
+/* ---------- Cérebro 3D (Three.js + modelo GLB anatômico real) ---------- */
+(function(){
+  "use strict";
+  var canvas = document.getElementById('brainCanvas');
+  var panel = document.getElementById('brainPanel');
+  if (!canvas || !panel) return;
+
+  function boot(){
+  var THREE = window.THREE;
+  if (!THREE) return;
+
+  /* Posições calculadas no espaço local do modelo real (eixo X = frente/trás,
+     Y = cima/baixo, Z = esquerda/direita), já centralizado e escalado para
+     caber num alvo de ~2.4 unidades no maior eixo. */
+  var REGIONS = [
+    { key:'frontal-e',  pos:[-0.72, 0.35, -0.38],   title:'Lobo Frontal',
+      body:'Planejamento, tomada de decisão, controle de impulsos e a maior parte dos movimentos voluntários.' },
+    { key:'frontal-d',  pos:[-0.72, 0.35, 0.38],   title:'Lobo Frontal',
+      body:'Planejamento, tomada de decisão, controle de impulsos e a maior parte dos movimentos voluntários.' },
+    { key:'parietal-e',  pos:[0.05, 0.92, -0.38],  title:'Lobo Parietal',
+      body:'Integra informações sensoriais — tato, temperatura, dor — e a noção de espaço e posição do corpo.' },
+    { key:'parietal-d',  pos:[0.05, 0.92, 0.38],  title:'Lobo Parietal',
+      body:'Integra informações sensoriais — tato, temperatura, dor — e a noção de espaço e posição do corpo.' },
+    { key:'temporal-e', pos:[-0.28, -0.10, -0.77], title:'Lobo Temporal',
+      body:'Audição, reconhecimento de rostos e linguagem; abriga o hipocampo, essencial para a memória.' },
+    { key:'temporal-d', pos:[-0.28, -0.10, 0.77], title:'Lobo Temporal',
+      body:'Audição, reconhecimento de rostos e linguagem; abriga o hipocampo, essencial para a memória.' },
+    { key:'occipital', pos:[0.90, 0.30, 0], title:'Lobo Occipital',
+      body:'Processamento visual — da luz captada pelos olhos até formas, cores e movimento reconhecíveis.' },
+    { key:'motor', pos:[-0.15, 0.98, 0], title:'Córtex Motor',
+      body:'Faixa no topo do cérebro que comanda os movimentos voluntários — cada trecho controla uma parte do corpo, como mãos, rosto ou pernas.' },
+    { key:'broca', pos:[-0.68, -0.05, -0.55], title:'Área de Broca',
+      body:'Região do lobo frontal ligada à produção da fala — à articulação das palavras e à formação de frases.' },
+    { key:'wernicke', pos:[-0.02, 0.05, -0.72], title:'Área de Wernicke',
+      body:'Na junção entre os lobos temporal e parietal, é essencial para compreender a linguagem falada e escrita.' },
+    { key:'cerebelo',  pos:[0.85, -0.62, 0], title:'Cerebelo',
+      body:'Coordenação motora fina, equilíbrio e o ajuste automático de movimentos aprendidos.' },
+    { key:'tronco',    pos:[0.28, -1.15, 0], title:'Tronco encefálico',
+      body:'Controla funções vitais automáticas — respiração, batimentos cardíacos e o ciclo sono-vigília.' }
+  ];
+
+  var state = { inited:false, animating:false, dragging:false, lastX:0, lastY:0, moved:0, ready:false };
+  var scene, camera, renderer, brainGroup, raycaster, pointer, hotspotMeshes = [];
+
+  function makeGlowTexture(hex){
+    var c = document.createElement('canvas');
+    c.width = c.height = 128;
+    var ctx = c.getContext('2d');
+    var g = ctx.createRadialGradient(64,64,0,64,64,64);
+    g.addColorStop(0, 'rgba(255,255,255,1)');
+    g.addColorStop(0.25, hex + 'ff');
+    g.addColorStop(1, hex + '00');
+    ctx.fillStyle = g;
+    ctx.fillRect(0,0,128,128);
+    return new THREE.CanvasTexture(c);
+  }
+
+  function b64ToArrayBuffer(b64){
+    var bin = atob(b64);
+    var len = bin.length;
+    var buf = new ArrayBuffer(len);
+    var arr = new Uint8Array(buf);
+    for (var i = 0; i < len; i++) arr[i] = bin.charCodeAt(i);
+    return buf;
+  }
+
+  function buildHotspots(group){
+    var texPink = makeGlowTexture('#ff6fd8');
+    REGIONS.forEach(function(r){
+      var mat = new THREE.SpriteMaterial({ map:texPink, transparent:true, depthWrite:false, blending:THREE.AdditiveBlending });
+      var sprite = new THREE.Sprite(mat);
+      sprite.position.set(r.pos[0], r.pos[1], r.pos[2]);
+      sprite.scale.set(0.13, 0.13, 0.13);
+      sprite.userData.region = r;
+      group.add(sprite);
+      hotspotMeshes.push(sprite);
+    });
+  }
+
+  function loadBrainModel(onReady){
+    var b64 = window.__brainB64;
+    if (!b64 || !window.THREE || !THREE.GLTFLoader){
+      onReady(null);
+      return;
+    }
+    var loader = new THREE.GLTFLoader();
+    var buf = b64ToArrayBuffer(b64);
+    loader.parse(buf, '', function(gltf){
+      var root = gltf.scene;
+      var box = new THREE.Box3().setFromObject(root);
+      var size = new THREE.Vector3(); box.getSize(size);
+      var center = new THREE.Vector3(); box.getCenter(center);
+
+      var mat = new THREE.MeshStandardMaterial({
+        color: 0x8a4bc9, emissive: 0x3a1858, emissiveIntensity: 0.38,
+        roughness: 0.5, metalness: 0.1, flatShading:false
+      });
+      root.traverse(function(o){
+        if (o.isMesh) o.material = mat;
+      });
+
+      var maxDim = Math.max(size.x, size.y, size.z) || 1;
+      var scale = 2.4 / maxDim;
+      root.scale.setScalar(scale);
+      root.position.set(-center.x * scale, -center.y * scale, -center.z * scale);
+
+      var wireMat = new THREE.MeshBasicMaterial({ color:0xc879e1, wireframe:true, transparent:true, opacity:0.04 });
+      var wireRoot = root.clone(true);
+      wireRoot.traverse(function(o){ if (o.isMesh) o.material = wireMat; });
+      wireRoot.scale.multiplyScalar(1.004);
+
+      var group = new THREE.Group();
+      group.add(root, wireRoot);
+      onReady(group);
+    }, function(err){
+      onReady(null);
+    });
+  }
+
+  function initBrain(){
+    state.inited = true;
+    scene = new THREE.Scene();
+    camera = new THREE.PerspectiveCamera(36, 1, 0.1, 100);
+    camera.position.set(0, 0.45, 5.1);
+    camera.lookAt(0, -0.18, 0);
+
+    renderer = new THREE.WebGLRenderer({ canvas:canvas, antialias:true, alpha:true });
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+
+    scene.add(new THREE.AmbientLight(0x3a1a4d, 1.5));
+    var lp = new THREE.PointLight(0xff2f8f, 1.1, 14);
+    lp.position.set(2.5, 2, 3);
+    scene.add(lp);
+    var lv = new THREE.PointLight(0x8b3ce0, 1.3, 14);
+    lv.position.set(-2.5, -1.5, -2.5);
+    scene.add(lv);
+    var lf = new THREE.PointLight(0xffffff, 0.28, 14);
+    lf.position.set(0, 3, 2);
+    scene.add(lf);
+
+    raycaster = new THREE.Raycaster();
+    pointer = new THREE.Vector2();
+
+    canvas.addEventListener('pointerdown', onPointerDown);
+    window.addEventListener('pointermove', onPointerMove);
+    window.addEventListener('pointerup', onPointerUp);
+    canvas.addEventListener('click', onClick);
+    window.addEventListener('resize', resizeBrain);
+
+    loadBrainModel(function(group){
+      if (!group){
+        panel.classList.add('brain3d-error');
+        return;
+      }
+      brainGroup = group;
+      brainGroup.rotation.y = Math.PI / 2 - 0.45;
+      scene.add(brainGroup);
+      buildHotspots(brainGroup);
+      state.ready = true;
+    });
+  }
+
+  function onPointerDown(e){
+    state.dragging = true;
+    state.moved = 0;
+    state.lastX = e.clientX;
+    state.lastY = e.clientY;
+    panel.classList.add('dragging');
+  }
+  function onPointerMove(e){
+    if (!state.dragging || !state.ready) return;
+    var dx = e.clientX - state.lastX;
+    var dy = e.clientY - state.lastY;
+    state.moved += Math.abs(dx) + Math.abs(dy);
+    brainGroup.rotation.y += dx * 0.008;
+    brainGroup.rotation.x = Math.max(-0.6, Math.min(0.6, brainGroup.rotation.x + dy * 0.008));
+    state.lastX = e.clientX;
+    state.lastY = e.clientY;
+  }
+  function onPointerUp(){
+    state.dragging = false;
+    panel.classList.remove('dragging');
+  }
+  function onClick(e){
+    if (state.moved > 6) return; // it was a drag, not a click
+    var rect = canvas.getBoundingClientRect();
+    pointer.x = ((e.clientX - rect.left) / rect.width) * 2 - 1;
+    pointer.y = -((e.clientY - rect.top) / rect.height) * 2 + 1;
+    raycaster.setFromCamera(pointer, camera);
+    var hits = raycaster.intersectObjects(hotspotMeshes);
+    if (hits.length){
+      var r = hits[0].object.userData.region;
+      window.openTooltip(r.title, r.body);
+    }
+  }
+
+  function resizeBrain(){
+    if (!renderer) return;
+    var w = panel.clientWidth, h = panel.clientHeight;
+    if (!w || !h) return;
+    renderer.setSize(w, h, false);
+    camera.aspect = w / h;
+    camera.updateProjectionMatrix();
+  }
+
+  function loop(){
+    if (!state.animating) return;
+    if (state.ready && !state.dragging) brainGroup.rotation.y += 0.0025;
+    renderer.render(scene, camera);
+    requestAnimationFrame(loop);
+  }
+
+  window.__startBrain3D = function(){
+    if (!state.inited) initBrain();
+    resizeBrain();
+    if (!state.animating){
+      state.animating = true;
+      requestAnimationFrame(loop);
+    }
+  };
+  window.__stopBrain3D = function(){
+    state.animating = false;
+  };
+
+  if (document.body.dataset.view === 'cerebro3d') window.__startBrain3D();
+  } // end boot()
+
+  if (window.THREE) boot();
+  else window.addEventListener('three-ready', boot, { once:true });
 })();

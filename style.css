@@ -281,16 +281,21 @@
   }
 
   .brain3d-panel{
+    position:relative;
     margin-top:40px; border-radius:40px; border:1px solid #a533e7;
-    background:rgba(46,17,53,.55); box-shadow:0 30px 90px rgba(132,0,248,.28);
+    background:radial-gradient(ellipse 80% 70% at 50% 40%, rgba(124,58,237,.16), transparent 65%), rgba(20,6,26,.7);
+    box-shadow:0 30px 90px rgba(132,0,248,.28);
     overflow:hidden; height:min(78vh, 780px); min-height:420px;
+    cursor:grab;
   }
-  .brain3d-frame{ width:100%; height:100%; border:0; display:block; background:#0c0212; }
-  .brain3d-note{
-    margin-top:18px; font-size:13px; line-height:1.6; color:var(--muted-2); max-width:70ch;
+  .brain3d-panel.dragging{ cursor:grabbing; }
+  .brain3d-panel canvas{ width:100%; height:100%; display:block; touch-action:none; }
+  .brain3d-hint{
+    position:absolute; left:50%; bottom:22px; transform:translateX(-50%);
+    font-family:var(--font-mono); font-size:12.5px; letter-spacing:.04em; color:var(--muted-2);
+    background:rgba(12,2,18,.55); border:1px solid rgba(255,255,255,.08);
+    padding:8px 18px; border-radius:999px; pointer-events:none; white-space:nowrap;
   }
-  .brain3d-note code{ font-family:var(--font-mono); color:var(--pink-text); }
-  .brain3d-note a{ color:var(--pink-text); text-decoration:underline; text-underline-offset:2px; }
 
   @media (max-width:900px){
     .area-grid{ grid-template-columns:1fr; }
