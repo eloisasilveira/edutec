@@ -89,8 +89,11 @@
   .logo{ display:flex; align-items:center; gap:11px; font-family:var(--font-display); font-weight:700; font-size:18px; letter-spacing:.01em; white-space:nowrap; background:none; border:none; color:#fff; padding:0; }
   .logo .dotgrid{ display:grid; grid-template-columns:repeat(3,7px); grid-template-rows:repeat(3,7px); gap:2px; }
   .logo .dotgrid span{ width:7px; height:7px; border-radius:50%; background:#a533e7; transition:background .3s; }
-  body[data-view="inicio"] .logo .dotgrid span{ background:#ff2ead; }
-  .logo .lab{ color:#e7337e; font-weight:400; }
+  /* o ".lab" acompanha a cor das bolinhas: roxo nas seções internas,
+     rosa na página de início — os dois trocam juntos na navegação */
+  .logo .lab{ color:#a533e7; font-weight:400; transition:color .3s; }
+  body[data-view="inicio"] .logo .dotgrid span{ background:#ff3b9e; }
+  body[data-view="inicio"] .logo .lab{ color:#ff3b9e; }
 
   .tabs{ list-style:none; display:flex; align-items:center; gap:4px; margin:0; padding:0; overflow-x:auto; scrollbar-width:none; }
   .tabs::-webkit-scrollbar{ display:none; }
@@ -361,12 +364,12 @@
   .brand-row{ display:flex; align-items:center; gap:9px; }
   .brand-dot{
     width:9px; height:9px; border-radius:50%; flex:none;
-    background:radial-gradient(circle at 35% 35%, #b794f6, #7e33e7);
-    box-shadow:0 0 14px #b794f6;
+    background:radial-gradient(circle at 35% 35%, #ff9dcd, #ff3b9e);
+    box-shadow:0 0 14px #ff3b9e;
   }
   .brand-text{ font-family:var(--font-display); font-size:21px; font-weight:700; color:rgba(255,255,255,.42); letter-spacing:.01em; }
-  .brand-text .lab{ font-weight:400; color:rgba(199,168,255,.75); }
-  .brand-tag{ font-family:var(--font-mono); font-size:11.5px; letter-spacing:.14em; color:rgba(221,162,255,.4); text-transform:lowercase; }
+  .brand-text .lab{ font-weight:400; color:#ff3b9e; }
+  .brand-tag{ font-family:var(--font-mono); font-size:11.5px; letter-spacing:.14em; color:rgba(255,59,158,.55); text-transform:lowercase; }
 
   /* ============ Responsive ============ */
   @media (max-width: 880px){
