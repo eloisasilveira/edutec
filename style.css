@@ -9,8 +9,6 @@
     --ink: #f6eef8;
     --pink-text: #ffb8e3;
     --pink-strong: #ff3b9e;
-    --brand-pink: #E7337E;
-    --brand-purple: #B76AD9;
     --pink-dim: rgba(255,184,227,.6);
     --card: #24101e;
     --card-fill: #2e1035;
@@ -21,6 +19,7 @@
     --blob-violet: #6d28d9;
     --esfumado-violet: #7c3aed;
     --esfumado-orchid: #c66bff;
+    --line: rgba(221,114,255,.20);
     --muted: rgba(246,238,248,.6);
     --muted-2: rgba(246,238,248,.4);
     --font-display: 'Space Grotesk', 'Segoe UI', sans-serif;
@@ -90,10 +89,12 @@
   }
   .logo{ display:flex; align-items:center; gap:11px; font-family:var(--font-display); font-weight:700; font-size:18px; letter-spacing:.01em; white-space:nowrap; background:none; border:none; color:#fff; padding:0; }
   .logo .dotgrid{ display:grid; grid-template-columns:repeat(3,7px); grid-template-rows:repeat(3,7px); gap:2px; }
-  .logo .dotgrid span{ width:7px; height:7px; border-radius:50%; background:var(--brand-purple); transition:background .3s; }
-  body[data-view="inicio"] .logo .dotgrid span{ background:var(--brand-pink); }
-  .logo .lab{ color:var(--brand-purple); font-weight:400; }
-  body[data-view="inicio"] .logo .lab{ color:var(--brand-pink); }
+  .logo .dotgrid span{ width:7px; height:7px; border-radius:50%; background:#a533e7; transition:background .3s; }
+  /* o ".lab" acompanha a cor das bolinhas: roxo nas seções internas,
+     rosa na página de início — os dois trocam juntos na navegação */
+  .logo .lab{ color:#a533e7; font-weight:400; transition:color .3s; }
+  body[data-view="inicio"] .logo .dotgrid span{ background:#ff3b9e; }
+  body[data-view="inicio"] .logo .lab{ color:#ff3b9e; }
 
   .tabs{ list-style:none; display:flex; align-items:center; gap:4px; margin:0; padding:0; overflow-x:auto; scrollbar-width:none; }
   .tabs::-webkit-scrollbar{ display:none; }
@@ -265,6 +266,46 @@
     text-align:center; color:var(--muted-2); font-size:14.5px;
   }
 
+  /* ============ Emoções / Áreas / Cérebro 3D ============ */
+  .area-lead{ max-width:60ch; color:var(--pink-text); font-size:1rem; line-height:1.6; margin-top:16px; }
+
+  .area-grid{
+    display:grid; grid-template-columns:repeat(3, 1fr); gap:28px; margin-top:44px;
+  }
+  .area-card{
+    background:#2e1135; border:none; border-radius:30px;
+    padding:32px 30px; display:flex; flex-direction:column; gap:16px; min-height:210px;
+  }
+  .area-card h3{ font-size:1.3rem; font-weight:700; color:#fff; line-height:1.25; }
+  .area-card p{ font-size:15px; line-height:1.6; color:var(--muted); }
+
+  .eyebrow3d{
+    display:inline-block; font-family:var(--font-mono); font-size:13px; letter-spacing:.14em;
+    text-transform:uppercase; color:var(--pink-text);
+  }
+
+  .brain3d-panel{
+    position:relative;
+    margin-top:40px; border-radius:40px; border:1px solid #a533e7;
+    background:radial-gradient(ellipse 80% 70% at 50% 40%, rgba(124,58,237,.16), transparent 65%), rgba(20,6,26,.7);
+    box-shadow:0 30px 90px rgba(132,0,248,.28);
+    overflow:hidden; height:min(78vh, 780px); min-height:420px;
+    cursor:grab;
+  }
+  .brain3d-panel.dragging{ cursor:grabbing; }
+  .brain3d-panel canvas{ width:100%; height:100%; display:block; touch-action:none; }
+  .brain3d-hint{
+    position:absolute; left:50%; bottom:22px; transform:translateX(-50%);
+    font-family:var(--font-mono); font-size:12.5px; letter-spacing:.04em; color:var(--muted-2);
+    background:rgba(12,2,18,.55); border:1px solid rgba(255,255,255,.08);
+    padding:8px 18px; border-radius:999px; pointer-events:none; white-space:nowrap;
+  }
+
+  @media (max-width:900px){
+    .area-grid{ grid-template-columns:1fr; }
+    .brain3d-panel{ height:60vh; border-radius:26px; }
+  }
+
   /* ============ Auth overlay ============ */
   .overlay{
     position:fixed; inset:0; z-index:300; display:flex; align-items:center; justify-content:center;
@@ -322,25 +363,110 @@
   .brand-lockup-hero{ margin-bottom:4px; }
   footer.brand-lockup{ padding:20px 24px 64px; }
   .brand-row{ display:flex; align-items:center; gap:9px; }
+  /* O selo é ROXO nas seções internas e ROSA na página de início, para
+     acompanhar o logo do topo. No início o selo do rodapé some, porque o
+     mesmo selo já aparece acima do título. */
   .brand-dot{
     width:9px; height:9px; border-radius:50%; flex:none;
-    background:radial-gradient(circle at 35% 35%, #b794f6, #7e33e7);
-    box-shadow:0 0 14px #b794f6;
+    background:radial-gradient(circle at 35% 35%, #c9a8ff, #a533e7);
+    box-shadow:0 0 14px #a533e7; transition:background .3s, box-shadow .3s;
   }
   .brand-text{ font-family:var(--font-display); font-size:21px; font-weight:700; color:rgba(255,255,255,.42); letter-spacing:.01em; }
-  .brand-text .lab{ font-weight:400; color:rgba(199,168,255,.75); }
-  .brand-tag{ font-family:var(--font-mono); font-size:11.5px; letter-spacing:.14em; color:rgba(221,162,255,.4); text-transform:lowercase; }
+  .brand-text .lab{ font-weight:400; color:#a533e7; transition:color .3s; }
+  .brand-tag{ font-family:var(--font-mono); font-size:11.5px; letter-spacing:.14em; color:rgba(165,51,231,.6); text-transform:lowercase; transition:color .3s; }
 
-  /* Início: logo central SINAPSE.lab + edutec em rosa */
-  body[data-view="inicio"] .brand-lockup-hero .brand-dot{
-    background:radial-gradient(circle at 35% 35%, #ff7aa9, var(--brand-pink));
-    box-shadow:0 0 14px rgba(231,51,126,.9);
+  body[data-view="inicio"] .brand-dot{
+    background:radial-gradient(circle at 35% 35%, #ff9dcd, #ff3b9e);
+    box-shadow:0 0 14px #ff3b9e;
   }
-  body[data-view="inicio"] .brand-lockup-hero .brand-text .lab{
-    color:var(--brand-pink);
+  body[data-view="inicio"] .brand-text .lab{ color:#ff3b9e; }
+  body[data-view="inicio"] .brand-tag{ color:rgba(255,59,158,.55); }
+  body[data-view="inicio"] footer.brand-lockup{ display:none; }
+
+  /* ============ Dentro da Mente (jogo embutido) ============
+     O jogo roda dentro de um iframe para que o CSS e o JS dele fiquem
+     isolados do site. A moldura segue o mesmo tratamento dos cards. */
+  .jogo-shell{
+    position:relative; border-radius:22px; overflow:hidden;
+    border:1px solid rgba(255,59,158,.22);
+    background:#07050f;
+    box-shadow:0 26px 70px rgba(0,0,0,.55), 0 0 46px rgba(255,59,158,.10);
   }
-  body[data-view="inicio"] .brand-lockup-hero .brand-tag{
-    color:rgba(231,51,126,.78);
+  .jogo-shell::after{
+    content:''; position:absolute; inset:0; pointer-events:none; border-radius:22px;
+    box-shadow:inset 0 0 0 1px rgba(255,255,255,.05);
+  }
+  .jogo-frame{
+    display:block; width:100%; height:min(78vh, 720px); min-height:520px;
+    border:0; background:#07050f;
+  }
+  .jogo-expandir{
+    position:absolute; right:14px; bottom:14px; z-index:3;
+    display:flex; align-items:center; gap:8px;
+    padding:9px 15px; border-radius:999px; cursor:pointer;
+    font-family:var(--font-mono); font-size:11.5px; letter-spacing:.1em;
+    text-transform:lowercase; color:var(--pink-text);
+    border:1px solid rgba(255,59,158,.36);
+    background:rgba(12,6,22,.72); backdrop-filter:blur(10px);
+    opacity:.5; transition:opacity .25s, color .25s, border-color .25s, background .25s;
+  }
+  .jogo-shell:hover .jogo-expandir, .jogo-expandir:focus-visible{ opacity:1; }
+  .jogo-expandir:hover{ color:#fff; border-color:var(--pink-strong);
+    background:rgba(255,59,158,.22); }
+  .jogo-expandir svg{ width:15px; height:15px; fill:none; stroke:currentColor;
+    stroke-width:2; stroke-linecap:round; stroke-linejoin:round; }
+  .jogo-expandir .ic-fechar{ display:none; }
+  /* dentro da tela cheia o ícone e o texto invertem */
+  .jogo-shell:fullscreen .jogo-expandir .ic-abrir{ display:none; }
+  .jogo-shell:fullscreen .jogo-expandir .ic-fechar{ display:block; }
+  .jogo-shell:fullscreen{ border-radius:0; border:0; background:#07050f; }
+  .jogo-shell:fullscreen::after{ display:none; }
+  .jogo-shell:fullscreen .jogo-frame{ width:100vw; height:100vh; max-height:none; }
+
+  .jogo-link{ color:var(--pink-strong); text-decoration:none; border-bottom:1px solid rgba(255,59,158,.4); }
+  .jogo-link:hover{ color:#fff; border-bottom-color:#fff; }
+  @media (max-width: 880px){
+    .jogo-frame{ height:min(70vh, 560px); min-height:440px; }
+  }
+
+  /* ============ Equipe ============ */
+  .equipe-lead{ max-width:58ch; color:var(--pink-text); font-size:1rem; line-height:1.7; margin-top:14px; }
+  .equipe-grid{
+    display:grid; grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
+    gap:16px; margin-top:40px;
+  }
+  .membro{
+    display:flex; align-items:center; gap:18px; padding:16px 20px;
+    border-radius:20px; border:1px solid var(--line);
+    background:linear-gradient(120deg, rgba(40,22,70,.5), rgba(22,12,40,.35));
+    transition:transform .35s cubic-bezier(.2,.8,.2,1), border-color .35s, box-shadow .35s;
+  }
+  .membro:hover{
+    transform:translateY(-4px); border-color:rgba(255,59,158,.42);
+    box-shadow:0 16px 44px rgba(0,0,0,.45), 0 0 34px rgba(255,59,158,.14);
+  }
+  .membro-foto{
+    width:84px; height:84px; border-radius:50%; flex:none; object-fit:cover;
+    border:2px solid rgba(255,59,158,.5);
+    box-shadow:0 0 0 4px rgba(255,59,158,.10), 0 0 26px rgba(255,59,158,.28);
+    transition:box-shadow .35s, border-color .35s;
+  }
+  .membro:hover .membro-foto{
+    border-color:#ff3b9e;
+    box-shadow:0 0 0 5px rgba(255,59,158,.16), 0 0 40px rgba(255,59,158,.5);
+  }
+  .membro-nome{
+    font-family:var(--font-display); font-size:1.12rem; font-weight:700;
+    color:#fff; line-height:1.3;
+  }
+  .equipe-fecho{
+    margin-top:48px; padding:28px 30px; border-radius:20px;
+    border:1px solid var(--line); background:rgba(20,11,36,.45); max-width:56ch;
+  }
+  .equipe-fecho p{ color:#fff; font-size:16px; line-height:1.8; font-weight:300; }
+  .equipe-fecho strong{ color:var(--pink-text); font-weight:600; }
+  @media (max-width:520px){
+    .membro{ flex-direction:column; text-align:center; gap:12px; padding:22px 18px; }
   }
 
   /* ============ Responsive ============ */

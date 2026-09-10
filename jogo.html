@@ -1,0 +1,1336 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Dentro da Mente</title>
+<style>
+:root{
+  --bg0:#070518; --bg1:#0c0926; --bg2:#140f36;
+  --panel:rgba(28,20,64,.62); --panel2:rgba(38,26,84,.72);
+  --line:rgba(160,120,255,.22); --line2:rgba(160,120,255,.42);
+  --roxo:#a06bff; --lilas:#cfaaff; --ciano:#5fd9ff; --rosa:#ff6bc7;
+  --ok:#4ce0a8; --erro:#ff5f7e; --ouro:#ffd36b;
+  --txt:#eae4ff; --dim:#9b90c4;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%}
+body{
+  background:var(--bg0); color:var(--txt); overflow:hidden;
+  font-family:'Segoe UI',system-ui,-apple-system,'Helvetica Neue',sans-serif;
+  -webkit-font-smoothing:antialiased; user-select:none;
+}
+#fundo{position:fixed;inset:0;z-index:0}
+#brilho{position:fixed;inset:0;z-index:1;pointer-events:none;
+  background:
+    radial-gradient(ellipse 60% 50% at 20% 15%,rgba(120,60,220,.28),transparent 70%),
+    radial-gradient(ellipse 50% 45% at 85% 80%,rgba(40,140,220,.22),transparent 70%),
+    radial-gradient(ellipse 70% 60% at 50% 50%,transparent 40%,rgba(4,2,14,.72) 100%);}
+
+/* ─────────── estrutura ─────────── */
+#app{position:relative;z-index:2;height:100%;display:flex;flex-direction:column}
+#hud{
+  display:flex;align-items:center;gap:18px;padding:14px 22px;
+  border-bottom:1px solid var(--line);
+  background:linear-gradient(180deg,rgba(12,8,32,.85),rgba(12,8,32,.35));
+  backdrop-filter:blur(10px);flex-wrap:wrap;opacity:0;
+  transition:opacity .6s ease;pointer-events:none}
+#hud.on{opacity:1;pointer-events:auto}
+.hud-item{display:flex;align-items:center;gap:8px;font-size:12px;letter-spacing:.16em;
+  text-transform:uppercase;color:var(--dim)}
+.hud-item b{color:var(--txt);font-size:15px;letter-spacing:.06em;
+  font-variant-numeric:tabular-nums}
+#vidas{display:flex;gap:4px;flex-wrap:wrap}
+.vida{width:13px;height:12px;position:relative;transition:.4s}
+.vida svg{width:100%;height:100%;display:block}
+.vida.off{opacity:.22;filter:grayscale(1)}
+#barraWrap{flex:1;min-width:150px;height:6px;border-radius:99px;
+  background:rgba(160,120,255,.14);overflow:hidden;position:relative}
+#barra{height:100%;width:0%;border-radius:99px;transition:width .8s cubic-bezier(.2,.8,.2,1);
+  background:linear-gradient(90deg,var(--ciano),var(--roxo),var(--rosa));
+  box-shadow:0 0 14px rgba(160,110,255,.7)}
+#somBtn{position:fixed;right:20px;top:16px;z-index:50;width:40px;height:40px;
+  border-radius:50%;border:1px solid var(--line2);color:var(--lilas);cursor:pointer;
+  font-size:14px;display:flex;align-items:center;justify-content:center;transition:.3s;
+  background:rgba(20,14,48,.7);backdrop-filter:blur(10px)}
+#somBtn:hover,#somBtn:focus-visible{background:rgba(160,120,255,.18);color:#fff;
+  box-shadow:0 0 18px rgba(160,120,255,.45);outline:none}
+
+#palco{flex:1;position:relative;overflow:hidden}
+.tela{position:absolute;inset:0;display:none;flex-direction:column;
+  align-items:center;justify-content:center;padding:22px;text-align:center;gap:18px}
+.tela.on{display:flex;animation:entra .7s cubic-bezier(.2,.8,.2,1)}
+@keyframes entra{from{opacity:0;transform:translateY(22px) scale(.985)}
+                 to{opacity:1;transform:none}}
+
+/* ─────────── tipografia ─────────── */
+h1.titulo{font-size:clamp(30px,7vw,68px);font-weight:200;letter-spacing:.2em;
+  text-indent:.2em;line-height:1.1;
+  background:linear-gradient(100deg,#fff,var(--lilas) 40%,var(--ciano));
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+  filter:drop-shadow(0 0 30px rgba(160,110,255,.45))}
+h2.fase{font-size:clamp(19px,3.4vw,34px);font-weight:200;letter-spacing:.2em;
+  text-indent:.2em;color:#fff}
+.eyebrow{font-size:11px;letter-spacing:.42em;text-indent:.42em;color:var(--roxo);
+  text-transform:uppercase;font-weight:600}
+p.sub{font-size:clamp(13px,1.7vw,17px);font-weight:300;line-height:1.85;
+  color:var(--dim);max-width:640px}
+p.sub b{color:var(--lilas);font-weight:500}
+
+/* ─────────── botões ─────────── */
+.btn{position:relative;font:inherit;font-size:13px;font-weight:500;letter-spacing:.24em;
+  text-indent:.24em;text-transform:uppercase;color:#fff;cursor:pointer;
+  padding:17px 40px;border-radius:99px;border:1px solid var(--line2);
+  background:linear-gradient(135deg,rgba(160,107,255,.24),rgba(95,217,255,.14));
+  backdrop-filter:blur(8px);overflow:hidden;
+  transition:transform .3s cubic-bezier(.2,.8,.2,1),box-shadow .3s,border-color .3s}
+.btn:hover,.btn:focus-visible{transform:translateY(-3px);border-color:var(--lilas);
+  box-shadow:0 10px 40px rgba(160,110,255,.42),0 0 0 1px rgba(207,170,255,.3) inset;
+  outline:none}
+.btn:active{transform:translateY(-1px)}
+.btn.grande{font-size:15px;padding:21px 54px}
+.btn.fantasma{background:transparent;border-color:var(--line)}
+.btn.fantasma:hover{background:rgba(160,120,255,.12)}
+
+/* ─────────── painel ─────────── */
+.painel{background:var(--panel);border:1px solid var(--line);border-radius:20px;
+  padding:26px 30px;backdrop-filter:blur(14px);max-width:660px;
+  box-shadow:0 24px 70px rgba(0,0,0,.5)}
+
+/* ─────────── canvas de fase ─────────── */
+.canvasWrap{position:relative;border-radius:18px;overflow:hidden;
+  border:1px solid var(--line);box-shadow:0 24px 70px rgba(0,0,0,.55),
+  0 0 0 1px rgba(160,120,255,.08) inset;background:rgba(8,5,24,.6)}
+.canvasWrap canvas{display:block}
+
+/* ─────────── cartão de informação ─────────── */
+#info{position:absolute;inset:0;z-index:30;display:none;align-items:center;
+  justify-content:center;padding:24px;background:rgba(6,4,18,.78);
+  backdrop-filter:blur(6px)}
+#info.on{display:flex;animation:entra .5s ease}
+#infoCard{max-width:520px;background:var(--panel2);border:1px solid var(--line2);
+  border-radius:20px;padding:32px 34px;text-align:center;
+  box-shadow:0 0 60px rgba(160,110,255,.28)}
+#infoCard .ic{font-size:26px;margin-bottom:14px;color:var(--ciano)}
+#infoCard h3{font-size:15px;font-weight:500;letter-spacing:.24em;text-indent:.24em;
+  text-transform:uppercase;color:var(--lilas);margin-bottom:14px}
+#infoCard p{font-size:15px;font-weight:300;line-height:1.9;color:var(--txt)}
+#infoCard .dica{margin-top:18px;font-size:11px;letter-spacing:.2em;color:var(--dim);
+  text-transform:uppercase}
+
+/* ─────────── fase 2: memória ─────────── */
+#gradeMem{display:grid;gap:12px;margin:6px auto}
+.cel{width:82px;height:82px;border-radius:16px;border:1px solid var(--line);
+  background:rgba(30,20,66,.55);cursor:pointer;position:relative;
+  display:flex;align-items:center;justify-content:center;
+  transition:transform .25s cubic-bezier(.2,.8,.2,1),box-shadow .3s,
+             background .3s,border-color .3s}
+.cel svg{width:42px;height:42px;opacity:0;transition:opacity .3s}
+.cel.mostra{background:linear-gradient(140deg,rgba(160,107,255,.5),rgba(95,217,255,.32));
+  border-color:var(--lilas);box-shadow:0 0 34px rgba(160,110,255,.65);transform:scale(1.06)}
+.cel.mostra svg{opacity:1}
+.cel:not(.bloq):hover{transform:translateY(-4px);border-color:var(--line2);
+  box-shadow:0 8px 26px rgba(0,0,0,.4)}
+.cel.certo{background:linear-gradient(140deg,rgba(76,224,168,.5),rgba(76,224,168,.2));
+  border-color:var(--ok);box-shadow:0 0 30px rgba(76,224,168,.55)}
+.cel.certo svg{opacity:1}
+.cel.errado{background:rgba(255,95,126,.34);border-color:var(--erro);
+  animation:tremer .45s}
+@keyframes tremer{0%,100%{transform:translateX(0)}20%{transform:translateX(-8px)}
+  40%{transform:translateX(8px)}60%{transform:translateX(-5px)}80%{transform:translateX(5px)}}
+.cel.bloq{cursor:default}
+@media(max-width:640px){.cel{width:62px;height:62px;border-radius:13px}
+  .cel svg{width:32px;height:32px}}
+
+/* ─────────── fase 4: stroop ─────────── */
+#stroopPalavra{font-size:clamp(46px,11vw,110px);font-weight:800;letter-spacing:.05em;
+  line-height:1;transition:opacity .2s;text-shadow:0 0 50px currentColor}
+#stroopOpts{display:flex;gap:14px;flex-wrap:wrap;justify-content:center}
+.corBtn{width:112px;padding:16px 0;border-radius:14px;border:2px solid transparent;
+  font:inherit;font-size:12px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;
+  color:#0b0820;cursor:pointer;transition:transform .22s cubic-bezier(.2,.8,.2,1),
+  box-shadow .25s,filter .25s}
+.corBtn:hover,.corBtn:focus-visible{transform:translateY(-5px) scale(1.04);
+  box-shadow:0 12px 34px rgba(0,0,0,.5);filter:brightness(1.15);outline:none}
+.corBtn kbd{display:block;font-size:9px;opacity:.6;margin-top:4px;font-family:inherit;
+  letter-spacing:.1em}
+#tempoWrap{width:min(420px,80vw);height:7px;border-radius:99px;
+  background:rgba(160,120,255,.16);overflow:hidden}
+#tempoBar{height:100%;width:100%;border-radius:99px;
+  background:linear-gradient(90deg,var(--ok),var(--ouro),var(--erro))}
+
+/* ─────────── fase 5: emoções ─────────── */
+#rostoWrap{width:min(280px,62vw);aspect-ratio:1;position:relative}
+#rostoWrap svg{width:100%;height:100%;overflow:visible}
+#emoOpts{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));
+  gap:12px;width:min(560px,90vw)}
+.emoBtn{font:inherit;font-size:12px;font-weight:500;letter-spacing:.2em;
+  text-transform:uppercase;color:var(--txt);cursor:pointer;padding:16px 10px;
+  border-radius:14px;border:1px solid var(--line);background:rgba(30,20,66,.5);
+  transition:transform .25s cubic-bezier(.2,.8,.2,1),background .3s,border-color .3s}
+.emoBtn:hover,.emoBtn:focus-visible{transform:translateY(-4px);border-color:var(--lilas);
+  background:rgba(160,120,255,.2);outline:none}
+.emoBtn.certo{background:rgba(76,224,168,.28);border-color:var(--ok)}
+.emoBtn.errado{background:rgba(255,95,126,.26);border-color:var(--erro);animation:tremer .45s}
+
+/* ─────────── fase 6: decisões ─────────── */
+#decCard{max-width:720px;width:100%}
+#decSit{font-size:clamp(15px,2.2vw,21px);font-weight:300;line-height:1.8;
+  color:var(--txt);margin-bottom:8px}
+#decOpts{display:flex;flex-direction:column;gap:12px;width:100%;margin-top:22px}
+.decBtn{font:inherit;font-size:14px;font-weight:300;letter-spacing:.04em;
+  text-align:left;color:var(--txt);cursor:pointer;padding:18px 22px;border-radius:14px;
+  border:1px solid var(--line);background:rgba(30,20,66,.45);line-height:1.6;
+  display:flex;align-items:center;gap:16px;
+  transition:transform .25s cubic-bezier(.2,.8,.2,1),background .3s,border-color .3s}
+.decBtn:hover,.decBtn:focus-visible{transform:translateX(7px);border-color:var(--lilas);
+  background:rgba(160,120,255,.18);outline:none}
+.decBtn .num{flex-shrink:0;width:30px;height:30px;border-radius:50%;
+  border:1px solid var(--line2);display:flex;align-items:center;justify-content:center;
+  font-size:11px;color:var(--lilas)}
+
+/* ─────────── final ─────────── */
+#fimStats{display:flex;gap:34px;flex-wrap:wrap;justify-content:center;margin:6px 0}
+.stat{text-align:center}
+.stat .n{font-size:clamp(28px,5vw,46px);font-weight:200;color:#fff;
+  font-variant-numeric:tabular-nums;
+  filter:drop-shadow(0 0 22px rgba(160,110,255,.6))}
+.stat .l{font-size:10px;letter-spacing:.3em;text-transform:uppercase;color:var(--dim);
+  margin-top:5px}
+
+/* ─────────── avisos flutuantes ─────────── */
+#flash{position:fixed;left:50%;top:16%;transform:translateX(-50%);z-index:60;
+  display:flex;flex-direction:column;gap:8px;align-items:center;pointer-events:none}
+.aviso{padding:11px 22px;border-radius:99px;font-size:12px;font-weight:500;
+  letter-spacing:.16em;text-transform:uppercase;backdrop-filter:blur(10px);
+  border:1px solid var(--line2);background:rgba(28,20,64,.8);
+  animation:sobe 1.9s cubic-bezier(.2,.8,.2,1) forwards}
+.aviso.ok{color:var(--ok);border-color:rgba(76,224,168,.5)}
+.aviso.err{color:var(--erro);border-color:rgba(255,95,126,.5)}
+.aviso.pt{color:var(--ouro);border-color:rgba(255,211,107,.5)}
+@keyframes sobe{0%{opacity:0;transform:translateY(14px) scale(.9)}
+  14%{opacity:1;transform:none} 74%{opacity:1} 100%{opacity:0;transform:translateY(-18px)}}
+
+/* ─────────── transição entre fases ─────────── */
+#wipe{position:fixed;inset:0;z-index:70;pointer-events:none;opacity:0;
+  background:radial-gradient(circle at 50% 50%,rgba(160,110,255,.9),rgba(8,5,24,1) 62%)}
+#wipe.go{animation:wipeAnim 1.05s cubic-bezier(.6,0,.3,1)}
+@keyframes wipeAnim{0%{opacity:0;transform:scale(.2)}
+  40%{opacity:1;transform:scale(1.6)} 100%{opacity:0;transform:scale(2.6)}}
+
+.linha{width:56px;height:1px;background:linear-gradient(90deg,transparent,var(--line2),transparent)}
+.pista{font-size:11px;letter-spacing:.24em;text-transform:uppercase;color:var(--dim)}
+.pista kbd{display:inline-block;padding:3px 8px;margin:0 2px;border-radius:6px;
+  border:1px solid var(--line);background:rgba(160,120,255,.12);color:var(--lilas);
+  font-family:inherit;font-size:10px}
+</style>
+</head>
+<body>
+<canvas id="fundo"></canvas>
+<div id="brilho"></div>
+<div id="wipe"></div>
+<div id="flash"></div>
+
+<div id="app">
+  <div id="hud">
+    <div class="hud-item">Pontos <b id="hudPts">0</b></div>
+    <div class="hud-item">Vidas <div id="vidas"></div></div>
+    <div class="hud-item" style="flex:1;min-width:150px">
+      <span id="hudFase">Fase 0/6</span>
+      <div id="barraWrap"><div id="barra"></div></div>
+    </div>
+    <div style="width:46px;flex-shrink:0"></div>
+  </div>
+  <div id="palco"></div>
+</div>
+<button id="somBtn" title="Ligar/desligar som (M)" aria-label="Som ligado">♪</button>
+
+<div id="info"><div id="infoCard">
+  <div class="ic" id="infoIcone">◈</div>
+  <h3 id="infoTitulo">Você aprendeu</h3>
+  <p id="infoTexto"></p>
+  <div class="dica">clique ou pressione <kbd>Enter</kbd> para continuar</div>
+</div></div>
+
+<script>
+(function(){
+'use strict';
+
+/* ══════════════════════════════════════════════════════════════════
+   DENTRO DA MENTE — jogo educativo de neurociência
+   Seis fases jogáveis, sem bibliotecas externas, num arquivo só.
+   ══════════════════════════════════════════════════════════════════ */
+
+var palco = document.getElementById('palco');
+var hud   = document.getElementById('hud');
+var elPts = document.getElementById('hudPts');
+var elFase= document.getElementById('hudFase');
+var elBarra=document.getElementById('barra');
+var elVidas=document.getElementById('vidas');
+var elFlash=document.getElementById('flash');
+var elInfo =document.getElementById('info');
+var elWipe =document.getElementById('wipe');
+
+var TOTAL_FASES = 5;
+var VIDAS_INICIAIS = 8;
+var S = { pts:0, vidas:VIDAS_INICIAIS, fase:0, som:true, recorde:0 };
+
+/* ───────────────────── utilidades ───────────────────── */
+function el(tag, cls, html){
+  var e=document.createElement(tag);
+  if(cls) e.className=cls;
+  if(html!==undefined) e.innerHTML=html;
+  return e;
+}
+function clamp(v,a,b){ return v<a?a:(v>b?b:v); }
+function lerp(a,b,t){ return a+(b-a)*t; }
+function rnd(a,b){ return a+Math.random()*(b-a); }
+function ri(a,b){ return Math.floor(rnd(a,b+1)); }
+function embaralhar(a){
+  a=a.slice();
+  for(var i=a.length-1;i>0;i--){ var j=Math.floor(Math.random()*(i+1));
+    var t=a[i]; a[i]=a[j]; a[j]=t; }
+  return a;
+}
+
+/* ───────────────────── som ───────────────────── */
+var Som = (function(){
+  var A=null, master, conv, dry, amb=null;
+  function init(){
+    if(A) return;
+    try{ A=new (window.AudioContext||window.webkitAudioContext)(); }catch(e){ return; }
+    master=A.createGain(); master.gain.value=S.som?0.5:0.0001; master.connect(A.destination);
+    conv=A.createConvolver(); conv.buffer=ir(2.6,2.6);
+    var wet=A.createGain(); wet.gain.value=0.5; conv.connect(wet); wet.connect(master);
+    dry=A.createGain(); dry.gain.value=0.85; dry.connect(master);
+  }
+  function ir(sec,dec){
+    var n=(A.sampleRate*sec)|0, b=A.createBuffer(2,n,A.sampleRate);
+    for(var c=0;c<2;c++){ var d=b.getChannelData(c);
+      for(var i=0;i<n;i++) d[i]=(Math.random()*2-1)*Math.pow(1-i/n,dec); }
+    return b;
+  }
+  function ruido(sec){
+    var n=(A.sampleRate*(sec||1))|0,b=A.createBuffer(1,n,A.sampleRate),d=b.getChannelData(0);
+    for(var i=0;i<n;i++) d[i]=Math.random()*2-1; return b;
+  }
+  function rota(node,w){ var s=A.createGain(); s.gain.value=w===undefined?0.3:w;
+    node.connect(dry); node.connect(s); s.connect(conv); }
+  function tom(f,dur,vol,delay,tipo,w){
+    init(); if(!A) return;
+    var t=A.currentTime+(delay||0);
+    var o=A.createOscillator(); o.type=tipo||'sine'; o.frequency.setValueAtTime(f,t);
+    var g=A.createGain(); g.gain.setValueAtTime(0.0001,t);
+    g.gain.exponentialRampToValueAtTime(vol||0.14,t+0.01);
+    g.gain.exponentialRampToValueAtTime(0.0001,t+(dur||0.5));
+    o.connect(g); rota(g,w); o.start(t); o.stop(t+(dur||0.5)+0.05);
+  }
+  var ESC=[0,2,4,7,9,12,14,16,19,21,24];      // pentatônica: sempre soa bem
+  function nota(i,dur,vol,delay){
+    tom(261.63*Math.pow(2,ESC[i%ESC.length]/12)*(i>6?2:1), dur||1.4, vol||0.12, delay||0,'sine',0.6);
+  }
+  return {
+    ligar:init,
+    clique:function(){ tom(660,0.14,0.07,0,'triangle',0.3); },
+    passo:function(){ tom(rnd(180,260),0.06,0.03,0,'sine',0.2); },
+    coleta:function(i){ nota(3+i,1.6,0.14); nota(7+i,1.2,0.07,0.05); },
+    acerto:function(){ nota(4,1.2,0.13); nota(6,1.2,0.10,0.06); nota(9,1.4,0.08,0.12); },
+    erro:function(){ tom(150,0.5,0.16,0,'sawtooth',0.4); tom(96,0.7,0.12,0.04,'sine',0.5); },
+    tique:function(){ tom(1200,0.05,0.04,0,'square',0.15); },
+    fase:function(){ [0,3,5,8,10].forEach(function(n,i){ nota(n,2.4,0.12,i*0.09); });
+                     tom(70,1.6,0.24,0,'sine',0.6); },
+    fim:function(){ [0,4,7,11,14,16,19].forEach(function(n,i){ nota(n,3.6,0.13,i*0.11); }); },
+    zumbido:function(on){
+      init(); if(!A) return;
+      if(amb){ try{ amb.g.gain.setTargetAtTime(0.0001,A.currentTime,0.4);
+        amb.n.forEach(function(x){ try{x.stop(A.currentTime+1.4);}catch(e){} }); }catch(e){}
+        amb=null; }
+      if(!on) return;
+      var g=A.createGain(); g.gain.setValueAtTime(0.0001,A.currentTime);
+      g.gain.setTargetAtTime(0.035,A.currentTime,2.2); rota(g,0.8);
+      var ns=[];
+      [55,82.4,110,164.8].forEach(function(f,i){
+        var o=A.createOscillator(); o.type='sine'; o.frequency.value=f;
+        var og=A.createGain(); og.gain.value=0.3/(i+1);
+        var lf=A.createOscillator(); lf.frequency.value=0.05+i*0.02;
+        var lg=A.createGain(); lg.gain.value=0.9;
+        lf.connect(lg); lg.connect(o.frequency);
+        o.connect(og); og.connect(g); o.start(); lf.start(); ns.push(o,lf);
+      });
+      amb={g:g,n:ns};
+    },
+    mudo:function(m){ S.som=!m;
+      if(master&&A) master.gain.setTargetAtTime(m?0.0001:0.5,A.currentTime,0.05); }
+  };
+})();
+
+var somBtn=document.getElementById('somBtn');
+somBtn.addEventListener('click',function(){
+  Som.ligar(); S.som=!S.som; Som.mudo(!S.som);
+  somBtn.textContent=S.som?'♪':'✕';
+  somBtn.setAttribute('aria-label', S.som?'Som ligado':'Som desligado');
+});
+
+/* ───────────────────── HUD ───────────────────── */
+var CORACAO='<svg viewBox="0 0 24 22"><path d="M12 21S2 14.6 2 8.2A5.2 5.2 0 0 1 12 5.6 5.2 5.2 0 0 1 22 8.2C22 14.6 12 21 12 21z" fill="#ff6bc7" stroke="#ffb3e2" stroke-width="1.3"/></svg>';
+function pintarVidas(){
+  elVidas.innerHTML='';
+  for(var i=0;i<VIDAS_INICIAIS;i++){
+    var v=el('div','vida'+(i<S.vidas?'':' off'),CORACAO);
+    elVidas.appendChild(v);
+  }
+}
+function setPts(n, motivo){
+  var d=n-S.pts; S.pts=n; elPts.textContent=n;
+  if(d>0) aviso('+'+d+(motivo?' · '+motivo:''),'pt');
+}
+function addPts(d,motivo){ setPts(S.pts+d,motivo); }
+function perderVida(motivo){
+  S.vidas=Math.max(0,S.vidas-1); pintarVidas(); Som.erro();
+  aviso(motivo||'errou','err');
+  document.body.animate([{filter:'none'},{filter:'hue-rotate(-40deg) brightness(1.15)'},
+    {filter:'none'}],{duration:340});
+  if(S.vidas<=0){ setTimeout(gameOver,700); return true; }
+  return false;
+}
+function setFase(n){
+  S.fase=n; elFase.textContent='Fase '+n+'/'+TOTAL_FASES;
+  elBarra.style.width=(n/TOTAL_FASES*100)+'%';
+}
+function aviso(txt,tipo){
+  var a=el('div','aviso '+(tipo||''),txt);
+  elFlash.appendChild(a);
+  setTimeout(function(){ a.remove(); },1900);
+}
+
+/* ───────────────────── telas ───────────────────── */
+var telaAtual=null;
+function novaTela(){
+  var t=el('div','tela');
+  palco.appendChild(t);
+  return t;
+}
+function mostrar(t){
+  if(telaAtual && telaAtual!==t){
+    var velha=telaAtual;
+    velha.classList.remove('on');
+    setTimeout(function(){ velha.remove(); },50);
+  }
+  telaAtual=t;
+  t.classList.add('on');
+  var foco=t.querySelector('.btn,button');
+  if(foco) setTimeout(function(){ try{foco.focus();}catch(e){} },260);
+}
+function transicao(fn){
+  elWipe.classList.remove('go'); void elWipe.offsetWidth; elWipe.classList.add('go');
+  setTimeout(fn,430);
+}
+
+/* ───────────────────── cartão educativo ───────────────────── */
+var infoCb=null;
+function ensinar(titulo,texto,icone,cb){
+  document.getElementById('infoTitulo').textContent=titulo;
+  document.getElementById('infoTexto').textContent=texto;
+  document.getElementById('infoIcone').textContent=icone||'◈';
+  elInfo.classList.add('on'); infoCb=cb||null;
+  Som.acerto();
+}
+function fecharInfo(){
+  if(!elInfo.classList.contains('on')) return;
+  elInfo.classList.remove('on');
+  var cb=infoCb; infoCb=null;
+  if(cb) cb();
+}
+elInfo.addEventListener('click',fecharInfo);
+window.addEventListener('keydown',function(e){
+  if(elInfo.classList.contains('on') && (e.code==='Enter'||e.code==='Space'||e.code==='Escape')){
+    e.preventDefault();
+    // marca a tecla como já usada: sem isso, o mesmo Enter que fecha o cartão
+    // dispararia também o botão principal da tela que aparece atrás dele
+    e.__tratado=true;
+    fecharInfo();
+  }
+});
+
+/* ───────────────────── fundo: rede neural viva ───────────────────── */
+var fc=document.getElementById('fundo'), fx=fc.getContext('2d');
+var NOS=[], LIG=[], PULSOS=[], fW=0,fH=0,fDpr=1;
+function montarRede(){
+  fDpr=Math.min(window.devicePixelRatio||1,2);
+  fW=window.innerWidth; fH=window.innerHeight;
+  fc.width=fW*fDpr; fc.height=fH*fDpr;
+  fc.style.width=fW+'px'; fc.style.height=fH+'px';
+  fx.setTransform(fDpr,0,0,fDpr,0,0);
+  NOS=[]; LIG=[];
+  var n=Math.round(clamp((fW*fH)/26000,26,64));
+  for(var i=0;i<n;i++) NOS.push({x:rnd(0,fW),y:rnd(0,fH),
+    vx:rnd(-6,6),vy:rnd(-6,6),r:rnd(1.4,3.4),ph:rnd(0,9)});
+  for(var a=0;a<NOS.length;a++) for(var b=a+1;b<NOS.length;b++){
+    var d=Math.hypot(NOS[a].x-NOS[b].x,NOS[a].y-NOS[b].y);
+    if(d<Math.min(fW,fH)*0.24) LIG.push([a,b]);
+  }
+}
+function pulso(){
+  if(!LIG.length) return;
+  var L=LIG[Math.floor(Math.random()*LIG.length)];
+  PULSOS.push({a:L[0],b:L[1],t:0,v:rnd(0.5,1.3)});
+}
+montarRede();
+window.addEventListener('resize',montarRede);
+var ultimo=performance.now(), acc=0;
+function animarFundo(now){
+  var dt=Math.min((now-ultimo)/1000,0.05); ultimo=now;
+  acc+=dt; if(acc>0.28){ acc=0; if(PULSOS.length<26) pulso(); }
+  fx.clearRect(0,0,fW,fH);
+  for(var i=0;i<NOS.length;i++){
+    var p=NOS[i];
+    p.x+=p.vx*dt; p.y+=p.vy*dt;
+    if(p.x<-20)p.x=fW+20; if(p.x>fW+20)p.x=-20;
+    if(p.y<-20)p.y=fH+20; if(p.y>fH+20)p.y=-20;
+  }
+  fx.lineWidth=1;
+  for(var k=0;k<LIG.length;k++){
+    var A=NOS[LIG[k][0]], B=NOS[LIG[k][1]];
+    var d=Math.hypot(A.x-B.x,A.y-B.y), lim=Math.min(fW,fH)*0.26;
+    if(d>lim) continue;
+    fx.strokeStyle='rgba(150,105,255,'+(0.16*(1-d/lim))+')';
+    fx.beginPath(); fx.moveTo(A.x,A.y); fx.lineTo(B.x,B.y); fx.stroke();
+  }
+  for(var j=PULSOS.length-1;j>=0;j--){
+    var q=PULSOS[j]; q.t+=dt*q.v;
+    if(q.t>=1){ PULSOS.splice(j,1); continue; }
+    var A2=NOS[q.a], B2=NOS[q.b];
+    var x=lerp(A2.x,B2.x,q.t), y=lerp(A2.y,B2.y,q.t);
+    var g=fx.createRadialGradient(x,y,0,x,y,16);
+    g.addColorStop(0,'rgba(140,230,255,.85)'); g.addColorStop(1,'rgba(140,230,255,0)');
+    fx.fillStyle=g; fx.beginPath(); fx.arc(x,y,16,0,6.2832); fx.fill();
+    fx.fillStyle='rgba(220,250,255,.95)';
+    fx.beginPath(); fx.arc(x,y,2,0,6.2832); fx.fill();
+  }
+  for(var m=0;m<NOS.length;m++){
+    var s=NOS[m], pu=0.6+0.4*Math.sin(now/900+s.ph);
+    var g2=fx.createRadialGradient(s.x,s.y,0,s.x,s.y,s.r*7);
+    g2.addColorStop(0,'rgba(180,140,255,'+(0.30*pu)+')');
+    g2.addColorStop(1,'rgba(180,140,255,0)');
+    fx.fillStyle=g2; fx.beginPath(); fx.arc(s.x,s.y,s.r*7,0,6.2832); fx.fill();
+    fx.fillStyle='rgba(226,208,255,'+(0.55+0.35*pu)+')';
+    fx.beginPath(); fx.arc(s.x,s.y,s.r,0,6.2832); fx.fill();
+  }
+  requestAnimationFrame(animarFundo);
+}
+requestAnimationFrame(animarFundo);
+
+/* ═══════════════════ TELA INICIAL ═══════════════════ */
+function telaInicial(){
+  hud.classList.remove('on');
+  var t=novaTela();
+  t.innerHTML=
+    '<div class="eyebrow">Neurociência interativa</div>'+
+    '<h1 class="titulo">DENTRO DA MENTE</h1>'+
+    '<div class="linha"></div>'+
+    '<p class="sub">Você entrou em uma mente humana. Agora precisará entender '+
+    'como ela funciona para encontrar a saída.</p>'+
+    '<button class="btn grande" id="btEntrar">Entrar na mente</button>'+
+    '<p class="pista">'+TOTAL_FASES+' fases · use <kbd>mouse</kbd> ou <kbd>teclado</kbd></p>';
+  t.querySelector('#btEntrar').addEventListener('click',function(){
+    Som.ligar(); Som.clique(); Som.zumbido(true);
+    S.pts=0; S.vidas=VIDAS_INICIAIS; setPts(0); pintarVidas(); setFase(0);
+    hud.classList.add('on');
+    transicao(function(){ abrirFase(1); });
+  });
+  mostrar(t);
+}
+
+/* ═══════════════════ CARTÃO DE ABERTURA DE FASE ═══════════════════ */
+var FASES=[
+  null,
+  {n:'Fase 01', nome:'CAMINHO DOS NEURÔNIOS',
+   desc:'Atravesse a rede neural e recolha 5 impulsos nervosos. Desvie das sinapses instáveis.',
+   dica:'<kbd>W A S D</kbd> ou <kbd>setas</kbd> para andar'},
+  {n:'Fase 02', nome:'LABORATÓRIO DA MEMÓRIA',
+   desc:'Observe quais células se acendem. Depois reproduza a sequência de memória.',
+   dica:'clique nas células · <kbd>Tab</kbd> navega'},
+  {n:'Fase 03', nome:'MENTE AUTOMÁTICA',
+   desc:'Responda a COR da palavra, não o que está escrito. E responda rápido.',
+   dica:'clique ou use <kbd>1</kbd><kbd>2</kbd><kbd>3</kbd><kbd>4</kbd>'},
+  {n:'Fase 04', nome:'SALA DAS EMOÇÕES',
+   desc:'Reconheça a emoção em cada rosto que aparecer.',
+   dica:'clique ou use <kbd>1</kbd>–<kbd>4</kbd>'},
+  {n:'Fase 05', nome:'A DECISÃO',
+   desc:'Situações do dia a dia. Não existe resposta totalmente certa — existe a sua.',
+   dica:'clique ou use <kbd>1</kbd><kbd>2</kbd><kbd>3</kbd>'}
+];
+function abrirFase(n){
+  var f=FASES[n];
+  setFase(n-1);
+  var t=novaTela();
+  t.innerHTML=
+    '<div class="eyebrow">'+f.n+'</div>'+
+    '<h2 class="fase">'+f.nome+'</h2>'+
+    '<div class="linha"></div>'+
+    '<p class="sub">'+f.desc+'</p>'+
+    '<button class="btn" id="btGo">Começar</button>'+
+    '<p class="pista">'+f.dica+'</p>';
+  t.querySelector('#btGo').addEventListener('click',function(){
+    Som.clique();
+    transicao(function(){ [null,fase1,fase2,fase3,fase4,fase5][n](); });
+  });
+  mostrar(t);
+}
+function concluirFase(n, bonus){
+  setFase(n);
+  Som.fase();
+  if(bonus) addPts(bonus,'fase completa');
+  var t=novaTela();
+  t.innerHTML=
+    '<div class="eyebrow">Fase '+(n<10?'0':'')+n+' concluída</div>'+
+    '<h2 class="fase">REGIÃO LIBERADA</h2>'+
+    '<div class="linha"></div>'+
+    '<p class="sub">Pontuação atual: <b>'+S.pts+'</b></p>'+
+    '<button class="btn" id="btNext">'+(n<TOTAL_FASES?'Avançar':'Ver o final')+'</button>';
+  t.querySelector('#btNext').addEventListener('click',function(){
+    Som.clique();
+    transicao(function(){ n<TOTAL_FASES ? abrirFase(n+1) : telaFinal(); });
+  });
+  mostrar(t);
+}
+
+/* ═══════════════════ FASE 1 — CAMINHO DOS NEURÔNIOS ═══════════════════ */
+function fase1(){
+  var CW=900, CH=520;
+  var t=novaTela();
+  t.innerHTML=
+    '<div class="eyebrow">Fase 01 · Caminho dos neurônios</div>'+
+    '<div class="canvasWrap"><canvas id="c1" width="'+CW+'" height="'+CH+'"></canvas></div>'+
+    '<p class="pista" id="p1dica"><kbd>W A S D</kbd> / <kbd>setas</kbd> · impulsos <b id="p1c">0</b>/5</p>';
+  mostrar(t);
+
+  var cvs=t.querySelector('#c1'), g=cvs.getContext('2d');
+  var elC=t.querySelector('#p1c');
+  function ajustar(){
+    var w=Math.min(window.innerWidth-44, CW);
+    cvs.style.width=w+'px'; cvs.style.height=(w*CH/CW)+'px';
+  }
+  ajustar(); window.addEventListener('resize',ajustar);
+
+  var PAREDES=[
+    [0,0,CW,14],[0,CH-14,CW,14],[0,0,14,CH],[CW-14,0,14,CH],
+    [140,80,24,190],[140,80,190,24],
+    [300,180,24,170],[300,330,150,24],
+    [430,60,24,180],[430,330,24,130],
+    [540,120,190,24],[610,230,24,180],
+    [700,300,186,24],[240,400,190,24],
+    [760,60,24,150],[520,420,180,24]
+  ];
+  var IMPULSOS=[
+    {x:232,y:150,ok:false,f:'Os neurônios se comunicam por sinais elétricos dentro da célula e sinais químicos entre elas.'},
+    {x:370,y:262,ok:false,f:'O espaço entre dois neurônios se chama sinapse. É ali que os neurotransmissores atravessam.'},
+    {x:540,y:262,ok:false,f:'Um impulso nervoso pode viajar a mais de 100 metros por segundo pelos axônios mielinizados.'},
+    {x:820,y:150,ok:false,f:'O cérebro humano tem cerca de 86 bilhões de neurônios — e muito mais conexões entre eles.'},
+    {x:180,y:470,ok:false,f:'Conexões usadas com frequência ficam mais fortes. Isso se chama plasticidade neural.'}
+  ];
+  var PERIGOS=[
+    {x:480,y:180,ax:480,ay:180,bx:480,by:300,t:0,v:0.30,r:17},
+    {x:660,y:430,ax:660,ay:430,bx:860,by:430,t:0,v:0.24,r:17},
+    {x:250,y:330,ax:250,ay:330,bx:250,by:210,t:0.5,v:0.34,r:15},
+    {x:790,y:250,ax:790,ay:250,bx:640,by:250,t:0.2,v:0.28,r:15}
+  ];
+  var pl={x:70,y:300,r:11,vx:0,vy:0,imune:0};
+  var rastro=[], faisca=[], coletados=0, saidaAberta=false, ativo=true;
+  var saida={x:CW-58,y:CH-58,r:30};
+  var teclas={};
+
+  function onKey(e){
+    var c=e.code;
+    if(['ArrowUp','ArrowDown','ArrowLeft','ArrowRight','KeyW','KeyA','KeyS','KeyD','Space'].indexOf(c)>=0){
+      if(c!=='Space') e.preventDefault();
+      teclas[c]=(e.type==='keydown');
+    }
+  }
+  window.addEventListener('keydown',onKey);
+  window.addEventListener('keyup',onKey);
+
+  // suporte a toque/mouse: arrastar leva o personagem
+  var alvoPonteiro=null;
+  cvs.addEventListener('pointerdown',function(e){ mover(e); cvs.setPointerCapture(e.pointerId); });
+  cvs.addEventListener('pointermove',function(e){ if(e.buttons) mover(e); });
+  cvs.addEventListener('pointerup',function(){ alvoPonteiro=null; });
+  function mover(e){
+    var r=cvs.getBoundingClientRect();
+    alvoPonteiro={x:(e.clientX-r.left)/r.width*CW, y:(e.clientY-r.top)/r.height*CH};
+  }
+
+  function colide(x,y,r){
+    for(var i=0;i<PAREDES.length;i++){
+      var w=PAREDES[i];
+      var cx=clamp(x,w[0],w[0]+w[2]), cy=clamp(y,w[1],w[1]+w[3]);
+      if((x-cx)*(x-cx)+(y-cy)*(y-cy) < r*r) return true;
+    }
+    return false;
+  }
+
+  var fim1=false;
+  function encerrar(){
+    if(fim1) return; fim1=true; ativo=false;
+    window.removeEventListener('keydown',onKey);
+    window.removeEventListener('keyup',onKey);
+    window.removeEventListener('resize',ajustar);
+  }
+
+  var ult=performance.now();
+  function loop(now){
+    if(fim1) return;
+    var dt=Math.min((now-ult)/1000,0.05); ult=now;
+    if(!elInfo.classList.contains('on') && ativo){
+      var ax=0, ay=0;
+      if(teclas.ArrowLeft||teclas.KeyA) ax-=1;
+      if(teclas.ArrowRight||teclas.KeyD) ax+=1;
+      if(teclas.ArrowUp||teclas.KeyW) ay-=1;
+      if(teclas.ArrowDown||teclas.KeyS) ay+=1;
+      if(alvoPonteiro){
+        var dx=alvoPonteiro.x-pl.x, dy=alvoPonteiro.y-pl.y, d=Math.hypot(dx,dy);
+        if(d>6){ ax+=dx/d; ay+=dy/d; }
+      }
+      var m=Math.hypot(ax,ay);
+      if(m>0){ ax/=m; ay/=m; }
+      var VEL=228;
+      pl.vx=lerp(pl.vx,ax*VEL,Math.min(dt*13,1));
+      pl.vy=lerp(pl.vy,ay*VEL,Math.min(dt*13,1));
+      var nx=pl.x+pl.vx*dt, ny=pl.y+pl.vy*dt;
+      if(!colide(nx,pl.y,pl.r)) pl.x=nx; else pl.vx=0;
+      if(!colide(pl.x,ny,pl.r)) pl.y=ny; else pl.vy=0;
+
+      if(m>0.1){
+        rastro.push({x:pl.x,y:pl.y,a:1});
+        if(Math.random()<0.10) Som.passo();
+      }
+      for(var i=rastro.length-1;i>=0;i--){ rastro[i].a-=dt*1.7;
+        if(rastro[i].a<=0) rastro.splice(i,1); }
+
+      // impulsos
+      IMPULSOS.forEach(function(im,idx){
+        if(im.ok) return;
+        if(Math.hypot(pl.x-im.x,pl.y-im.y) < pl.r+16){
+          im.ok=true; coletados++; elC.textContent=coletados;
+          addPts(120,'impulso'); Som.coleta(idx);
+          for(var k=0;k<26;k++) faisca.push({x:im.x,y:im.y,
+            vx:rnd(-170,170),vy:rnd(-170,170),vida:rnd(0.4,0.9),t:0});
+          ativo=false;
+          ensinar('Impulso nervoso '+coletados+'/5', im.f, '⚡', function(){
+            ativo=true; ult=performance.now();
+            if(coletados===5 && !saidaAberta){
+              saidaAberta=true;
+              aviso('saída liberada','ok');
+              Som.acerto();
+            }
+          });
+        }
+      });
+
+      // perigos
+      PERIGOS.forEach(function(pg){
+        pg.t+=dt*pg.v;
+        var f=(Math.sin(pg.t*6.2832)+1)/2;
+        pg.x=lerp(pg.ax,pg.bx,f); pg.y=lerp(pg.ay,pg.by,f);
+        if(pl.imune<=0 && Math.hypot(pl.x-pg.x,pl.y-pg.y) < pl.r+pg.r){
+          pl.imune=1.6;
+          pl.x=70; pl.y=300; pl.vx=0; pl.vy=0;
+          if(perderVida('sinapse instável')) encerrar();
+        }
+      });
+      if(pl.imune>0) pl.imune-=dt;
+
+      // saída
+      if(saidaAberta && Math.hypot(pl.x-saida.x,pl.y-saida.y) < pl.r+saida.r*0.8){
+        encerrar();
+        concluirFase(1, 200);
+        return;
+      }
+      for(var j=faisca.length-1;j>=0;j--){
+        var s=faisca[j]; s.t+=dt; s.x+=s.vx*dt; s.y+=s.vy*dt;
+        s.vx*=0.94; s.vy*=0.94;
+        if(s.t>s.vida) faisca.splice(j,1);
+      }
+    }
+
+    /* ---- desenho ---- */
+    var tt=now/1000;
+    g.clearRect(0,0,CW,CH);
+    var bg=g.createLinearGradient(0,0,CW,CH);
+    bg.addColorStop(0,'#0a0722'); bg.addColorStop(0.5,'#120c30'); bg.addColorStop(1,'#0a0826');
+    g.fillStyle=bg; g.fillRect(0,0,CW,CH);
+    // teia de fundo
+    g.strokeStyle='rgba(150,105,255,.10)'; g.lineWidth=1;
+    for(var q=0;q<16;q++){
+      var yy=(q*37+Math.sin(tt*0.3+q)*8)%CH;
+      g.beginPath(); g.moveTo(0,yy); g.lineTo(CW,yy+22); g.stroke();
+    }
+    // paredes: membranas neon
+    PAREDES.forEach(function(w){
+      var wg=g.createLinearGradient(w[0],w[1],w[0],w[1]+w[3]);
+      wg.addColorStop(0,'rgba(96,60,190,.85)'); wg.addColorStop(1,'rgba(52,30,120,.85)');
+      g.fillStyle=wg;
+      g.beginPath();
+      if(g.roundRect) g.roundRect(w[0],w[1],w[2],w[3],7); else g.rect(w[0],w[1],w[2],w[3]);
+      g.fill();
+      g.strokeStyle='rgba(190,150,255,.55)'; g.lineWidth=1.4; g.stroke();
+    });
+    // rastro
+    rastro.forEach(function(r){
+      g.fillStyle='rgba(120,225,255,'+(r.a*0.34)+')';
+      g.beginPath(); g.arc(r.x,r.y,pl.r*r.a*0.85,0,6.2832); g.fill();
+    });
+    // impulsos
+    IMPULSOS.forEach(function(im,i){
+      if(im.ok) return;
+      var pu=0.6+0.4*Math.sin(tt*3+i);
+      var gg=g.createRadialGradient(im.x,im.y,0,im.x,im.y,42);
+      gg.addColorStop(0,'rgba(255,220,120,'+(0.5*pu)+')');
+      gg.addColorStop(1,'rgba(255,220,120,0)');
+      g.fillStyle=gg; g.beginPath(); g.arc(im.x,im.y,42,0,6.2832); g.fill();
+      g.strokeStyle='rgba(255,235,170,'+(0.5+0.4*pu)+')'; g.lineWidth=2;
+      g.beginPath(); g.arc(im.x,im.y,15+pu*4,0,6.2832); g.stroke();
+      g.fillStyle='#fff3c4';
+      g.beginPath();
+      g.moveTo(im.x-4,im.y-11); g.lineTo(im.x+5,im.y-2); g.lineTo(im.x,im.y-1);
+      g.lineTo(im.x+4,im.y+11); g.lineTo(im.x-5,im.y+1); g.lineTo(im.x,im.y);
+      g.closePath(); g.fill();
+    });
+    // perigos
+    PERIGOS.forEach(function(pg,i){
+      var pu=0.55+0.45*Math.sin(tt*5+i);
+      var gg=g.createRadialGradient(pg.x,pg.y,0,pg.x,pg.y,pg.r*2.8);
+      gg.addColorStop(0,'rgba(255,90,130,'+(0.44*pu)+')');
+      gg.addColorStop(1,'rgba(255,90,130,0)');
+      g.fillStyle=gg; g.beginPath(); g.arc(pg.x,pg.y,pg.r*2.8,0,6.2832); g.fill();
+      g.fillStyle='rgba(255,120,150,.92)';
+      g.beginPath(); g.arc(pg.x,pg.y,pg.r*(0.85+pu*0.14),0,6.2832); g.fill();
+      g.strokeStyle='rgba(255,200,215,.85)'; g.lineWidth=1.6;
+      g.beginPath(); g.arc(pg.x,pg.y,pg.r+5+pu*3,0,6.2832); g.stroke();
+    });
+    // saída
+    if(saidaAberta){
+      var pu2=0.5+0.5*Math.sin(tt*2.4);
+      var sg=g.createRadialGradient(saida.x,saida.y,0,saida.x,saida.y,saida.r*2.6);
+      sg.addColorStop(0,'rgba(120,255,210,'+(0.55*pu2+0.2)+')');
+      sg.addColorStop(1,'rgba(120,255,210,0)');
+      g.fillStyle=sg; g.beginPath(); g.arc(saida.x,saida.y,saida.r*2.6,0,6.2832); g.fill();
+      for(var a2=0;a2<3;a2++){
+        g.strokeStyle='rgba(180,255,230,'+(0.7-a2*0.2)+')'; g.lineWidth=2;
+        g.beginPath(); g.arc(saida.x,saida.y,saida.r-a2*8+Math.sin(tt*3+a2)*3,0,6.2832); g.stroke();
+      }
+    }
+    // faíscas
+    faisca.forEach(function(s){
+      var a=1-s.t/s.vida;
+      g.fillStyle='rgba(255,230,150,'+a+')';
+      g.beginPath(); g.arc(s.x,s.y,2.6*a+0.6,0,6.2832); g.fill();
+    });
+    // jogador
+    var im0=pl.imune>0 && Math.floor(tt*14)%2===0;
+    if(!im0){
+      var pg2=g.createRadialGradient(pl.x,pl.y,0,pl.x,pl.y,pl.r*4.2);
+      pg2.addColorStop(0,'rgba(130,230,255,.62)'); pg2.addColorStop(1,'rgba(130,230,255,0)');
+      g.fillStyle=pg2; g.beginPath(); g.arc(pl.x,pl.y,pl.r*4.2,0,6.2832); g.fill();
+      g.fillStyle='#eafcff';
+      g.beginPath(); g.arc(pl.x,pl.y,pl.r,0,6.2832); g.fill();
+      g.strokeStyle='rgba(120,220,255,.9)'; g.lineWidth=2;
+      g.beginPath(); g.arc(pl.x,pl.y,pl.r+4+Math.sin(tt*4)*2,0,6.2832); g.stroke();
+    }
+    requestAnimationFrame(loop);
+  }
+  requestAnimationFrame(loop);
+}
+
+/* ═══════════════════ FASE 2 — LABORATÓRIO DA MEMÓRIA ═══════════════════ */
+var ICONES=[
+  '<circle cx="12" cy="12" r="8"/>',
+  '<rect x="4" y="4" width="16" height="16" rx="3"/>',
+  '<path d="M12 3l9 17H3z"/>',
+  '<path d="M12 2l2.6 6.6L21 11l-6.4 2.4L12 20l-2.6-6.6L3 11l6.4-2.4z"/>',
+  '<path d="M12 21S3 14 3 8.6A4.7 4.7 0 0 1 12 6a4.7 4.7 0 0 1 9 2.6C21 14 12 21 12 21z"/>',
+  '<path d="M12 2l8 5v10l-8 5-8-5V7z"/>',
+  '<path d="M4 12h6l2-7 2 14 2-7h4"/>',
+  '<path d="M12 3a6 6 0 0 1 6 6c0 3-2 4-2 7H8c0-3-2-4-2-7a6 6 0 0 1 6-6z"/>',
+  '<path d="M5 19L12 5l7 14z" /><circle cx="12" cy="14" r="2.5" fill="#0b0820"/>',
+  '<path d="M3 12a9 9 0 0 1 18 0 9 9 0 0 1-18 0z"/><path d="M12 3v18" stroke="#0b0820" stroke-width="2" fill="none"/>',
+  '<path d="M6 4h12v6a6 6 0 0 1-12 0z"/><path d="M9 16h6v4H9z"/>',
+  '<path d="M12 2l3 7h7l-5.6 4.3L18.6 21 12 16.7 5.4 21l2.2-7.7L2 9h7z"/>'
+];
+function svgIcone(i){
+  return '<svg viewBox="0 0 24 24" fill="#f3ecff" stroke="none">'+ICONES[i%ICONES.length]+'</svg>';
+}
+
+function fase2(){
+  var COLS=4, LINS=3, TOTAL=COLS*LINS;
+  var RODADAS=[{n:3,ms:2400},{n:4,ms:2600},{n:5,ms:2900}];
+  var rodada=0, alvo=[], escolhidos=[], travado=true;
+
+  var t=novaTela();
+  t.innerHTML=
+    '<div class="eyebrow">Fase 02 · Laboratório da memória</div>'+
+    '<h2 class="fase" id="m-tit">MEMORIZE</h2>'+
+    '<p class="sub" id="m-txt">Guarde quais células vão se acender.</p>'+
+    '<div id="gradeMem"></div>'+
+    '<p class="pista">rodada <b id="m-r">1</b>/3 · selecione <b id="m-n">3</b></p>';
+  mostrar(t);
+
+  var grade=t.querySelector('#gradeMem');
+  grade.style.gridTemplateColumns='repeat('+COLS+',auto)';
+  var celulas=[];
+  for(var i=0;i<TOTAL;i++){
+    var c=el('button','cel bloq', svgIcone(i));
+    c.setAttribute('type','button');
+    c.dataset.i=i;
+    c.addEventListener('click', clicar);
+    grade.appendChild(c);
+    celulas.push(c);
+  }
+
+  function limpar(){
+    celulas.forEach(function(c){ c.className='cel bloq'; });
+  }
+  function iniciarRodada(){
+    var r=RODADAS[rodada];
+    t.querySelector('#m-r').textContent=rodada+1;
+    t.querySelector('#m-n').textContent=r.n;
+    t.querySelector('#m-tit').textContent='MEMORIZE';
+    t.querySelector('#m-txt').textContent='Guarde quais células vão se acender.';
+    limpar(); escolhidos=[]; travado=true;
+    var idx=[]; for(var k=0;k<TOTAL;k++) idx.push(k);
+    alvo=embaralhar(idx).slice(0,r.n);
+    setTimeout(function(){
+      alvo.forEach(function(a,j){
+        setTimeout(function(){
+          celulas[a].classList.add('mostra');
+          Som.tique();
+        }, j*230);
+      });
+      setTimeout(function(){
+        limpar();
+        travado=false;
+        t.querySelector('#m-tit').textContent='AGORA REPRODUZA';
+        t.querySelector('#m-txt').textContent='Clique nas '+r.n+' células que acenderam.';
+        celulas.forEach(function(c){ c.classList.remove('bloq'); });
+      }, r.ms + alvo.length*230);
+    }, 620);
+  }
+
+  function clicar(e){
+    if(travado) return;
+    var c=e.currentTarget, i=+c.dataset.i;
+    if(escolhidos.indexOf(i)>=0) return;
+    escolhidos.push(i);
+    if(alvo.indexOf(i)>=0){
+      c.classList.add('certo'); c.classList.add('bloq');
+      Som.tique(); addPts(60,'acerto');
+      if(escolhidos.filter(function(x){return alvo.indexOf(x)>=0;}).length===alvo.length){
+        travado=true;
+        celulas.forEach(function(cc){ cc.classList.add('bloq'); });
+        rodada++;
+        if(rodada>=RODADAS.length){
+          setTimeout(function(){
+            ensinar('Hipocampo','O hipocampo é essencial para transformar experiências em memórias '+
+              'novas. Sem ele, o cérebro vive o presente, mas não guarda o que acabou de acontecer.',
+              '🧠', function(){ concluirFase(2, 220); });
+          },520);
+        } else {
+          aviso('rodada completa','ok');
+          setTimeout(iniciarRodada, 900);
+        }
+      }
+    } else {
+      c.classList.add('errado');
+      travado=true;
+      if(perderVida('célula errada')) return;
+      setTimeout(function(){
+        aviso('tente essa rodada de novo','');
+        iniciarRodada();
+      }, 950);
+    }
+  }
+  iniciarRodada();
+}
+
+/* ═══════════════════ FASE 4 — MENTE AUTOMÁTICA (STROOP) ═══════════════════ */
+function fase3(){
+  var CORES=[
+    {id:'vermelho', nome:'VERMELHO', hex:'#ff5f6d'},
+    {id:'azul',     nome:'AZUL',     hex:'#5fa8ff'},
+    {id:'verde',    nome:'VERDE',    hex:'#4ce0a8'},
+    {id:'amarelo',  nome:'AMARELO',  hex:'#ffd36b'}
+  ];
+  var TOTAL=8, n=0, atual=null, tempo=0, LIMITE=4.2, rodando=false, fim4=false;
+
+  var t=novaTela();
+  t.innerHTML=
+    '<div class="eyebrow">Fase 03 · Mente automática</div>'+
+    '<h2 class="fase">QUAL É A <b style="color:var(--ciano)">COR</b> DA PALAVRA?</h2>'+
+    '<div id="stroopPalavra">—</div>'+
+    '<div id="tempoWrap"><div id="tempoBar"></div></div>'+
+    '<div id="stroopOpts"></div>'+
+    '<p class="pista">questão <b id="s-n">1</b>/'+TOTAL+' · ignore o que está escrito</p>';
+  mostrar(t);
+
+  var elPal=t.querySelector('#stroopPalavra');
+  var elBar=t.querySelector('#tempoBar');
+  var elOpts=t.querySelector('#stroopOpts');
+  var elN=t.querySelector('#s-n');
+
+  CORES.forEach(function(c,i){
+    var b=el('button','corBtn', c.nome+'<kbd>'+(i+1)+'</kbd>');
+    b.type='button';
+    b.style.background=c.hex;
+    b.dataset.id=c.id;
+    b.addEventListener('click',function(){ responder(c.id); });
+    elOpts.appendChild(b);
+  });
+
+  function proxima(){
+    if(n>=TOTAL){
+      rodando=false;
+      ensinar('Processos automáticos','Algumas respostas do cérebro acontecem automaticamente — '+
+        'ler é uma delas. Por isso precisamos de esforço consciente para ignorar o significado '+
+        'da palavra e responder só a cor. Isso é controle inibitório.', '⚙',
+        function(){ fim4=true; concluirFase(3, 260); });
+      return;
+    }
+    n++; elN.textContent=n;
+    var iPal=ri(0,3), iCor=ri(0,3);
+    // na maioria das vezes, palavra e cor divergem (é aí que está o conflito)
+    if(iPal===iCor && Math.random()<0.8) iCor=(iCor+1+ri(0,2))%4;
+    atual=CORES[iCor];
+    elPal.textContent=CORES[iPal].nome;
+    elPal.style.color=CORES[iCor].hex;
+    elPal.animate([{opacity:0,transform:'scale(.86)'},{opacity:1,transform:'none'}],
+      {duration:260,easing:'cubic-bezier(.2,.8,.2,1)'});
+    tempo=LIMITE; rodando=true;
+  }
+  function responder(id){
+    if(!rodando||fim4) return;
+    rodando=false;
+    if(id===atual.id){
+      var b=Math.round(tempo*22);
+      addPts(70+b,'rápido'); Som.acerto();
+      aviso('correto','ok');
+      setTimeout(proxima,520);
+    } else {
+      if(perderVida('essa não era a cor')){ fim4=true; return; }
+      setTimeout(proxima,760);
+    }
+  }
+  function tecla(e){
+    if(fim4) return;
+    var k=['Digit1','Digit2','Digit3','Digit4'].indexOf(e.code);
+    if(k<0) k=['Numpad1','Numpad2','Numpad3','Numpad4'].indexOf(e.code);
+    if(k>=0){ e.preventDefault(); responder(CORES[k].id); }
+  }
+  window.addEventListener('keydown',tecla);
+
+  var ult=performance.now();
+  function loop(now){
+    if(fim4){ window.removeEventListener('keydown',tecla); return; }
+    var dt=Math.min((now-ult)/1000,0.05); ult=now;
+    if(rodando && !elInfo.classList.contains('on')){
+      tempo-=dt;
+      elBar.style.width=clamp(tempo/LIMITE,0,1)*100+'%';
+      if(tempo<=0){
+        rodando=false;
+        if(perderVida('tempo esgotado')){ fim4=true; return; }
+        setTimeout(proxima,700);
+      }
+    }
+    requestAnimationFrame(loop);
+  }
+  proxima();
+  requestAnimationFrame(loop);
+}
+
+/* ═══════════════════ FASE 5 — SALA DAS EMOÇÕES ═══════════════════ */
+function rostoSVG(emo){
+  var olhos, sobr, boca, extra='';
+  if(emo==='alegria'){
+    sobr='<path d="M52 74q13-11 26-2" /><path d="M122 72q13-9 26 2" />';
+    olhos='<path d="M56 96q12-14 24 0" /><path d="M120 96q12-14 24 0" />';
+    boca='<path d="M62 126q38 34 76 0" fill="none"/>';
+    extra='<path d="M58 118q42 8 84 0" stroke-width="0" fill="rgba(255,255,255,.08)"/>';
+  } else if(emo==='medo'){
+    sobr='<path d="M52 66q14-14 28-2" /><path d="M120 64q14-12 28 2" />';
+    olhos='<circle cx="68" cy="96" r="14" fill="none"/><circle cx="68" cy="98" r="5" fill="currentColor" stroke="none"/>'+
+          '<circle cx="132" cy="96" r="14" fill="none"/><circle cx="132" cy="98" r="5" fill="currentColor" stroke="none"/>';
+    boca='<ellipse cx="100" cy="140" rx="15" ry="19" fill="none"/>';
+  } else if(emo==='raiva'){
+    sobr='<path d="M52 66l32 16" /><path d="M148 66l-32 16" />';
+    olhos='<path d="M56 100q12-8 24 0" /><path d="M120 100q12-8 24 0" />';
+    boca='<path d="M64 146q36-28 72 0" fill="none"/>';
+  } else if(emo==='tristeza'){
+    sobr='<path d="M54 80q14-14 28-4" /><path d="M146 80q-14-14-28-4" />';
+    olhos='<path d="M56 100q12-12 24 0" /><path d="M120 100q12-12 24 0" />';
+    boca='<path d="M66 148q34-26 68 0" fill="none"/>';
+    extra='<path d="M74 112q5 12 0 18 -8-3-4-11z" fill="#7fd8ff" stroke="none" opacity=".9"/>';
+  } else {
+    sobr='<path d="M50 60q16-14 32-4" /><path d="M150 60q-16-14-32-4" />';
+    olhos='<circle cx="68" cy="98" r="15" fill="none"/><circle cx="68" cy="100" r="6" fill="currentColor" stroke="none"/>'+
+          '<circle cx="132" cy="98" r="15" fill="none"/><circle cx="132" cy="100" r="6" fill="currentColor" stroke="none"/>';
+    boca='<ellipse cx="100" cy="142" rx="19" ry="22" fill="none"/>';
+  }
+  return '<svg viewBox="0 0 200 200" fill="none" stroke="currentColor" '+
+    'stroke-width="7" stroke-linecap="round" stroke-linejoin="round">'+
+    '<circle cx="100" cy="104" r="82" fill="rgba(160,110,255,.10)" stroke="currentColor" stroke-width="4"/>'+
+    extra+sobr+olhos+boca+'</svg>';
+}
+function fase4(){
+  var EMOS=[
+    {id:'alegria', nome:'Alegria', cor:'#ffd36b'},
+    {id:'medo',    nome:'Medo',    cor:'#9b7bff'},
+    {id:'raiva',   nome:'Raiva',   cor:'#ff5f6d'},
+    {id:'tristeza',nome:'Tristeza',cor:'#5fa8ff'},
+    {id:'surpresa',nome:'Surpresa',cor:'#4ce0a8'}
+  ];
+  var ordem=embaralhar(EMOS), i=0, travado=false, fim5=false;
+
+  var t=novaTela();
+  t.innerHTML=
+    '<div class="eyebrow">Fase 04 · Sala das emoções</div>'+
+    '<h2 class="fase">QUE EMOÇÃO É ESSA?</h2>'+
+    '<div id="rostoWrap"></div>'+
+    '<div id="emoOpts"></div>'+
+    '<p class="pista">rosto <b id="e-n">1</b>/5 · clique ou use <kbd>1</kbd>–<kbd>4</kbd></p>';
+  mostrar(t);
+
+  var wrap=t.querySelector('#rostoWrap');
+  var opts=t.querySelector('#emoOpts');
+  var elN=t.querySelector('#e-n');
+  var atuaisBtns=[];
+
+  function mostrarRosto(){
+    if(i>=ordem.length){
+      ensinar('Amígdala cerebral','A amígdala participa do processamento emocional e é rápida '+
+        'em identificar estímulos com carga emocional — principalmente ameaças. Ela reage antes '+
+        'mesmo de você ter consciência do que viu.', '◈',
+        function(){ fim5=true; concluirFase(4, 260); });
+      return;
+    }
+    var e=ordem[i];
+    elN.textContent=i+1;
+    wrap.style.color=e.cor;
+    wrap.innerHTML=rostoSVG(e.id);
+    wrap.animate([{opacity:0,transform:'scale(.9)'},{opacity:1,transform:'none'}],
+      {duration:420,easing:'cubic-bezier(.2,.8,.2,1)'});
+    efeito(e.id, e.cor);
+
+    var erradas=embaralhar(EMOS.filter(function(x){return x.id!==e.id;})).slice(0,3);
+    var lista=embaralhar([e].concat(erradas));
+    opts.innerHTML=''; atuaisBtns=[];
+    lista.forEach(function(o,k){
+      var b=el('button','emoBtn', o.nome);
+      b.type='button';
+      b.addEventListener('click',function(){ responder(o,e,b); });
+      opts.appendChild(b); atuaisBtns.push({o:o,b:b});
+    });
+    travado=false;
+  }
+  function efeito(id,cor){
+    wrap.style.filter='drop-shadow(0 0 34px '+cor+'88)';
+    if(id==='raiva'){
+      wrap.animate([{transform:'translateX(0)'},{transform:'translateX(-7px)'},
+        {transform:'translateX(7px)'},{transform:'translateX(0)'}],{duration:420,iterations:2});
+    } else if(id==='medo'){
+      wrap.animate([{transform:'scale(1)'},{transform:'scale(.94)'},{transform:'scale(1)'}],
+        {duration:900,iterations:3});
+    } else if(id==='alegria'){
+      wrap.animate([{transform:'translateY(0)'},{transform:'translateY(-11px)'},
+        {transform:'translateY(0)'}],{duration:1100,iterations:3,easing:'ease-in-out'});
+    } else if(id==='tristeza'){
+      wrap.animate([{transform:'translateY(0) rotate(0)'},{transform:'translateY(7px) rotate(-2deg)'}],
+        {duration:1800,direction:'alternate',iterations:3,easing:'ease-in-out'});
+    } else {
+      wrap.animate([{transform:'scale(.86)'},{transform:'scale(1.06)'},{transform:'scale(1)'}],
+        {duration:520,easing:'cubic-bezier(.2,1.6,.4,1)'});
+    }
+  }
+  function responder(escolha, certa, btn){
+    if(travado||fim5) return;
+    travado=true;
+    if(escolha.id===certa.id){
+      btn.classList.add('certo'); addPts(90,'emoção certa'); Som.acerto();
+      i++; setTimeout(mostrarRosto,900);
+    } else {
+      btn.classList.add('errado');
+      atuaisBtns.forEach(function(x){ if(x.o.id===certa.id) x.b.classList.add('certo'); });
+      if(perderVida('era '+certa.nome.toLowerCase())){ fim5=true; return; }
+      i++; setTimeout(mostrarRosto,1300);
+    }
+  }
+  function tecla(e){
+    if(fim5||travado) return;
+    var k=['Digit1','Digit2','Digit3','Digit4'].indexOf(e.code);
+    if(k>=0 && atuaisBtns[k]){ e.preventDefault(); atuaisBtns[k].b.click(); }
+  }
+  window.addEventListener('keydown',tecla);
+  var limpar=setInterval(function(){
+    if(fim5){ window.removeEventListener('keydown',tecla); clearInterval(limpar); }
+  },400);
+  mostrarRosto();
+}
+
+/* ═══════════════════ FASE 6 — A DECISÃO ═══════════════════ */
+function fase5(){
+  var SITS=[
+    { txt:'Você tem uma prova amanhã, mas seus amigos chamaram você para sair.',
+      ops:[
+        {t:'Ficar em casa e estudar a noite toda.',
+         e:'Seu córtex pré-frontal assumiu o comando. É a região do controle executivo: ela segura o impulso imediato em nome de um objetivo distante.'},
+        {t:'Sair e estudar de manhã bem cedo.',
+         e:'Uma negociação entre recompensa imediata e planejamento. O cérebro faz isso o tempo todo, estimando o risco de cada caminho.'},
+        {t:'Sair e resolver depois como der.',
+         e:'O sistema de recompensa falou mais alto. A dopamina não é "prazer" apenas: ela sinaliza expectativa de algo bom, e empurra a escolha para lá.'}
+      ]},
+    { txt:'Alguém critica seu trabalho na frente de outras pessoas.',
+      ops:[
+        {t:'Responder na hora, no mesmo tom.',
+         e:'A amígdala reagiu antes do raciocínio — é o caminho rápido, feito para ameaças. Só depois o córtex avalia se valia a pena.'},
+        {t:'Respirar e responder mais tarde, com calma.',
+         e:'Você deu tempo ao córtex pré-frontal para entrar na conversa. Regular emoção não é apagá-la: é atrasar a resposta automática.'},
+        {t:'Não dizer nada e guardar para si.',
+         e:'Evitar o conflito também é uma decisão. O cérebro pesa o custo social do confronto — e às vezes escolhe o silêncio como proteção.'}
+      ]},
+    { txt:'Você está muito cansado, mas ainda falta terminar uma tarefa importante.',
+      ops:[
+        {t:'Forçar e terminar agora.',
+         e:'Com sono, o córtex pré-frontal funciona pior: atenção, memória de trabalho e autocontrole caem justamente quando você mais precisa deles.'},
+        {t:'Dormir e acordar mais cedo para terminar.',
+         e:'Durante o sono o cérebro consolida memórias e reorganiza o que foi aprendido. Descansar às vezes é parte do trabalho.'},
+        {t:'Fazer só o essencial e dormir.',
+         e:'Isso é priorização — uma função executiva. Decidir o que NÃO fazer também exige o córtex pré-frontal.'}
+      ]}
+  ];
+  var i=0, travado=false;
+
+  var t=novaTela();
+  t.innerHTML=
+    '<div class="eyebrow">Fase 05 · A decisão</div>'+
+    '<h2 class="fase">ESCOLHA UM CAMINHO</h2>'+
+    '<div class="painel" id="decCard">'+
+      '<p id="decSit"></p>'+
+      '<div id="decOpts"></div>'+
+    '</div>'+
+    '<p class="pista">situação <b id="d-n">1</b>/3 · não existe resposta totalmente certa</p>';
+  mostrar(t);
+
+  var elSit=t.querySelector('#decSit'), elOpts=t.querySelector('#decOpts'),
+      elN=t.querySelector('#d-n');
+  var btns=[];
+
+  function mostrarSit(){
+    if(i>=SITS.length){
+      ensinar('Tomada de decisão','Decisões humanas envolvem emoções, experiências anteriores, '+
+        'expectativa de recompensa, avaliação de risco e controle executivo — tudo ao mesmo tempo. '+
+        'Raramente existe só uma resposta certa.', '⑂',
+        function(){ concluirFase(5, 300); });
+      return;
+    }
+    var s=SITS[i]; elN.textContent=i+1;
+    elSit.textContent=s.txt;
+    elOpts.innerHTML=''; btns=[];
+    travado=false;
+    s.ops.forEach(function(o,k){
+      var b=el('button','decBtn','<span class="num">'+(k+1)+'</span><span>'+o.t+'</span>');
+      b.type='button';
+      b.addEventListener('click',function(){
+        if(travado) return;
+        travado=true;
+        Som.clique(); addPts(110,'escolha feita');
+        i++;
+        ensinar('O que aconteceu no cérebro', o.e, '◈', mostrarSit);
+      });
+      elOpts.appendChild(b); btns.push(b);
+    });
+    t.querySelector('#decCard').animate(
+      [{opacity:0,transform:'translateY(16px)'},{opacity:1,transform:'none'}],
+      {duration:460,easing:'cubic-bezier(.2,.8,.2,1)'});
+  }
+  function tecla(e){
+    if(travado||elInfo.classList.contains('on')) return;
+    var k=['Digit1','Digit2','Digit3'].indexOf(e.code);
+    if(k>=0 && btns[k]){ e.preventDefault(); btns[k].click(); }
+  }
+  window.addEventListener('keydown',tecla);
+  mostrarSit();
+}
+
+/* ═══════════════════ FINAL ═══════════════════ */
+function telaFinal(){
+  Som.fim();
+  var t=novaTela();
+  t.innerHTML=
+    '<div class="eyebrow">Saída encontrada</div>'+
+    '<h1 class="titulo" style="font-size:clamp(24px,5.2vw,50px)">'+
+      'PARABÉNS! VOCÊ CONSEGUIU SAIR DA MENTE.</h1>'+
+    '<div class="linha"></div>'+
+    '<p class="sub">Mas agora sabe que bilhões de neurônios estavam trabalhando '+
+      'durante toda essa jornada.</p>'+
+    '<div id="fimStats">'+
+      '<div class="stat"><div class="n">'+S.pts+'</div><div class="l">Pontos</div></div>'+
+      '<div class="stat"><div class="n">'+S.vidas+'/'+VIDAS_INICIAIS+'</div><div class="l">Vidas restantes</div></div>'+
+      '<div class="stat"><div class="n">5/5</div><div class="l">Fases</div></div>'+
+    '</div>'+
+    '<button class="btn grande" id="btDeNovo">Jogar novamente</button>';
+  t.querySelector('#btDeNovo').addEventListener('click',function(){
+    Som.clique();
+    transicao(function(){ S.pts=0; S.vidas=VIDAS_INICIAIS; setPts(0); pintarVidas(); setFase(0);
+      abrirFase(1); });
+  });
+  mostrar(t);
+  // chuva de partículas comemorativa
+  for(var i=0;i<40;i++) setTimeout(pulso, i*45);
+}
+
+/* ═══════════════════ FIM DE JOGO ═══════════════════ */
+function gameOver(){
+  Som.zumbido(false);
+  var t=novaTela();
+  t.innerHTML=
+    '<div class="eyebrow" style="color:var(--erro)">Sinal perdido</div>'+
+    '<h2 class="fase">A CONEXÃO SE DESFEZ</h2>'+
+    '<div class="linha"></div>'+
+    '<p class="sub">Você ficou sem vidas dentro da mente. Nenhum problema: '+
+      'o cérebro aprende justamente errando e tentando de novo.</p>'+
+    '<p class="sub">Pontuação alcançada: <b>'+S.pts+'</b></p>'+
+    '<button class="btn grande" id="btRetry">Tentar de novo</button>'+
+    '<button class="btn fantasma" id="btMenu">Voltar ao início</button>';
+  t.querySelector('#btRetry').addEventListener('click',function(){
+    Som.clique(); Som.zumbido(true);
+    transicao(function(){ S.pts=0; S.vidas=VIDAS_INICIAIS; setPts(0); pintarVidas(); setFase(0);
+      abrirFase(1); });
+  });
+  t.querySelector('#btMenu').addEventListener('click',function(){
+    Som.clique(); Som.zumbido(false);
+    transicao(function(){ setFase(0); telaInicial(); });
+  });
+  mostrar(t);
+}
+
+/* ═══════════════════ ATALHOS GLOBAIS ═══════════════════ */
+window.addEventListener('keydown',function(e){
+  if(e.__tratado) return;
+  if(e.code==='KeyM'){ somBtn.click(); }
+  // Enter/Espaço aciona o botão em foco; se nenhum, aciona o principal da tela
+  if((e.code==='Enter'||e.code==='Space') && telaAtual && !elInfo.classList.contains('on')){
+    var a=document.activeElement;
+    if(!a || a===document.body){
+      var b=telaAtual.querySelector('.btn');
+      if(b){ e.preventDefault(); b.click(); }
+    }
+  }
+});
+
+/* ═══════════════════ INÍCIO ═══════════════════ */
+pintarVidas();
+setFase(0);
+telaInicial();
+
+})();
+</script>
+</body>
+</html>

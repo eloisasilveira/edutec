@@ -23,9 +23,11 @@
     <li><button class="tab" data-nav="neuro">Neuroplasticidade</button></li>
     <li><button class="tab" data-nav="processos">Processos Químicos</button></li>
     <li><button class="tab" data-nav="modelo">Modelo molecular</button></li>
-    <li><button class="tab soon" data-soon="Emoções">Emoções</button></li>
-    <li><button class="tab soon" data-soon="Áreas da Neurociência">Áreas da Neurociência</button></li>
-    <li><button class="tab soon" data-soon="Cérebro 3d">Cérebro 3d</button></li>
+    <li><button class="tab" data-nav="emocoes">Emoções</button></li>
+    <li><button class="tab" data-nav="areas">Áreas da Neurociência</button></li>
+    <li><button class="tab" data-nav="cerebro3d">Cérebro 3d</button></li>
+    <li><button class="tab" data-nav="jogo">Dentro da Mente</button></li>
+    <li><button class="tab" data-nav="equipe">A Equipe</button></li>
   </ul>
   <button class="btn-enter" data-auth="login">Entrar</button>
 </nav>
@@ -139,6 +141,159 @@
     </div>
   </section>
 
+  <!-- ================= EMOÇÕES ================= -->
+  <section id="view-emocoes" class="view">
+    <div class="wrap">
+      <h2 class="neuro-title" style="max-width:28ch;">Emoções e o sistema límbico</h2>
+      <div class="neuro-text" style="max-width:64ch;">
+        <p>Antes de você "pensar" sobre um perigo, uma rede de estruturas mais antigas do cérebro já reagiu a ele.</p>
+        <p>O neurocientista <strong>Joseph LeDoux</strong> descreveu duas rotas para o medo: a via rápida, direto até a amígdala, e a via lenta, que passa pelo córtex para uma avaliação mais racional.</p>
+        <p>Em estresse, o hipotálamo aciona o eixo HPA, liberando cortisol. O córtex pré-frontal normalmente regula a amígdala — <strong>mas sob estresse extremo essa regulação enfraquece.</strong></p>
+      </div>
+
+      <div class="nt-grid" style="margin-top:56px;">
+        <div class="nt-card" style="width:100%; max-width:340px;">
+          <span class="nt-badge">Am</span>
+          <h4>Amígdala</h4>
+          <p>Detecta ameaças e atribui carga emocional às experiências, muitas vezes antes da consciência processar a situação.</p>
+        </div>
+        <div class="nt-card" style="width:100%; max-width:340px;">
+          <span class="nt-badge">Hc</span>
+          <h4>Hipocampo</h4>
+          <p>Liga emoção e contexto à memória — por isso lembramos com mais força de momentos emocionalmente intensos.</p>
+        </div>
+        <div class="nt-card" style="width:100%; max-width:340px;">
+          <span class="nt-badge">Cc</span>
+          <h4>Córtex cingulado</h4>
+          <p>Monitora conflitos entre emoção e razão, ajudando a regular impulsos e reações.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= ÁREAS DA NEUROCIÊNCIA ================= -->
+  <section id="view-areas" class="view">
+    <div class="wrap">
+      <h2 class="neuro-title" style="max-width:26ch;">As muitas frentes da neurociência</h2>
+      <p class="area-lead">"Neurociência" não é uma área só — é um conjunto de disciplinas que estudam o sistema nervoso em escalas diferentes.</p>
+
+      <div class="area-grid">
+        <div class="area-card">
+          <h3>Neurociência Cognitiva</h3>
+          <p>Estuda como o cérebro produz memória, atenção, linguagem e tomada de decisão.</p>
+        </div>
+        <div class="area-card">
+          <h3>Neurociência Computacional</h3>
+          <p>Usa modelos matemáticos e simulações para entender como circuitos neurais processam informação.</p>
+        </div>
+        <div class="area-card">
+          <h3>Neurociência Molecular e Celular</h3>
+          <p>Investiga neurônios, genes e moléculas — a base física da plasticidade sináptica.</p>
+        </div>
+        <div class="area-card">
+          <h3>Neurociência Clínica</h3>
+          <p>Aplica esse conhecimento ao diagnóstico e tratamento de doenças neurológicas e psiquiátricas.</p>
+        </div>
+        <div class="area-card">
+          <h3>Neurociência Comportamental</h3>
+          <p>Relaciona circuitos cerebrais a comportamentos observáveis, de reflexos a decisões complexas.</p>
+        </div>
+        <div class="area-card">
+          <h3>Neurociência Social e Afetiva</h3>
+          <p>Explora como o cérebro processa emoções, empatia e interações entre pessoas.</p>
+        </div>
+        <div class="area-card">
+          <h3>Neurociência do Desenvolvimento</h3>
+          <p>Estuda como o sistema nervoso se forma e amadurece, da gestação à velhice.</p>
+        </div>
+        <div class="area-card">
+          <h3>Neuroengenharia</h3>
+          <p>Cria interfaces cérebro-máquina, próteses neurais e dispositivos que leem ou estimulam a atividade cerebral.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= CÉREBRO 3D ================= -->
+  <section id="view-cerebro3d" class="view">
+    <div class="wrap">
+      <span class="eyebrow3d">Explorador interativo</span>
+      <h2 class="neuro-title" style="max-width:22ch; margin-top:10px;">Gire, explore e clique no cérebro</h2>
+      <p class="area-lead">Modelo 3D anatômico real, direto na página — arraste para girar e clique nos pontos brilhantes para abrir os detalhes de cada região, sem sair desta aba.</p>
+
+      <div class="brain3d-panel" id="brainPanel">
+        <canvas id="brainCanvas"></canvas>
+        <span class="brain3d-hint">arraste para girar · clique nos pontos</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= DENTRO DA MENTE (jogo) ================= -->
+  <section id="view-jogo" class="view">
+    <div class="wrap">
+      <p class="eyebrow"><span class="dot"></span>Jogo educativo</p>
+      <h2 class="neuro-title">DENTRO DA MENTE</h2>
+      <div class="neuro-text" style="margin-bottom:26px">
+        <p>Você foi encolhido e entrou dentro de uma mente humana. Para sair, precisa
+        atravessar cinco regiões do cérebro — percorrendo a rede neural, testando a
+        memória, enfrentando os processos automáticos, reconhecendo emoções e,
+        no fim, decidindo.</p>
+      </div>
+      <div class="jogo-shell" id="jogoShell">
+        <iframe id="jogoFrame" class="jogo-frame" data-src="jogo.html"
+                title="Dentro da Mente — jogo educativo de neurociência"
+                allow="autoplay"></iframe>
+        <button id="jogoExpandir" class="jogo-expandir" type="button"
+                title="Expandir para tela cheia">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path class="ic-abrir"
+            d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/><path class="ic-fechar"
+            d="M9 4v5H4M15 4v5h5M9 20v-5H4M15 20v-5h5"/></svg>
+          <span>Expandir</span>
+        </button>
+      </div>
+      <p class="diagram-hint">Clique dentro do quadro para jogar · use o mouse ou o teclado ·
+        <a href="jogo.html" target="_blank" rel="noopener" class="jogo-link">abrir em tela cheia</a></p>
+    </div>
+  </section>
+
+  <!-- ================= A EQUIPE ================= -->
+  <section id="view-equipe" class="view">
+    <div class="wrap">
+      <p class="eyebrow"><span class="dot"></span>Créditos</p>
+      <h2 class="neuro-title" style="max-width:18ch">FEITO POR CINCO CÉREBROS</h2>
+      <p class="equipe-lead">Escolhemos os assuntos, escrevemos os textos, montamos o cérebro
+      em 3D, desenhamos o jogo — e refizemos quase tudo o que não funcionou na primeira vez.</p>
+
+      <div class="equipe-grid">
+        <article class="membro">
+          <img class="membro-foto" src="membro1.jpg" alt="Foto de Eloisa Silveira" loading="lazy">
+          <h3 class="membro-nome">Eloisa Silveira</h3>
+        </article>
+        <article class="membro">
+          <img class="membro-foto" src="membro2.jpg" alt="Foto de Manuela Munhoz" loading="lazy">
+          <h3 class="membro-nome">Manuela Munhoz</h3>
+        </article>
+        <article class="membro">
+          <img class="membro-foto" src="membro3.jpg" alt="Foto de Mariana Fernandes" loading="lazy">
+          <h3 class="membro-nome">Mariana Fernandes</h3>
+        </article>
+        <article class="membro">
+          <img class="membro-foto" src="membro4.jpg" alt="Foto de Maria Rita" loading="lazy">
+          <h3 class="membro-nome">Maria Rita</h3>
+        </article>
+        <article class="membro">
+          <img class="membro-foto" src="membro5.jpg" alt="Foto de Sophia Pupim" loading="lazy">
+          <h3 class="membro-nome">Sophia Pupim</h3>
+        </article>
+      </div>
+
+      <div class="equipe-fecho">
+        <p>Nada aqui foi feito por um cérebro sozinho — que é, no fundo,
+        <strong>o argumento do site inteiro</strong>.</p>
+      </div>
+    </div>
+  </section>
+
 </main>
 
 <footer class="brand-lockup">
@@ -181,6 +336,9 @@
 
 <div class="toast" id="toast"></div>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js"></script>
+<script src="GLTFLoader.js"></script>
+<script src="brain-data.js"></script>
 <script src="script.js"></script>
 </body>
 </html>
