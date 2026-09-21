@@ -1,0 +1,1890 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SINAPSE.lab</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Manrope:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="estilo.css">
+</head>
+<body>
+
+<div class="bg-blobs" aria-hidden="true"></div>
+<div class="page-transition" id="pageTransition" aria-hidden="true"></div>
+
+<nav class="topnav">
+  <button class="logo" data-nav="inicio" aria-label="SINAPSE.lab — início">
+    <span class="dotgrid" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span>
+    SINAPSE<span class="lab">&nbsp;.lab</span>
+  </button>
+  <ul class="tabs" id="mainTabs" role="tablist">
+    <li><button class="tab active" data-nav="inicio">Início</button></li>
+    <li><button class="tab" data-nav="neuro">Neuroplasticidade</button></li>
+    <li><button class="tab" data-nav="processos">Processos Químicos</button></li>
+    <li><button class="tab" data-nav="modelo">Modelo molecular</button></li>
+    <li><button class="tab" data-nav="emocoes">Emoções</button></li>
+    <li><button class="tab" data-nav="areas">Áreas da Neurociência</button></li>
+    <li><button class="tab" data-nav="cerebro3d">Cérebro 3d</button></li>
+    <li><button class="tab" data-nav="jogo">Dentro da Mente</button></li>
+    <li><button class="tab" data-nav="equipe">A Equipe</button></li>
+  </ul>
+  <button class="btn-enter" data-auth="login">Entrar</button>
+  <button class="menu-toggle" id="menuToggle" type="button" aria-label="Abrir menu" aria-controls="mainTabs" aria-expanded="false">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<main>
+
+  <section id="view-inicio" class="view active">
+    <div class="hero">
+      <canvas class="hero-cerebro" id="heroCerebro" aria-hidden="true"></canvas>
+      <div class="brand-lockup brand-lockup-hero" aria-hidden="true">
+        <div class="brand-row"><span class="brand-dot"></span><span class="brand-text">SINAPSE<span class="lab">&nbsp;.lab</span></span></div>
+        <span class="brand-tag">edutec</span>
+      </div>
+      <h1>O CÉREBRO QUE <span class="accent">MUDA</span><br>ENQUANTO VOCÊ APRENDE</h1>
+      <p>Um laboratório digital para entender neurônios, sinapses, química cerebral e comportamento — explore o cérebro em 3D, monte moléculas e teste seus conhecimentos no Desafio Neural.</p>
+      <button class="pill-btn" data-auth="cadastro">Fazer login</button>
+    </div>
+  </section>
+
+  <section id="view-neuro" class="view">
+    <div class="wrap">
+      <p class="eyebrow"><span class="dot"></span>Neuroplasticidade</p>
+      <h2 class="neuro-title" style="max-width:20ch">O CÉREBRO NUNCA ESTÁ PRONTO</h2>
+      <p class="np-lead">A cada experiência, repetição ou lesão, o sistema nervoso muda a própria estrutura.
+      Não é força de expressão: sinapses aparecem, engrossam, enfraquecem e desaparecem enquanto você aprende.</p>
+
+      <div class="np-synapse-layout">
+        <div class="np-visual-card">
+        <span class="np-tag np-tag-painel">ilustração</span>
+        <svg class="np-sinapse" viewBox="0 0 1000 340" role="img"
+             aria-label="Um neurônio com dendritos, corpo celular, axônio coberto de mielina e terminal. O impulso salta entre os nós da mielina, chega ao terminal e libera neurotransmissores na fenda sináptica. A via usada engrossa; a via parada some.">
+
+          <g class="np-dend">
+            <path d="M150 132 C140 108 126 92 112 74"/>
+            <path d="M130 152 C108 142 88 138 66 134"/>
+            <path d="M126 176 C104 178 84 184 62 192"/>
+            <path d="M146 208 C136 228 124 244 110 260"/>
+          </g>
+          <g class="np-dend np-dend-fina">
+            <path d="M112 74 C102 60 92 52 78 44"/>
+            <path d="M112 74 C118 56 120 46 118 32"/>
+            <path d="M66 134 C52 126 42 120 30 118"/>
+            <path d="M66 134 C54 140 46 148 38 158"/>
+            <path d="M62 192 C48 196 38 204 28 214"/>
+            <path d="M110 260 C98 272 88 278 74 284"/>
+            <path d="M110 260 C112 274 110 286 104 298"/>
+          </g>
+          <g class="np-dend np-dend-twig">
+            <path d="M78 44 C70 36 62 32 52 30"/>
+            <path d="M30 118 C22 114 16 112 8 112"/>
+            <path d="M38 158 C30 164 24 170 18 178"/>
+          </g>
+
+          <path class="np-axonio" d="M206 168 H612"/>
+
+          <g class="np-mielina">
+            <rect x="250" y="155" width="80" height="30" rx="15"/>
+            <rect x="344" y="155" width="80" height="30" rx="15"/>
+            <rect x="438" y="155" width="80" height="30" rx="15"/>
+            <rect x="532" y="155" width="64" height="30" rx="15"/>
+          </g>
+          <g class="np-no-ranvier">
+            <circle cx="337" cy="170" r="5"/>
+            <circle cx="431" cy="170" r="5"/>
+            <circle cx="525" cy="170" r="5"/>
+          </g>
+
+          <circle class="np-pulso" cx="0" cy="170" r="8"/>
+          <circle class="np-pulso np-pulso-b" cx="0" cy="170" r="8"/>
+          <circle class="np-pulso np-pulso-c" cx="0" cy="170" r="8"/>
+
+          <path class="np-soma" d="M170 126 C198 124 218 142 220 166 C222 190 206 212 180 216 C154 220 130 210 122 188 C114 166 124 138 146 130 C154 127 162 126 170 126 Z"/>
+          <ellipse class="np-nucleo" cx="172" cy="172" rx="17" ry="15"/>
+
+          <path class="np-via np-via-forte" d="M612 170 C650 170 662 136 694 112"/>
+          <path class="np-via np-via-fraca" d="M612 170 C640 176 652 222 684 244"/>
+          <circle class="np-terminal-fraca" cx="694" cy="252" r="11"/>
+
+          <path class="np-botao" d="M704 98 C708 76 728 62 750 66 C772 70 784 90 778 110 C772 130 750 140 732 131 C716 123 700 116 704 98 Z"/>
+          <g class="np-vesicula">
+            <circle cx="734" cy="98" r="6"/>
+            <circle cx="752" cy="88" r="5"/>
+            <circle cx="754" cy="112" r="5"/>
+          </g>
+
+          <path class="np-dend-pos" d="M812 118 C842 128 862 142 872 158"/>
+          <g class="np-receptor">
+            <circle cx="812" cy="118" r="5"/>
+            <circle cx="828" cy="125" r="5"/>
+            <circle cx="843" cy="134" r="5"/>
+          </g>
+
+          <circle class="np-nt" cx="782" cy="106" r="5"/>
+          <circle class="np-nt np-nt-b" cx="782" cy="106" r="5"/>
+          <circle class="np-nt np-nt-c" cx="782" cy="106" r="5"/>
+
+          <g class="np-dend">
+            <path d="M938 166 C956 156 968 150 984 146"/>
+            <path d="M936 194 C954 202 966 210 980 220"/>
+            <path d="M902 216 C900 234 896 246 890 260"/>
+          </g>
+          <g class="np-dend np-dend-fina">
+            <path d="M984 146 C990 138 994 134 998 130"/>
+            <path d="M890 260 C882 272 874 278 864 284"/>
+          </g>
+          <path class="np-soma" d="M900 140 C926 138 942 156 942 178 C942 200 924 216 900 216 C876 216 860 200 860 178 C860 156 876 140 900 140 Z"/>
+          <ellipse class="np-nucleo" cx="902" cy="178" rx="15" ry="13"/>
+
+          <g class="np-guia">
+            <path d="M70 306 L70 250"/><circle cx="70" cy="250" r="3"/>
+            <path d="M172 262 L172 222"/><circle cx="172" cy="222" r="3"/>
+            <path d="M410 140 L402 152"/><circle cx="402" cy="152" r="3"/>
+            <path d="M337 196 L337 180"/><circle cx="337" cy="180" r="3"/>
+            <path d="M706 54 L730 62"/><circle cx="730" cy="62" r="3"/>
+            <path d="M858 78 L800 106"/><circle cx="800" cy="106" r="3"/>
+            <path d="M902 288 L900 220"/><circle cx="900" cy="220" r="3"/>
+            <path d="M692 288 L694 266"/><circle cx="694" cy="266" r="3"/>
+          </g>
+
+          <text class="np-nome" x="40" y="318">dendritos</text>
+          <text class="np-nome" x="172" y="256" text-anchor="middle">corpo celular</text>
+          <text class="np-nome" x="410" y="132" text-anchor="middle">bainha de mielina</text>
+          <text class="np-nome np-nome-mini" x="337" y="206" text-anchor="middle">nó</text>
+          <text class="np-nome" x="700" y="46" text-anchor="middle">terminal do axônio</text>
+          <text class="np-nome" x="884" y="70" text-anchor="middle">fenda sináptica</text>
+          <text class="np-nome" x="902" y="300" text-anchor="middle">neurônio que recebe</text>
+          <text class="np-nome np-nome-fraco" x="690" y="300" text-anchor="middle">via sem uso</text>
+        </svg>
+        </div>
+
+        <div class="np-info-grid">
+          <div class="np-info-card"><span class="np-bola np-bola-impulso"></span><span>impulso elétrico saltando de nó em nó pelo axônio</span></div>
+          <div class="np-info-card"><span class="np-bola np-bola-nt"></span><span>neurotransmissores atravessando a fenda sináptica</span></div>
+          <div class="np-info-card"><span class="np-chave np-chave-nova"></span><span>via usada com frequência: engrossa <strong>(LTP)</strong></span></div>
+          <div class="np-info-card"><span class="np-chave np-chave-some"></span><span>via parada: enfraquece e some <strong>(poda sináptica)</strong></span></div>
+        </div>
+
+        <div class="np-explain-card">
+          <p class="np-legenda">Toda repetição dispara o mesmo caminho. O que é disparado junto se fortalece — é a
+          <strong>potenciação de longo prazo</strong>. O que fica parado é eliminado na <strong>poda sináptica</strong>,
+          porque manter conexão sem uso custa energia.</p>
+          <p class="aviso">desenho esquemático — não é a aparência real de um neurônio</p>
+        </div>
+      </div>
+
+      <h3 class="np-sub">São dois tipos de mudança</h3>
+      <div class="np-duo">
+        <article class="np-card">
+          <div class="np-figura">
+          <span class="np-tag">ilustração</span>
+          <svg class="np-mini" viewBox="0 0 440 210" role="img" aria-label="Cinco neurônios ligados entre si: duas ligações novas aparecem e uma ligação sem uso desaparece.">
+            <g class="np-mini-linha">
+              <path d="M64 52 L150 100"/>
+              <path d="M150 100 L214 52"/>
+              <path d="M150 100 L214 154"/>
+            </g>
+            <path class="np-mini-nova" d="M214 52 L214 154"/>
+            <path class="np-mini-nova np-atraso" d="M64 52 L64 154"/>
+            <path class="np-mini-some" d="M150 100 L64 154"/>
+
+            <g class="np-neuroninho">
+              <path d="M64 52 L44 34 M64 52 L40 58 M64 52 L50 72"/>
+              <path d="M150 100 L128 82 M150 100 L126 108 M150 100 L140 124"/>
+              <path d="M214 52 L236 32 M214 52 L240 56 M214 52 L228 74"/>
+              <path d="M214 154 L238 166 M214 154 L236 144 M214 154 L204 178"/>
+              <path d="M64 154 L42 168 M64 154 L40 146 M64 154 L74 178"/>
+            </g>
+            <circle class="np-no" cx="64" cy="52" r="11"/>
+            <circle class="np-no" cx="150" cy="100" r="13"/>
+            <circle class="np-no" cx="214" cy="52" r="11"/>
+            <circle class="np-no" cx="214" cy="154" r="11"/>
+            <circle class="np-no" cx="64" cy="154" r="11"/>
+
+            <g class="np-guia">
+              <path d="M296 44 L232 50"/><circle cx="232" cy="50" r="2.4"/>
+              <path d="M296 104 L222 103"/><circle cx="222" cy="103" r="2.4"/>
+              <path d="M86 192 L104 134"/><circle cx="104" cy="134" r="2.4"/>
+            </g>
+            <text class="np-etq" x="302" y="49">neurônio</text>
+            <text class="np-etq np-etq-nova" x="302" y="109">ligação nova</text>
+            <text class="np-etq np-etq-some" x="20" y="202">ligação que sumiu</text>
+          </svg>
+          </div>
+          <p class="np-cap">um punhado de neurônios e as ligações entre eles</p>
+          <h4>Plasticidade estrutural</h4>
+          <p>O cérebro muda as peças: forma e elimina sinapses, cria ramificações novas e, em regiões como o
+          hipocampo, até neurônios novos.</p>
+        </article>
+
+        <article class="np-card">
+          <div class="np-figura">
+          <span class="np-tag">ilustração</span>
+          <div class="np-brain-real" role="img" aria-label="Modelo anatômico real do cérebro visto de lado: uma área lesionada deixa de funcionar e uma área vizinha assume parte da tarefa.">
+            <span class="np-tag">modelo 3D real</span>
+            <canvas id="npBrainCanvas" aria-hidden="true"></canvas>
+            <svg class="np-brain-overlay" viewBox="0 0 440 210" aria-hidden="true">
+              <circle class="np-lesao" cx="185" cy="86" r="20"/>
+              <circle class="np-assume" cx="245" cy="78" r="21"/>
+              <g class="np-guia">
+                <path d="M107 92 L163 88"/><circle cx="163" cy="88" r="2.4"/>
+                <path d="M294 70 L268 76"/><circle cx="268" cy="76" r="2.4"/>
+              </g>
+              <text class="np-etq np-etq-lesao" x="16" y="96">área lesionada</text>
+              <text class="np-etq np-etq-nova" x="300" y="62">área vizinha
+                <tspan x="300" dy="17">assume a função</tspan>
+              </text>
+            </svg>
+          </div>
+          </div>
+          <p class="np-cap">o contorno é um cérebro visto de lado, com o cerebelo atrás</p>
+          <h4>Plasticidade funcional</h4>
+          <p>As mesmas peças trocam de função: quando uma área é lesionada, áreas vizinhas assumem parte do
+          trabalho que era dela.</p>
+        </article>
+      </div>
+
+      <h3 class="np-sub">Existem janelas em que aprender custa menos</h3>
+      <div class="np-janelas">
+        <div class="np-trilho"><span class="np-trilho-luz"></span></div>
+        <ol class="np-fases">
+          <li><span class="np-idade">0 – 2 anos</span><span class="np-oq">visão e audição se calibram</span></li>
+          <li><span class="np-idade">0 – 7 anos</span><span class="np-oq">linguagem entra quase sem esforço</span></li>
+          <li><span class="np-idade">infância</span><span class="np-oq">controle motor fino</span></li>
+          <li><span class="np-idade">até ~25 anos</span><span class="np-oq">córtex pré-frontal amadurece</span></li>
+          <li><span class="np-idade">vida toda</span><span class="np-oq">a plasticidade nunca fecha</span></li>
+        </ol>
+      </div>
+      <p class="np-nota">Passada a janela ainda dá para aprender — só exige muito mais repetição para chegar
+      no mesmo lugar.</p>
+
+      <h3 class="np-sub">Dá para ver isso em pessoas reais</h3>
+      <div class="np-trio">
+        <article class="np-caso">
+          <svg class="np-icone" viewBox="0 0 48 48" aria-hidden="true">
+            <path d="M18 34V12l18-4v22"/>
+            <circle cx="13" cy="34" r="5"/>
+            <circle cx="31" cy="30" r="5"/>
+          </svg>
+          <h4>Músicos</h4>
+          <p>Anos de treino deixam as áreas motoras e auditivas mensuravelmente maiores do que a média.</p>
+        </article>
+        <article class="np-caso">
+          <svg class="np-icone" viewBox="0 0 48 48" aria-hidden="true">
+            <path d="M24 42s13-12 13-22a13 13 0 0 0-26 0c0 10 13 22 13 22z"/>
+            <circle cx="24" cy="20" r="5"/>
+          </svg>
+          <h4>Taxistas</h4>
+          <p>Decorar uma cidade inteira por anos está associado a um hipocampo maior — a região da memória espacial.</p>
+        </article>
+        <article class="np-caso">
+          <svg class="np-icone" viewBox="0 0 48 48" aria-hidden="true">
+            <path d="M39 24a15 15 0 1 1-6-12"/>
+            <path d="M34 6v8h-8"/>
+          </svg>
+          <h4>Reabilitação após AVC</h4>
+          <p>A recuperação vem de repetição intensiva: é ela que força o cérebro a redistribuir a função perdida.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section id="view-processos" class="view">
+    <div class="wrap">
+      <div class="proc-grid">
+        <div>
+          <h2>Processos químicos dos pensamentos</h2>
+          <div class="proc-text">
+            <p><strong>Toda sensação</strong>, decisão ou emoção depende de uma cascata elétrica e química acontecendo em milissegundos. Clique nos elementos do diagrama ao lado.</p>
+            <p>Quando um neurônio dispara, um potencial de ação percorre <strong>seu axônio até o terminal sináptico</strong>. Ali, canais de cálcio se abrem, e vesículas cheias de <strong>neurotransmissores</strong> se fundem com a membrana, liberando essas moléculas na fenda sináptica.</p>
+            <p>O neurotransmissor atravessa esse espaço microscópico e se liga a receptores no neurônio seguinte — o que pode excitar ou inibir esse segundo neurônio. Em seguida, o sinal é encerrado por recaptação ou por enzimas que degradam a molécula.</p>
+            <p>Quando uma sinapse é ativada repetidamente, ela libera mais neurotransmissor e cria mais receptores — a base química da potenciação de longo prazo citada na aba de neuroplasticidade.</p>
+          </div>
+        </div>
+
+        <div class="diagram-box" id="diagramBox">
+          <svg class="synapse-svg" viewBox="0 0 607 500" role="img" aria-label="Diagrama da sinapse: clique na vesícula, na fenda ou no receptor">
+            <text x="132" y="30" text-anchor="middle" class="neuron-label">Pré-sináptico</text>
+            <text x="475" y="30" text-anchor="middle" class="neuron-label">Pós-sináptico</text>
+
+            <rect x="0" y="50" width="264" height="442" rx="37" class="neuron-shape" />
+            <rect x="343" y="50" width="264" height="442" rx="37" class="neuron-shape" />
+
+            <rect class="hit-fenda" data-key="fenda" x="264" y="50" width="79" height="442" fill="transparent" aria-label="Fenda sináptica" />
+
+            <circle class="hit-vesicula" data-key="vesicula" cx="211" cy="140" r="26.5" aria-label="Vesícula" />
+            <circle class="hit-vesicula" data-key="vesicula" cx="211" cy="233" r="26.5" aria-label="Vesícula" />
+            <circle class="hit-vesicula" data-key="vesicula" cx="211" cy="306" r="26.5" aria-label="Vesícula" />
+
+            <rect class="hit-receptor" data-key="receptor" x="343" y="124" width="68" height="81" rx="16" aria-label="Receptor" />
+            <rect class="hit-receptor" data-key="receptor" x="343" y="221" width="68" height="81" rx="16" aria-label="Receptor" />
+
+            <ellipse class="cleft-dot" cx="273" cy="165" rx="9" ry="8" />
+            <ellipse class="cleft-dot dot-b" cx="311" cy="258" rx="9" ry="8" />
+          </svg>
+          <p class="diagram-hint">clique na vesícula, na fenda ou no receptor</p>
+          <p class="aviso">esquema ilustrativo da sinapse — fora de escala</p>
+        </div>
+      </div>
+
+      <div class="nt-grid">
+        <div class="nt-card"><span class="nt-badge">Da</span><h4>Dopamina</h4><p>Ligada à motivação, recompensa e controle do movimento. Envolvida no vício e reduzida no Parkinson.</p></div>
+        <div class="nt-card"><span class="nt-badge">Se</span><h4>Serotonina</h4><p>Regula humor, sono e apetite. É o principal alvo dos antidepressivos ISRS.</p></div>
+        <div class="nt-card"><span class="nt-badge">Ga</span><h4>GABA</h4><p>Principal neurotransmissor inibitório — reduz a excitabilidade neuronal. Alvo de ansiolíticos.</p></div>
+        <div class="nt-card"><span class="nt-badge">Gl</span><h4>Glutamato</h4><p>Principal neurotransmissor excitatório. Essencial para aprendizado, memória e potenciação de longo prazo.</p></div>
+        <div class="nt-card"><span class="nt-badge">Ac</span><h4>Acetilcolina</h4><p>Envolvida em memória, atenção e contração muscular. Reduzida em pacientes com Alzheimer.</p></div>
+        <div class="nt-card"><span class="nt-badge">No</span><h4>Noradrenalina</h4><p>Comanda o estado de alerta e a resposta de "luta ou fuga" diante de ameaças.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="view-modelo" class="view">
+    <div class="wrap">
+      <div class="modelo-head">
+        <h2>Modelo molecular interativo</h2>
+        <p>Escolha um neurotransmissor para ver sua estrutura química simplificada — ou ative o modo comparação para ver dois lado a lado.</p>
+        <label class="compare-toggle"><input type="checkbox" id="compareToggle"> compara duas moléculas</label>
+      </div>
+
+      <div class="nt-pills" id="ntPills">
+        <button class="nt-pill" data-mol="dopamina">Dopamina</button>
+        <button class="nt-pill" data-mol="serotonina">Serotonina</button>
+        <button class="nt-pill" data-mol="gaba">GABA</button>
+        <button class="nt-pill" data-mol="glutamato">Glutamato</button>
+        <button class="nt-pill" data-mol="noradrenalina">Noradrenalina</button>
+        <button class="nt-pill" data-mol="acetilcolina">Acetilcolina</button>
+      </div>
+
+      <div class="molecule-stack" id="moleculeStack"></div>
+      <p class="molecule-empty" id="moleculeEmpty">Selecione um neurotransmissor acima para ver o modelo molecular.</p>
+      <p class="aviso">estruturas simplificadas e meramente ilustrativas — não estão em escala</p>
+    </div>
+  </section>
+
+  <section id="view-emocoes" class="view">
+    <div class="wrap">
+      <p class="eyebrow"><span class="dot"></span>Sistema límbico</p>
+      <h2 class="neuro-title" style="max-width:28ch; margin-top:14px;">Emoções e o sistema límbico</h2>
+      <div class="neuro-text" style="max-width:64ch;">
+        <p>Antes de você "pensar" sobre um perigo, uma rede de estruturas mais antigas do cérebro já reagiu a ele.</p>
+        <p>O neurocientista <strong>Joseph LeDoux</strong> descreveu duas rotas para o medo: a via rápida, direto até a amígdala, e a via lenta, que passa pelo córtex para uma avaliação mais racional.</p>
+        <p>Em estresse, o hipotálamo aciona o eixo HPA, liberando cortisol. O córtex pré-frontal normalmente regula a amígdala — <strong>mas sob estresse extremo essa regulação enfraquece.</strong></p>
+      </div>
+
+      <div class="np-painel fear-panel" style="margin-top:44px">
+        <span class="np-tag np-tag-painel">mapa interativo</span>
+        <div class="fear-intro">
+          <p>Um som inesperado chega ao cérebro e segue por dois caminhos.</p>
+          <span class="fear-click-hint">clique nos nomes</span>
+        </div>
+
+        <div role="group" aria-label="Caminhos rápido e lento da resposta cerebral a um som inesperado">
+          <div class="fear-mainline">
+            <div class="fear-stimulus"><strong>Porta bate</strong>som inesperado</div>
+            <span class="fear-arrow" aria-hidden="true">→</span>
+            <button class="fear-node" data-emotion-node="talamo" type="button">Tálamo</button>
+          </div>
+
+          <div class="fear-split">
+            <article class="fear-path fear-path-fast">
+              <div class="fear-path-head">
+                <h3>Via rápida</h3>
+                <span>você reage</span>
+              </div>
+              <div class="fear-path-flow">
+                <button class="fear-node" data-emotion-node="amigdala" type="button">Amígdala</button>
+                <span class="fear-arrow" aria-hidden="true">→</span>
+                <button class="fear-node" data-emotion-node="hipotalamo" type="button">Hipotálamo</button>
+                <span class="fear-arrow fear-result-arrow" aria-hidden="true">→</span>
+                <div class="fear-result"><strong>Corpo em alerta</strong>coração acelera</div>
+              </div>
+            </article>
+
+            <article class="fear-path fear-path-slow">
+              <div class="fear-path-head">
+                <h3>Via lenta</h3>
+                <span>você entende</span>
+              </div>
+              <div class="fear-path-flow">
+                <button class="fear-node" data-emotion-node="cortex" type="button">Córtex</button>
+                <span class="fear-arrow" aria-hidden="true">→</span>
+                <button class="fear-node" data-emotion-node="hipocampo" type="button">Hipocampo</button>
+                <span class="fear-arrow fear-result-arrow" aria-hidden="true">→</span>
+                <div class="fear-result"><strong>Sem perigo</strong>“foi a porta”</div>
+              </div>
+            </article>
+          </div>
+        </div>
+
+        <p class="fear-summary"><strong>Primeiro você se assusta.</strong> Depois entende o que aconteceu.</p>
+      </div>
+      <div class="nt-grid" style="margin-top:56px;">
+        <div class="nt-card" style="width:100%; max-width:340px;">
+          <span class="nt-badge">Am</span>
+          <h4>Amígdala</h4>
+          <p>Detecta ameaças e atribui carga emocional às experiências, muitas vezes antes da consciência processar a situação.</p>
+        </div>
+        <div class="nt-card" style="width:100%; max-width:340px;">
+          <span class="nt-badge">Hc</span>
+          <h4>Hipocampo</h4>
+          <p>Liga emoção e contexto à memória — por isso lembramos com mais força de momentos emocionalmente intensos.</p>
+        </div>
+        <div class="nt-card" style="width:100%; max-width:340px;">
+          <span class="nt-badge">Cc</span>
+          <h4>Córtex cingulado</h4>
+          <p>Monitora conflitos entre emoção e razão, ajudando a regular impulsos e reações.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="view-areas" class="view">
+    <div class="wrap">
+      <p class="eyebrow"><span class="dot"></span>Panorama</p>
+      <h2 class="neuro-title" style="max-width:26ch; margin-top:14px;">As muitas frentes da neurociência</h2>
+      <p class="area-lead">"Neurociência" não é uma área só — é um conjunto de disciplinas que estudam o sistema nervoso em escalas diferentes.</p>
+
+      <div class="area-grid">
+        <div class="area-card">
+          <span class="area-selo">Cg</span>
+          <h3>Neurociência Cognitiva</h3>
+          <p>Estuda como o cérebro produz memória, atenção, linguagem e tomada de decisão.</p>
+        </div>
+        <div class="area-card">
+          <span class="area-selo">Cp</span>
+          <h3>Neurociência Computacional</h3>
+          <p>Usa modelos matemáticos e simulações para entender como circuitos neurais processam informação.</p>
+        </div>
+        <div class="area-card">
+          <span class="area-selo">Mc</span>
+          <h3>Neurociência Molecular e Celular</h3>
+          <p>Investiga neurônios, genes e moléculas — a base física da plasticidade sináptica.</p>
+        </div>
+        <div class="area-card">
+          <span class="area-selo">Cl</span>
+          <h3>Neurociência Clínica</h3>
+          <p>Aplica esse conhecimento ao diagnóstico e tratamento de doenças neurológicas e psiquiátricas.</p>
+        </div>
+        <div class="area-card">
+          <span class="area-selo">Cb</span>
+          <h3>Neurociência Comportamental</h3>
+          <p>Relaciona circuitos cerebrais a comportamentos observáveis, de reflexos a decisões complexas.</p>
+        </div>
+        <div class="area-card">
+          <span class="area-selo">Sa</span>
+          <h3>Neurociência Social e Afetiva</h3>
+          <p>Explora como o cérebro processa emoções, empatia e interações entre pessoas.</p>
+        </div>
+        <div class="area-card">
+          <span class="area-selo">Dv</span>
+          <h3>Neurociência do Desenvolvimento</h3>
+          <p>Estuda como o sistema nervoso se forma e amadurece, da gestação à velhice.</p>
+        </div>
+        <div class="area-card">
+          <span class="area-selo">Ne</span>
+          <h3>Neuroengenharia</h3>
+          <p>Cria interfaces cérebro-máquina, próteses neurais e dispositivos que leem ou estimulam a atividade cerebral.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="view-cerebro3d" class="view">
+    <div class="wrap">
+      <span class="eyebrow3d">Explorador interativo</span>
+      <h2 class="neuro-title" style="max-width:22ch; margin-top:10px;">Gire, explore e clique no cérebro</h2>
+      <p class="area-lead">Modelo 3D anatômico real, direto na página — arraste para girar e clique nos pontos brilhantes para abrir os detalhes de cada região, sem sair desta aba.</p>
+
+      <div class="brain3d-panel" id="brainPanel">
+        <canvas id="brainCanvas"></canvas>
+        <span class="brain3d-hint">arraste para girar · clique nos pontos</span>
+      </div>
+      <p class="aviso">modelo meramente ilustrativo — as marcações indicam a posição aproximada de cada região</p>
+    </div>
+  </section>
+
+  <section id="view-jogo" class="view">
+    <div class="wrap">
+      <p class="eyebrow"><span class="dot"></span>Jogo educativo</p>
+      <h2 class="neuro-title">DENTRO DA MENTE</h2>
+      <div class="neuro-text" style="margin-bottom:26px">
+        <p>Você foi encolhido e entrou dentro de uma mente humana. Para sair, precisa
+        atravessar cinco regiões do cérebro — percorrendo a rede neural, testando a
+        memória, enfrentando os processos automáticos, reconhecendo emoções e,
+        no fim, decidindo.</p>
+      </div>
+      <div class="jogo-shell" id="jogoShell">
+        <iframe id="jogoFrame" class="jogo-frame" srcdoc="&lt;!DOCTYPE html&gt;
+&lt;html lang=&quot;pt-BR&quot;&gt;
+&lt;head&gt;
+&lt;meta charset=&quot;UTF-8&quot;&gt;
+&lt;meta name=&quot;viewport&quot; content=&quot;width=device-width,initial-scale=1&quot;&gt;
+&lt;title&gt;Dentro da Mente&lt;/title&gt;
+&lt;style&gt;
+:root{
+  --bg0:#070518; --bg1:#0c0926; --bg2:#140f36;
+  --panel:rgba(28,20,64,.62); --panel2:rgba(38,26,84,.72);
+  --line:rgba(160,120,255,.22); --line2:rgba(160,120,255,.42);
+  --roxo:#a06bff; --lilas:#cfaaff; --ciano:#5fd9ff; --rosa:#ff6bc7;
+  --ok:#4ce0a8; --erro:#ff5f7e; --ouro:#ffd36b;
+  --txt:#eae4ff; --dim:#9b90c4;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%}
+body{
+  background:var(--bg0); color:var(--txt); overflow:hidden;
+  font-family:&#x27;Segoe UI&#x27;,system-ui,-apple-system,&#x27;Helvetica Neue&#x27;,sans-serif;
+  -webkit-font-smoothing:antialiased; user-select:none;
+}
+#fundo{position:fixed;inset:0;z-index:0}
+#brilho{position:fixed;inset:0;z-index:1;pointer-events:none;
+  background:
+    radial-gradient(ellipse 60% 50% at 20% 15%,rgba(120,60,220,.28),transparent 70%),
+    radial-gradient(ellipse 50% 45% at 85% 80%,rgba(40,140,220,.22),transparent 70%),
+    radial-gradient(ellipse 70% 60% at 50% 50%,transparent 40%,rgba(4,2,14,.72) 100%);}
+#app{position:relative;z-index:2;height:100%;display:flex;flex-direction:column}
+#hud{
+  display:flex;align-items:center;gap:18px;padding:14px 22px;
+  border-bottom:1px solid var(--line);
+  background:linear-gradient(180deg,rgba(12,8,32,.85),rgba(12,8,32,.35));
+  backdrop-filter:blur(10px);flex-wrap:wrap;opacity:0;
+  transition:opacity .6s ease;pointer-events:none}
+#hud.on{opacity:1;pointer-events:auto}
+.hud-item{display:flex;align-items:center;gap:8px;font-size:12px;letter-spacing:.16em;
+  text-transform:uppercase;color:var(--dim)}
+.hud-item b{color:var(--txt);font-size:15px;letter-spacing:.06em;
+  font-variant-numeric:tabular-nums}
+#vidas{display:flex;gap:4px;flex-wrap:wrap}
+.vida{width:13px;height:12px;position:relative;transition:.4s}
+.vida svg{width:100%;height:100%;display:block}
+.vida.off{opacity:.22;filter:grayscale(1)}
+#barraWrap{flex:1;min-width:150px;height:6px;border-radius:99px;
+  background:rgba(160,120,255,.14);overflow:hidden;position:relative}
+#barra{height:100%;width:0%;border-radius:99px;transition:width .8s cubic-bezier(.2,.8,.2,1);
+  background:linear-gradient(90deg,var(--ciano),var(--roxo),var(--rosa));
+  box-shadow:0 0 14px rgba(160,110,255,.7)}
+#somBtn{position:fixed;right:20px;top:16px;z-index:50;width:40px;height:40px;
+  border-radius:50%;border:1px solid var(--line2);color:var(--lilas);cursor:pointer;
+  font-size:14px;display:flex;align-items:center;justify-content:center;transition:.3s;
+  background:rgba(20,14,48,.7);backdrop-filter:blur(10px)}
+#somBtn:hover,#somBtn:focus-visible{background:rgba(160,120,255,.18);color:#fff;
+  box-shadow:0 0 18px rgba(160,120,255,.45);outline:none}
+
+#palco{flex:1;position:relative;overflow:hidden}
+.tela{position:absolute;inset:0;display:none;flex-direction:column;
+  align-items:center;justify-content:center;padding:22px;text-align:center;gap:18px}
+.tela.on{display:flex;animation:entra .7s cubic-bezier(.2,.8,.2,1)}
+@keyframes entra{from{opacity:0;transform:translateY(22px) scale(.985)}
+                 to{opacity:1;transform:none}}
+h1.titulo{font-size:clamp(30px,7vw,68px);font-weight:200;letter-spacing:.2em;
+  text-indent:.2em;line-height:1.1;
+  background:linear-gradient(100deg,#fff,var(--lilas) 40%,var(--ciano));
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+  filter:drop-shadow(0 0 30px rgba(160,110,255,.45))}
+h2.fase{font-size:clamp(19px,3.4vw,34px);font-weight:200;letter-spacing:.2em;
+  text-indent:.2em;color:#fff}
+.eyebrow{font-size:11px;letter-spacing:.42em;text-indent:.42em;color:var(--roxo);
+  text-transform:uppercase;font-weight:600}
+p.sub{font-size:clamp(13px,1.7vw,17px);font-weight:300;line-height:1.85;
+  color:var(--dim);max-width:640px}
+p.sub b{color:var(--lilas);font-weight:500}
+.btn{position:relative;font:inherit;font-size:13px;font-weight:500;letter-spacing:.24em;
+  text-indent:.24em;text-transform:uppercase;color:#fff;cursor:pointer;
+  padding:17px 40px;border-radius:99px;border:1px solid var(--line2);
+  background:linear-gradient(135deg,rgba(160,107,255,.24),rgba(95,217,255,.14));
+  backdrop-filter:blur(8px);overflow:hidden;
+  transition:transform .3s cubic-bezier(.2,.8,.2,1),box-shadow .3s,border-color .3s}
+.btn:hover,.btn:focus-visible{transform:translateY(-3px);border-color:var(--lilas);
+  box-shadow:0 10px 40px rgba(160,110,255,.42),0 0 0 1px rgba(207,170,255,.3) inset;
+  outline:none}
+.btn:active{transform:translateY(-1px)}
+.btn.grande{font-size:15px;padding:21px 54px}
+.btn.fantasma{background:transparent;border-color:var(--line)}
+.btn.fantasma:hover{background:rgba(160,120,255,.12)}
+.painel{background:var(--panel);border:1px solid var(--line);border-radius:20px;
+  padding:26px 30px;backdrop-filter:blur(14px);max-width:660px;
+  box-shadow:0 24px 70px rgba(0,0,0,.5)}
+.canvasWrap{position:relative;border-radius:18px;overflow:hidden;
+  border:1px solid var(--line);box-shadow:0 24px 70px rgba(0,0,0,.55),
+  0 0 0 1px rgba(160,120,255,.08) inset;background:rgba(8,5,24,.6)}
+.canvasWrap canvas{display:block}
+#info{position:absolute;inset:0;z-index:30;display:none;align-items:center;
+  justify-content:center;padding:24px;background:rgba(6,4,18,.78);
+  backdrop-filter:blur(6px)}
+#info.on{display:flex;animation:entra .5s ease}
+#infoCard{max-width:520px;background:var(--panel2);border:1px solid var(--line2);
+  border-radius:20px;padding:32px 34px;text-align:center;
+  box-shadow:0 0 60px rgba(160,110,255,.28)}
+#infoCard .ic{font-size:26px;margin-bottom:14px;color:var(--ciano)}
+#infoCard h3{font-size:15px;font-weight:500;letter-spacing:.24em;text-indent:.24em;
+  text-transform:uppercase;color:var(--lilas);margin-bottom:14px}
+#infoCard p{font-size:15px;font-weight:300;line-height:1.9;color:var(--txt)}
+#infoCard .dica{margin-top:18px;font-size:11px;letter-spacing:.2em;color:var(--dim);
+  text-transform:uppercase}
+#gradeMem{display:grid;gap:12px;margin:6px auto}
+.cel{width:82px;height:82px;border-radius:16px;border:1px solid var(--line);
+  background:rgba(30,20,66,.55);cursor:pointer;position:relative;
+  display:flex;align-items:center;justify-content:center;
+  transition:transform .25s cubic-bezier(.2,.8,.2,1),box-shadow .3s,
+             background .3s,border-color .3s}
+.cel svg{width:42px;height:42px;opacity:0;transition:opacity .3s}
+.cel.mostra{background:linear-gradient(140deg,rgba(160,107,255,.5),rgba(95,217,255,.32));
+  border-color:var(--lilas);box-shadow:0 0 34px rgba(160,110,255,.65);transform:scale(1.06)}
+.cel.mostra svg{opacity:1}
+.cel:not(.bloq):hover{transform:translateY(-4px);border-color:var(--line2);
+  box-shadow:0 8px 26px rgba(0,0,0,.4)}
+.cel.certo{background:linear-gradient(140deg,rgba(76,224,168,.5),rgba(76,224,168,.2));
+  border-color:var(--ok);box-shadow:0 0 30px rgba(76,224,168,.55)}
+.cel.certo svg{opacity:1}
+.cel.errado{background:rgba(255,95,126,.34);border-color:var(--erro);
+  animation:tremer .45s}
+@keyframes tremer{0%,100%{transform:translateX(0)}20%{transform:translateX(-8px)}
+  40%{transform:translateX(8px)}60%{transform:translateX(-5px)}80%{transform:translateX(5px)}}
+.cel.bloq{cursor:default}
+@media(max-width:640px){.cel{width:62px;height:62px;border-radius:13px}
+  .cel svg{width:32px;height:32px}}
+#stroopPalavra{font-size:clamp(46px,11vw,110px);font-weight:800;letter-spacing:.05em;
+  line-height:1;transition:opacity .2s;text-shadow:0 0 50px currentColor}
+#stroopOpts{display:flex;gap:14px;flex-wrap:wrap;justify-content:center}
+.corBtn{width:112px;padding:16px 0;border-radius:14px;border:2px solid transparent;
+  font:inherit;font-size:12px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;
+  color:#0b0820;cursor:pointer;transition:transform .22s cubic-bezier(.2,.8,.2,1),
+  box-shadow .25s,filter .25s}
+.corBtn:hover,.corBtn:focus-visible{transform:translateY(-5px) scale(1.04);
+  box-shadow:0 12px 34px rgba(0,0,0,.5);filter:brightness(1.15);outline:none}
+.corBtn kbd{display:block;font-size:9px;opacity:.6;margin-top:4px;font-family:inherit;
+  letter-spacing:.1em}
+#tempoWrap{width:min(420px,80vw);height:7px;border-radius:99px;
+  background:rgba(160,120,255,.16);overflow:hidden}
+#tempoBar{height:100%;width:100%;border-radius:99px;
+  background:linear-gradient(90deg,var(--ok),var(--ouro),var(--erro))}
+#rostoWrap{width:min(280px,62vw);aspect-ratio:1;position:relative}
+#rostoWrap svg{width:100%;height:100%;overflow:visible}
+#emoOpts{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));
+  gap:12px;width:min(560px,90vw)}
+.emoBtn{font:inherit;font-size:12px;font-weight:500;letter-spacing:.2em;
+  text-transform:uppercase;color:var(--txt);cursor:pointer;padding:16px 10px;
+  border-radius:14px;border:1px solid var(--line);background:rgba(30,20,66,.5);
+  transition:transform .25s cubic-bezier(.2,.8,.2,1),background .3s,border-color .3s}
+.emoBtn:hover,.emoBtn:focus-visible{transform:translateY(-4px);border-color:var(--lilas);
+  background:rgba(160,120,255,.2);outline:none}
+.emoBtn.certo{background:rgba(76,224,168,.28);border-color:var(--ok)}
+.emoBtn.errado{background:rgba(255,95,126,.26);border-color:var(--erro);animation:tremer .45s}
+#decCard{max-width:720px;width:100%}
+#decSit{font-size:clamp(15px,2.2vw,21px);font-weight:300;line-height:1.8;
+  color:var(--txt);margin-bottom:8px}
+#decOpts{display:flex;flex-direction:column;gap:12px;width:100%;margin-top:22px}
+.decBtn{font:inherit;font-size:14px;font-weight:300;letter-spacing:.04em;
+  text-align:left;color:var(--txt);cursor:pointer;padding:18px 22px;border-radius:14px;
+  border:1px solid var(--line);background:rgba(30,20,66,.45);line-height:1.6;
+  display:flex;align-items:center;gap:16px;
+  transition:transform .25s cubic-bezier(.2,.8,.2,1),background .3s,border-color .3s}
+.decBtn:hover,.decBtn:focus-visible{transform:translateX(7px);border-color:var(--lilas);
+  background:rgba(160,120,255,.18);outline:none}
+.decBtn .num{flex-shrink:0;width:30px;height:30px;border-radius:50%;
+  border:1px solid var(--line2);display:flex;align-items:center;justify-content:center;
+  font-size:11px;color:var(--lilas)}
+#fimStats{display:flex;gap:34px;flex-wrap:wrap;justify-content:center;margin:6px 0}
+.stat{text-align:center}
+.stat .n{font-size:clamp(28px,5vw,46px);font-weight:200;color:#fff;
+  font-variant-numeric:tabular-nums;
+  filter:drop-shadow(0 0 22px rgba(160,110,255,.6))}
+.stat .l{font-size:10px;letter-spacing:.3em;text-transform:uppercase;color:var(--dim);
+  margin-top:5px}
+#flash{position:fixed;left:50%;top:16%;transform:translateX(-50%);z-index:60;
+  display:flex;flex-direction:column;gap:8px;align-items:center;pointer-events:none}
+.aviso{padding:11px 22px;border-radius:99px;font-size:12px;font-weight:500;
+  letter-spacing:.16em;text-transform:uppercase;backdrop-filter:blur(10px);
+  border:1px solid var(--line2);background:rgba(28,20,64,.8);
+  animation:sobe 1.9s cubic-bezier(.2,.8,.2,1) forwards}
+.aviso.ok{color:var(--ok);border-color:rgba(76,224,168,.5)}
+.aviso.err{color:var(--erro);border-color:rgba(255,95,126,.5)}
+.aviso.pt{color:var(--ouro);border-color:rgba(255,211,107,.5)}
+@keyframes sobe{0%{opacity:0;transform:translateY(14px) scale(.9)}
+  14%{opacity:1;transform:none} 74%{opacity:1} 100%{opacity:0;transform:translateY(-18px)}}
+#wipe{position:fixed;inset:0;z-index:70;pointer-events:none;opacity:0;
+  background:radial-gradient(circle at 50% 50%,rgba(160,110,255,.9),rgba(8,5,24,1) 62%)}
+#wipe.go{animation:wipeAnim 1.05s cubic-bezier(.6,0,.3,1)}
+@keyframes wipeAnim{0%{opacity:0;transform:scale(.2)}
+  40%{opacity:1;transform:scale(1.6)} 100%{opacity:0;transform:scale(2.6)}}
+
+.linha{width:56px;height:1px;background:linear-gradient(90deg,transparent,var(--line2),transparent)}
+.pista{font-size:11px;letter-spacing:.24em;text-transform:uppercase;color:var(--dim)}
+.pista kbd{display:inline-block;padding:3px 8px;margin:0 2px;border-radius:6px;
+  border:1px solid var(--line);background:rgba(160,120,255,.12);color:var(--lilas);
+  font-family:inherit;font-size:10px}
+&lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;canvas id=&quot;fundo&quot;&gt;&lt;/canvas&gt;
+&lt;div id=&quot;brilho&quot;&gt;&lt;/div&gt;
+&lt;div id=&quot;wipe&quot;&gt;&lt;/div&gt;
+&lt;div id=&quot;flash&quot;&gt;&lt;/div&gt;
+
+&lt;div id=&quot;app&quot;&gt;
+  &lt;div id=&quot;hud&quot;&gt;
+    &lt;div class=&quot;hud-item&quot;&gt;Pontos &lt;b id=&quot;hudPts&quot;&gt;0&lt;/b&gt;&lt;/div&gt;
+    &lt;div class=&quot;hud-item&quot;&gt;Vidas &lt;div id=&quot;vidas&quot;&gt;&lt;/div&gt;&lt;/div&gt;
+    &lt;div class=&quot;hud-item&quot; style=&quot;flex:1;min-width:150px&quot;&gt;
+      &lt;span id=&quot;hudFase&quot;&gt;Fase 0/6&lt;/span&gt;
+      &lt;div id=&quot;barraWrap&quot;&gt;&lt;div id=&quot;barra&quot;&gt;&lt;/div&gt;&lt;/div&gt;
+    &lt;/div&gt;
+    &lt;div style=&quot;width:46px;flex-shrink:0&quot;&gt;&lt;/div&gt;
+  &lt;/div&gt;
+  &lt;div id=&quot;palco&quot;&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;button id=&quot;somBtn&quot; title=&quot;Ligar/desligar som (M)&quot; aria-label=&quot;Som ligado&quot;&gt;♪&lt;/button&gt;
+
+&lt;div id=&quot;info&quot;&gt;&lt;div id=&quot;infoCard&quot;&gt;
+  &lt;div class=&quot;ic&quot; id=&quot;infoIcone&quot;&gt;◈&lt;/div&gt;
+  &lt;h3 id=&quot;infoTitulo&quot;&gt;Você aprendeu&lt;/h3&gt;
+  &lt;p id=&quot;infoTexto&quot;&gt;&lt;/p&gt;
+  &lt;div class=&quot;dica&quot;&gt;clique ou pressione &lt;kbd&gt;Enter&lt;/kbd&gt; para continuar&lt;/div&gt;
+&lt;/div&gt;&lt;/div&gt;
+
+&lt;script&gt;
+(function(){
+&#x27;use strict&#x27;;
+
+var palco = document.getElementById(&#x27;palco&#x27;);
+var hud   = document.getElementById(&#x27;hud&#x27;);
+var elPts = document.getElementById(&#x27;hudPts&#x27;);
+var elFase= document.getElementById(&#x27;hudFase&#x27;);
+var elBarra=document.getElementById(&#x27;barra&#x27;);
+var elVidas=document.getElementById(&#x27;vidas&#x27;);
+var elFlash=document.getElementById(&#x27;flash&#x27;);
+var elInfo =document.getElementById(&#x27;info&#x27;);
+var elWipe =document.getElementById(&#x27;wipe&#x27;);
+
+var TOTAL_FASES = 5;
+var VIDAS_INICIAIS = 8;
+var S = { pts:0, vidas:VIDAS_INICIAIS, fase:0, som:true, recorde:0 };
+
+function el(tag, cls, html){
+  var e=document.createElement(tag);
+  if(cls) e.className=cls;
+  if(html!==undefined) e.innerHTML=html;
+  return e;
+}
+function clamp(v,a,b){ return v&lt;a?a:(v&gt;b?b:v); }
+function lerp(a,b,t){ return a+(b-a)*t; }
+function rnd(a,b){ return a+Math.random()*(b-a); }
+function ri(a,b){ return Math.floor(rnd(a,b+1)); }
+function embaralhar(a){
+  a=a.slice();
+  for(var i=a.length-1;i&gt;0;i--){ var j=Math.floor(Math.random()*(i+1));
+    var t=a[i]; a[i]=a[j]; a[j]=t; }
+  return a;
+}
+
+var Som = (function(){
+  var A=null, master, conv, dry, amb=null;
+  function init(){
+    if(A) return;
+    try{ A=new (window.AudioContext||window.webkitAudioContext)(); }catch(e){ return; }
+    master=A.createGain(); master.gain.value=S.som?0.5:0.0001; master.connect(A.destination);
+    conv=A.createConvolver(); conv.buffer=ir(2.6,2.6);
+    var wet=A.createGain(); wet.gain.value=0.5; conv.connect(wet); wet.connect(master);
+    dry=A.createGain(); dry.gain.value=0.85; dry.connect(master);
+  }
+  function ir(sec,dec){
+    var n=(A.sampleRate*sec)|0, b=A.createBuffer(2,n,A.sampleRate);
+    for(var c=0;c&lt;2;c++){ var d=b.getChannelData(c);
+      for(var i=0;i&lt;n;i++) d[i]=(Math.random()*2-1)*Math.pow(1-i/n,dec); }
+    return b;
+  }
+  function ruido(sec){
+    var n=(A.sampleRate*(sec||1))|0,b=A.createBuffer(1,n,A.sampleRate),d=b.getChannelData(0);
+    for(var i=0;i&lt;n;i++) d[i]=Math.random()*2-1; return b;
+  }
+  function rota(node,w){ var s=A.createGain(); s.gain.value=w===undefined?0.3:w;
+    node.connect(dry); node.connect(s); s.connect(conv); }
+  function tom(f,dur,vol,delay,tipo,w){
+    init(); if(!A) return;
+    var t=A.currentTime+(delay||0);
+    var o=A.createOscillator(); o.type=tipo||&#x27;sine&#x27;; o.frequency.setValueAtTime(f,t);
+    var g=A.createGain(); g.gain.setValueAtTime(0.0001,t);
+    g.gain.exponentialRampToValueAtTime(vol||0.14,t+0.01);
+    g.gain.exponentialRampToValueAtTime(0.0001,t+(dur||0.5));
+    o.connect(g); rota(g,w); o.start(t); o.stop(t+(dur||0.5)+0.05);
+  }
+  var ESC=[0,2,4,7,9,12,14,16,19,21,24];
+  function nota(i,dur,vol,delay){
+    tom(261.63*Math.pow(2,ESC[i%ESC.length]/12)*(i&gt;6?2:1), dur||1.4, vol||0.12, delay||0,&#x27;sine&#x27;,0.6);
+  }
+  return {
+    ligar:init,
+    clique:function(){ tom(660,0.14,0.07,0,&#x27;triangle&#x27;,0.3); },
+    passo:function(){ tom(rnd(180,260),0.06,0.03,0,&#x27;sine&#x27;,0.2); },
+    coleta:function(i){ nota(3+i,1.6,0.14); nota(7+i,1.2,0.07,0.05); },
+    acerto:function(){ nota(4,1.2,0.13); nota(6,1.2,0.10,0.06); nota(9,1.4,0.08,0.12); },
+    erro:function(){ tom(150,0.5,0.16,0,&#x27;sawtooth&#x27;,0.4); tom(96,0.7,0.12,0.04,&#x27;sine&#x27;,0.5); },
+    tique:function(){ tom(1200,0.05,0.04,0,&#x27;square&#x27;,0.15); },
+    fase:function(){ [0,3,5,8,10].forEach(function(n,i){ nota(n,2.4,0.12,i*0.09); });
+                     tom(70,1.6,0.24,0,&#x27;sine&#x27;,0.6); },
+    fim:function(){ [0,4,7,11,14,16,19].forEach(function(n,i){ nota(n,3.6,0.13,i*0.11); }); },
+    zumbido:function(on){
+      init(); if(!A) return;
+      if(amb){ try{ amb.g.gain.setTargetAtTime(0.0001,A.currentTime,0.4);
+        amb.n.forEach(function(x){ try{x.stop(A.currentTime+1.4);}catch(e){} }); }catch(e){}
+        amb=null; }
+      if(!on) return;
+      var g=A.createGain(); g.gain.setValueAtTime(0.0001,A.currentTime);
+      g.gain.setTargetAtTime(0.035,A.currentTime,2.2); rota(g,0.8);
+      var ns=[];
+      [55,82.4,110,164.8].forEach(function(f,i){
+        var o=A.createOscillator(); o.type=&#x27;sine&#x27;; o.frequency.value=f;
+        var og=A.createGain(); og.gain.value=0.3/(i+1);
+        var lf=A.createOscillator(); lf.frequency.value=0.05+i*0.02;
+        var lg=A.createGain(); lg.gain.value=0.9;
+        lf.connect(lg); lg.connect(o.frequency);
+        o.connect(og); og.connect(g); o.start(); lf.start(); ns.push(o,lf);
+      });
+      amb={g:g,n:ns};
+    },
+    mudo:function(m){ S.som=!m;
+      if(master&amp;&amp;A) master.gain.setTargetAtTime(m?0.0001:0.5,A.currentTime,0.05); }
+  };
+})();
+
+var somBtn=document.getElementById(&#x27;somBtn&#x27;);
+somBtn.addEventListener(&#x27;click&#x27;,function(){
+  Som.ligar(); S.som=!S.som; Som.mudo(!S.som);
+  somBtn.textContent=S.som?&#x27;♪&#x27;:&#x27;✕&#x27;;
+  somBtn.setAttribute(&#x27;aria-label&#x27;, S.som?&#x27;Som ligado&#x27;:&#x27;Som desligado&#x27;);
+});
+
+var CORACAO=&#x27;&lt;svg viewBox=&quot;0 0 24 22&quot;&gt;&lt;path d=&quot;M12 21S2 14.6 2 8.2A5.2 5.2 0 0 1 12 5.6 5.2 5.2 0 0 1 22 8.2C22 14.6 12 21 12 21z&quot; fill=&quot;#ff6bc7&quot; stroke=&quot;#ffb3e2&quot; stroke-width=&quot;1.3&quot;/&gt;&lt;/svg&gt;&#x27;;
+function pintarVidas(){
+  elVidas.innerHTML=&#x27;&#x27;;
+  for(var i=0;i&lt;VIDAS_INICIAIS;i++){
+    var v=el(&#x27;div&#x27;,&#x27;vida&#x27;+(i&lt;S.vidas?&#x27;&#x27;:&#x27; off&#x27;),CORACAO);
+    elVidas.appendChild(v);
+  }
+}
+function setPts(n, motivo){
+  var d=n-S.pts; S.pts=n; elPts.textContent=n;
+  if(d&gt;0) aviso(&#x27;+&#x27;+d+(motivo?&#x27; · &#x27;+motivo:&#x27;&#x27;),&#x27;pt&#x27;);
+}
+function addPts(d,motivo){ setPts(S.pts+d,motivo); }
+function perderVida(motivo){
+  S.vidas=Math.max(0,S.vidas-1); pintarVidas(); Som.erro();
+  aviso(motivo||&#x27;errou&#x27;,&#x27;err&#x27;);
+  document.body.animate([{filter:&#x27;none&#x27;},{filter:&#x27;hue-rotate(-40deg) brightness(1.15)&#x27;},
+    {filter:&#x27;none&#x27;}],{duration:340});
+  if(S.vidas&lt;=0){ setTimeout(gameOver,700); return true; }
+  return false;
+}
+function setFase(n){
+  S.fase=n; elFase.textContent=&#x27;Fase &#x27;+n+&#x27;/&#x27;+TOTAL_FASES;
+  elBarra.style.width=(n/TOTAL_FASES*100)+&#x27;%&#x27;;
+}
+function aviso(txt,tipo){
+  var a=el(&#x27;div&#x27;,&#x27;aviso &#x27;+(tipo||&#x27;&#x27;),txt);
+  elFlash.appendChild(a);
+  setTimeout(function(){ a.remove(); },1900);
+}
+
+var telaAtual=null;
+function novaTela(){
+  var t=el(&#x27;div&#x27;,&#x27;tela&#x27;);
+  palco.appendChild(t);
+  return t;
+}
+function mostrar(t){
+  if(telaAtual &amp;&amp; telaAtual!==t){
+    var velha=telaAtual;
+    velha.classList.remove(&#x27;on&#x27;);
+    setTimeout(function(){ velha.remove(); },50);
+  }
+  telaAtual=t;
+  t.classList.add(&#x27;on&#x27;);
+  var foco=t.querySelector(&#x27;.btn,button&#x27;);
+  if(foco) setTimeout(function(){ try{foco.focus();}catch(e){} },260);
+}
+function transicao(fn){
+  elWipe.classList.remove(&#x27;go&#x27;); void elWipe.offsetWidth; elWipe.classList.add(&#x27;go&#x27;);
+  setTimeout(fn,430);
+}
+
+var infoCb=null;
+function ensinar(titulo,texto,icone,cb){
+  document.getElementById(&#x27;infoTitulo&#x27;).textContent=titulo;
+  document.getElementById(&#x27;infoTexto&#x27;).textContent=texto;
+  document.getElementById(&#x27;infoIcone&#x27;).textContent=icone||&#x27;◈&#x27;;
+  elInfo.classList.add(&#x27;on&#x27;); infoCb=cb||null;
+  Som.acerto();
+}
+function fecharInfo(){
+  if(!elInfo.classList.contains(&#x27;on&#x27;)) return;
+  elInfo.classList.remove(&#x27;on&#x27;);
+  var cb=infoCb; infoCb=null;
+  if(cb) cb();
+}
+elInfo.addEventListener(&#x27;click&#x27;,fecharInfo);
+window.addEventListener(&#x27;keydown&#x27;,function(e){
+  if(elInfo.classList.contains(&#x27;on&#x27;) &amp;&amp; (e.code===&#x27;Enter&#x27;||e.code===&#x27;Space&#x27;||e.code===&#x27;Escape&#x27;)){
+    e.preventDefault();
+    e.__tratado=true;
+    fecharInfo();
+  }
+});
+
+var fc=document.getElementById(&#x27;fundo&#x27;), fx=fc.getContext(&#x27;2d&#x27;);
+var NOS=[], LIG=[], PULSOS=[], fW=0,fH=0,fDpr=1;
+function montarRede(){
+  fDpr=Math.min(window.devicePixelRatio||1,2);
+  fW=window.innerWidth; fH=window.innerHeight;
+  fc.width=fW*fDpr; fc.height=fH*fDpr;
+  fc.style.width=fW+&#x27;px&#x27;; fc.style.height=fH+&#x27;px&#x27;;
+  fx.setTransform(fDpr,0,0,fDpr,0,0);
+  NOS=[]; LIG=[];
+  var n=Math.round(clamp((fW*fH)/26000,26,64));
+  for(var i=0;i&lt;n;i++) NOS.push({x:rnd(0,fW),y:rnd(0,fH),
+    vx:rnd(-6,6),vy:rnd(-6,6),r:rnd(1.4,3.4),ph:rnd(0,9)});
+  for(var a=0;a&lt;NOS.length;a++) for(var b=a+1;b&lt;NOS.length;b++){
+    var d=Math.hypot(NOS[a].x-NOS[b].x,NOS[a].y-NOS[b].y);
+    if(d&lt;Math.min(fW,fH)*0.24) LIG.push([a,b]);
+  }
+}
+function pulso(){
+  if(!LIG.length) return;
+  var L=LIG[Math.floor(Math.random()*LIG.length)];
+  PULSOS.push({a:L[0],b:L[1],t:0,v:rnd(0.5,1.3)});
+}
+montarRede();
+window.addEventListener(&#x27;resize&#x27;,montarRede);
+var ultimo=performance.now(), acc=0;
+function animarFundo(now){
+  var dt=Math.min((now-ultimo)/1000,0.05); ultimo=now;
+  acc+=dt; if(acc&gt;0.28){ acc=0; if(PULSOS.length&lt;26) pulso(); }
+  fx.clearRect(0,0,fW,fH);
+  for(var i=0;i&lt;NOS.length;i++){
+    var p=NOS[i];
+    p.x+=p.vx*dt; p.y+=p.vy*dt;
+    if(p.x&lt;-20)p.x=fW+20; if(p.x&gt;fW+20)p.x=-20;
+    if(p.y&lt;-20)p.y=fH+20; if(p.y&gt;fH+20)p.y=-20;
+  }
+  fx.lineWidth=1;
+  for(var k=0;k&lt;LIG.length;k++){
+    var A=NOS[LIG[k][0]], B=NOS[LIG[k][1]];
+    var d=Math.hypot(A.x-B.x,A.y-B.y), lim=Math.min(fW,fH)*0.26;
+    if(d&gt;lim) continue;
+    fx.strokeStyle=&#x27;rgba(150,105,255,&#x27;+(0.16*(1-d/lim))+&#x27;)&#x27;;
+    fx.beginPath(); fx.moveTo(A.x,A.y); fx.lineTo(B.x,B.y); fx.stroke();
+  }
+  for(var j=PULSOS.length-1;j&gt;=0;j--){
+    var q=PULSOS[j]; q.t+=dt*q.v;
+    if(q.t&gt;=1){ PULSOS.splice(j,1); continue; }
+    var A2=NOS[q.a], B2=NOS[q.b];
+    var x=lerp(A2.x,B2.x,q.t), y=lerp(A2.y,B2.y,q.t);
+    var g=fx.createRadialGradient(x,y,0,x,y,16);
+    g.addColorStop(0,&#x27;rgba(140,230,255,.85)&#x27;); g.addColorStop(1,&#x27;rgba(140,230,255,0)&#x27;);
+    fx.fillStyle=g; fx.beginPath(); fx.arc(x,y,16,0,6.2832); fx.fill();
+    fx.fillStyle=&#x27;rgba(220,250,255,.95)&#x27;;
+    fx.beginPath(); fx.arc(x,y,2,0,6.2832); fx.fill();
+  }
+  for(var m=0;m&lt;NOS.length;m++){
+    var s=NOS[m], pu=0.6+0.4*Math.sin(now/900+s.ph);
+    var g2=fx.createRadialGradient(s.x,s.y,0,s.x,s.y,s.r*7);
+    g2.addColorStop(0,&#x27;rgba(180,140,255,&#x27;+(0.30*pu)+&#x27;)&#x27;);
+    g2.addColorStop(1,&#x27;rgba(180,140,255,0)&#x27;);
+    fx.fillStyle=g2; fx.beginPath(); fx.arc(s.x,s.y,s.r*7,0,6.2832); fx.fill();
+    fx.fillStyle=&#x27;rgba(226,208,255,&#x27;+(0.55+0.35*pu)+&#x27;)&#x27;;
+    fx.beginPath(); fx.arc(s.x,s.y,s.r,0,6.2832); fx.fill();
+  }
+  requestAnimationFrame(animarFundo);
+}
+requestAnimationFrame(animarFundo);
+
+function telaInicial(){
+  hud.classList.remove(&#x27;on&#x27;);
+  var t=novaTela();
+  t.innerHTML=
+    &#x27;&lt;div class=&quot;eyebrow&quot;&gt;Neurociência interativa&lt;/div&gt;&#x27;+
+    &#x27;&lt;h1 class=&quot;titulo&quot;&gt;DENTRO DA MENTE&lt;/h1&gt;&#x27;+
+    &#x27;&lt;div class=&quot;linha&quot;&gt;&lt;/div&gt;&#x27;+
+    &#x27;&lt;p class=&quot;sub&quot;&gt;Você entrou em uma mente humana. Agora precisará entender &#x27;+
+    &#x27;como ela funciona para encontrar a saída.&lt;/p&gt;&#x27;+
+    &#x27;&lt;button class=&quot;btn grande&quot; id=&quot;btEntrar&quot;&gt;Entrar na mente&lt;/button&gt;&#x27;+
+    &#x27;&lt;p class=&quot;pista&quot;&gt;&#x27;+TOTAL_FASES+&#x27; fases · use &lt;kbd&gt;mouse&lt;/kbd&gt; ou &lt;kbd&gt;teclado&lt;/kbd&gt;&lt;/p&gt;&#x27;;
+  t.querySelector(&#x27;#btEntrar&#x27;).addEventListener(&#x27;click&#x27;,function(){
+    Som.ligar(); Som.clique(); Som.zumbido(true);
+    S.pts=0; S.vidas=VIDAS_INICIAIS; setPts(0); pintarVidas(); setFase(0);
+    hud.classList.add(&#x27;on&#x27;);
+    transicao(function(){ abrirFase(1); });
+  });
+  mostrar(t);
+}
+
+var FASES=[
+  null,
+  {n:&#x27;Fase 01&#x27;, nome:&#x27;CAMINHO DOS NEURÔNIOS&#x27;,
+   desc:&#x27;Atravesse a rede neural e recolha 5 impulsos nervosos. Desvie das sinapses instáveis.&#x27;,
+   dica:&#x27;&lt;kbd&gt;W A S D&lt;/kbd&gt; ou &lt;kbd&gt;setas&lt;/kbd&gt; para andar&#x27;},
+  {n:&#x27;Fase 02&#x27;, nome:&#x27;LABORATÓRIO DA MEMÓRIA&#x27;,
+   desc:&#x27;Observe quais células se acendem. Depois reproduza a sequência de memória.&#x27;,
+   dica:&#x27;clique nas células · &lt;kbd&gt;Tab&lt;/kbd&gt; navega&#x27;},
+  {n:&#x27;Fase 03&#x27;, nome:&#x27;MENTE AUTOMÁTICA&#x27;,
+   desc:&#x27;Responda a COR da palavra, não o que está escrito. E responda rápido.&#x27;,
+   dica:&#x27;clique ou use &lt;kbd&gt;1&lt;/kbd&gt;&lt;kbd&gt;2&lt;/kbd&gt;&lt;kbd&gt;3&lt;/kbd&gt;&lt;kbd&gt;4&lt;/kbd&gt;&#x27;},
+  {n:&#x27;Fase 04&#x27;, nome:&#x27;SALA DAS EMOÇÕES&#x27;,
+   desc:&#x27;Reconheça a emoção em cada rosto que aparecer.&#x27;,
+   dica:&#x27;clique ou use &lt;kbd&gt;1&lt;/kbd&gt;–&lt;kbd&gt;4&lt;/kbd&gt;&#x27;},
+  {n:&#x27;Fase 05&#x27;, nome:&#x27;A DECISÃO&#x27;,
+   desc:&#x27;Situações do dia a dia. Não existe resposta totalmente certa — existe a sua.&#x27;,
+   dica:&#x27;clique ou use &lt;kbd&gt;1&lt;/kbd&gt;&lt;kbd&gt;2&lt;/kbd&gt;&lt;kbd&gt;3&lt;/kbd&gt;&#x27;}
+];
+function abrirFase(n){
+  var f=FASES[n];
+  setFase(n-1);
+  var t=novaTela();
+  t.innerHTML=
+    &#x27;&lt;div class=&quot;eyebrow&quot;&gt;&#x27;+f.n+&#x27;&lt;/div&gt;&#x27;+
+    &#x27;&lt;h2 class=&quot;fase&quot;&gt;&#x27;+f.nome+&#x27;&lt;/h2&gt;&#x27;+
+    &#x27;&lt;div class=&quot;linha&quot;&gt;&lt;/div&gt;&#x27;+
+    &#x27;&lt;p class=&quot;sub&quot;&gt;&#x27;+f.desc+&#x27;&lt;/p&gt;&#x27;+
+    &#x27;&lt;button class=&quot;btn&quot; id=&quot;btGo&quot;&gt;Começar&lt;/button&gt;&#x27;+
+    &#x27;&lt;p class=&quot;pista&quot;&gt;&#x27;+f.dica+&#x27;&lt;/p&gt;&#x27;;
+  t.querySelector(&#x27;#btGo&#x27;).addEventListener(&#x27;click&#x27;,function(){
+    Som.clique();
+    transicao(function(){ [null,fase1,fase2,fase3,fase4,fase5][n](); });
+  });
+  mostrar(t);
+}
+function concluirFase(n, bonus){
+  setFase(n);
+  Som.fase();
+  if(bonus) addPts(bonus,&#x27;fase completa&#x27;);
+  var t=novaTela();
+  t.innerHTML=
+    &#x27;&lt;div class=&quot;eyebrow&quot;&gt;Fase &#x27;+(n&lt;10?&#x27;0&#x27;:&#x27;&#x27;)+n+&#x27; concluída&lt;/div&gt;&#x27;+
+    &#x27;&lt;h2 class=&quot;fase&quot;&gt;REGIÃO LIBERADA&lt;/h2&gt;&#x27;+
+    &#x27;&lt;div class=&quot;linha&quot;&gt;&lt;/div&gt;&#x27;+
+    &#x27;&lt;p class=&quot;sub&quot;&gt;Pontuação atual: &lt;b&gt;&#x27;+S.pts+&#x27;&lt;/b&gt;&lt;/p&gt;&#x27;+
+    &#x27;&lt;button class=&quot;btn&quot; id=&quot;btNext&quot;&gt;&#x27;+(n&lt;TOTAL_FASES?&#x27;Avançar&#x27;:&#x27;Ver o final&#x27;)+&#x27;&lt;/button&gt;&#x27;;
+  t.querySelector(&#x27;#btNext&#x27;).addEventListener(&#x27;click&#x27;,function(){
+    Som.clique();
+    transicao(function(){ n&lt;TOTAL_FASES ? abrirFase(n+1) : telaFinal(); });
+  });
+  mostrar(t);
+}
+
+function fase1(){
+  var CW=900, CH=520;
+  var t=novaTela();
+  t.innerHTML=
+    &#x27;&lt;div class=&quot;eyebrow&quot;&gt;Fase 01 · Caminho dos neurônios&lt;/div&gt;&#x27;+
+    &#x27;&lt;div class=&quot;canvasWrap&quot;&gt;&lt;canvas id=&quot;c1&quot; width=&quot;&#x27;+CW+&#x27;&quot; height=&quot;&#x27;+CH+&#x27;&quot;&gt;&lt;/canvas&gt;&lt;/div&gt;&#x27;+
+    &#x27;&lt;p class=&quot;pista&quot; id=&quot;p1dica&quot;&gt;&lt;kbd&gt;W A S D&lt;/kbd&gt; / &lt;kbd&gt;setas&lt;/kbd&gt; · impulsos &lt;b id=&quot;p1c&quot;&gt;0&lt;/b&gt;/5&lt;/p&gt;&#x27;;
+  mostrar(t);
+
+  var cvs=t.querySelector(&#x27;#c1&#x27;), g=cvs.getContext(&#x27;2d&#x27;);
+  var elC=t.querySelector(&#x27;#p1c&#x27;);
+  function ajustar(){
+    var w=Math.min(window.innerWidth-44, CW);
+    cvs.style.width=w+&#x27;px&#x27;; cvs.style.height=(w*CH/CW)+&#x27;px&#x27;;
+  }
+  ajustar(); window.addEventListener(&#x27;resize&#x27;,ajustar);
+
+  var PAREDES=[
+    [0,0,CW,14],[0,CH-14,CW,14],[0,0,14,CH],[CW-14,0,14,CH],
+    [140,80,24,190],[140,80,190,24],
+    [300,180,24,170],[300,330,150,24],
+    [430,60,24,180],[430,330,24,130],
+    [540,120,190,24],[610,230,24,180],
+    [700,300,186,24],[240,400,190,24],
+    [760,60,24,150],[520,420,180,24]
+  ];
+  var IMPULSOS=[
+    {x:232,y:150,ok:false,f:&#x27;Os neurônios se comunicam por sinais elétricos dentro da célula e sinais químicos entre elas.&#x27;},
+    {x:370,y:262,ok:false,f:&#x27;O espaço entre dois neurônios se chama sinapse. É ali que os neurotransmissores atravessam.&#x27;},
+    {x:540,y:262,ok:false,f:&#x27;Um impulso nervoso pode viajar a mais de 100 metros por segundo pelos axônios mielinizados.&#x27;},
+    {x:820,y:150,ok:false,f:&#x27;O cérebro humano tem cerca de 86 bilhões de neurônios — e muito mais conexões entre eles.&#x27;},
+    {x:180,y:470,ok:false,f:&#x27;Conexões usadas com frequência ficam mais fortes. Isso se chama plasticidade neural.&#x27;}
+  ];
+  var PERIGOS=[
+    {x:480,y:180,ax:480,ay:180,bx:480,by:300,t:0,v:0.30,r:17},
+    {x:660,y:430,ax:660,ay:430,bx:860,by:430,t:0,v:0.24,r:17},
+    {x:250,y:330,ax:250,ay:330,bx:250,by:210,t:0.5,v:0.34,r:15},
+    {x:790,y:250,ax:790,ay:250,bx:640,by:250,t:0.2,v:0.28,r:15}
+  ];
+  var pl={x:70,y:300,r:11,vx:0,vy:0,imune:0};
+  var rastro=[], faisca=[], coletados=0, saidaAberta=false, ativo=true;
+  var saida={x:CW-58,y:CH-58,r:30};
+  var teclas={};
+
+  function onKey(e){
+    var c=e.code;
+    if([&#x27;ArrowUp&#x27;,&#x27;ArrowDown&#x27;,&#x27;ArrowLeft&#x27;,&#x27;ArrowRight&#x27;,&#x27;KeyW&#x27;,&#x27;KeyA&#x27;,&#x27;KeyS&#x27;,&#x27;KeyD&#x27;,&#x27;Space&#x27;].indexOf(c)&gt;=0){
+      if(c!==&#x27;Space&#x27;) e.preventDefault();
+      teclas[c]=(e.type===&#x27;keydown&#x27;);
+    }
+  }
+  window.addEventListener(&#x27;keydown&#x27;,onKey);
+  window.addEventListener(&#x27;keyup&#x27;,onKey);
+
+  var alvoPonteiro=null;
+  cvs.addEventListener(&#x27;pointerdown&#x27;,function(e){ mover(e); cvs.setPointerCapture(e.pointerId); });
+  cvs.addEventListener(&#x27;pointermove&#x27;,function(e){ if(e.buttons) mover(e); });
+  cvs.addEventListener(&#x27;pointerup&#x27;,function(){ alvoPonteiro=null; });
+  function mover(e){
+    var r=cvs.getBoundingClientRect();
+    alvoPonteiro={x:(e.clientX-r.left)/r.width*CW, y:(e.clientY-r.top)/r.height*CH};
+  }
+
+  function colide(x,y,r){
+    for(var i=0;i&lt;PAREDES.length;i++){
+      var w=PAREDES[i];
+      var cx=clamp(x,w[0],w[0]+w[2]), cy=clamp(y,w[1],w[1]+w[3]);
+      if((x-cx)*(x-cx)+(y-cy)*(y-cy) &lt; r*r) return true;
+    }
+    return false;
+  }
+
+  var fim1=false;
+  function encerrar(){
+    if(fim1) return; fim1=true; ativo=false;
+    window.removeEventListener(&#x27;keydown&#x27;,onKey);
+    window.removeEventListener(&#x27;keyup&#x27;,onKey);
+    window.removeEventListener(&#x27;resize&#x27;,ajustar);
+  }
+
+  var ult=performance.now();
+  function loop(now){
+    if(fim1) return;
+    var dt=Math.min((now-ult)/1000,0.05); ult=now;
+    if(!elInfo.classList.contains(&#x27;on&#x27;) &amp;&amp; ativo){
+      var ax=0, ay=0;
+      if(teclas.ArrowLeft||teclas.KeyA) ax-=1;
+      if(teclas.ArrowRight||teclas.KeyD) ax+=1;
+      if(teclas.ArrowUp||teclas.KeyW) ay-=1;
+      if(teclas.ArrowDown||teclas.KeyS) ay+=1;
+      if(alvoPonteiro){
+        var dx=alvoPonteiro.x-pl.x, dy=alvoPonteiro.y-pl.y, d=Math.hypot(dx,dy);
+        if(d&gt;6){ ax+=dx/d; ay+=dy/d; }
+      }
+      var m=Math.hypot(ax,ay);
+      if(m&gt;0){ ax/=m; ay/=m; }
+      var VEL=228;
+      pl.vx=lerp(pl.vx,ax*VEL,Math.min(dt*13,1));
+      pl.vy=lerp(pl.vy,ay*VEL,Math.min(dt*13,1));
+      var nx=pl.x+pl.vx*dt, ny=pl.y+pl.vy*dt;
+      if(!colide(nx,pl.y,pl.r)) pl.x=nx; else pl.vx=0;
+      if(!colide(pl.x,ny,pl.r)) pl.y=ny; else pl.vy=0;
+
+      if(m&gt;0.1){
+        rastro.push({x:pl.x,y:pl.y,a:1});
+        if(Math.random()&lt;0.10) Som.passo();
+      }
+      for(var i=rastro.length-1;i&gt;=0;i--){ rastro[i].a-=dt*1.7;
+        if(rastro[i].a&lt;=0) rastro.splice(i,1); }
+
+      IMPULSOS.forEach(function(im,idx){
+        if(im.ok) return;
+        if(Math.hypot(pl.x-im.x,pl.y-im.y) &lt; pl.r+16){
+          im.ok=true; coletados++; elC.textContent=coletados;
+          addPts(120,&#x27;impulso&#x27;); Som.coleta(idx);
+          for(var k=0;k&lt;26;k++) faisca.push({x:im.x,y:im.y,
+            vx:rnd(-170,170),vy:rnd(-170,170),vida:rnd(0.4,0.9),t:0});
+          ativo=false;
+          ensinar(&#x27;Impulso nervoso &#x27;+coletados+&#x27;/5&#x27;, im.f, &#x27;⚡&#x27;, function(){
+            ativo=true; ult=performance.now();
+            if(coletados===5 &amp;&amp; !saidaAberta){
+              saidaAberta=true;
+              aviso(&#x27;saída liberada&#x27;,&#x27;ok&#x27;);
+              Som.acerto();
+            }
+          });
+        }
+      });
+
+      PERIGOS.forEach(function(pg){
+        pg.t+=dt*pg.v;
+        var f=(Math.sin(pg.t*6.2832)+1)/2;
+        pg.x=lerp(pg.ax,pg.bx,f); pg.y=lerp(pg.ay,pg.by,f);
+        if(pl.imune&lt;=0 &amp;&amp; Math.hypot(pl.x-pg.x,pl.y-pg.y) &lt; pl.r+pg.r){
+          pl.imune=1.6;
+          pl.x=70; pl.y=300; pl.vx=0; pl.vy=0;
+          if(perderVida(&#x27;sinapse instável&#x27;)) encerrar();
+        }
+      });
+      if(pl.imune&gt;0) pl.imune-=dt;
+
+      if(saidaAberta &amp;&amp; Math.hypot(pl.x-saida.x,pl.y-saida.y) &lt; pl.r+saida.r*0.8){
+        encerrar();
+        concluirFase(1, 200);
+        return;
+      }
+      for(var j=faisca.length-1;j&gt;=0;j--){
+        var s=faisca[j]; s.t+=dt; s.x+=s.vx*dt; s.y+=s.vy*dt;
+        s.vx*=0.94; s.vy*=0.94;
+        if(s.t&gt;s.vida) faisca.splice(j,1);
+      }
+    }
+
+    var tt=now/1000;
+    g.clearRect(0,0,CW,CH);
+    var bg=g.createLinearGradient(0,0,CW,CH);
+    bg.addColorStop(0,&#x27;#0a0722&#x27;); bg.addColorStop(0.5,&#x27;#120c30&#x27;); bg.addColorStop(1,&#x27;#0a0826&#x27;);
+    g.fillStyle=bg; g.fillRect(0,0,CW,CH);
+    g.strokeStyle=&#x27;rgba(150,105,255,.10)&#x27;; g.lineWidth=1;
+    for(var q=0;q&lt;16;q++){
+      var yy=(q*37+Math.sin(tt*0.3+q)*8)%CH;
+      g.beginPath(); g.moveTo(0,yy); g.lineTo(CW,yy+22); g.stroke();
+    }
+    PAREDES.forEach(function(w){
+      var wg=g.createLinearGradient(w[0],w[1],w[0],w[1]+w[3]);
+      wg.addColorStop(0,&#x27;rgba(96,60,190,.85)&#x27;); wg.addColorStop(1,&#x27;rgba(52,30,120,.85)&#x27;);
+      g.fillStyle=wg;
+      g.beginPath();
+      if(g.roundRect) g.roundRect(w[0],w[1],w[2],w[3],7); else g.rect(w[0],w[1],w[2],w[3]);
+      g.fill();
+      g.strokeStyle=&#x27;rgba(190,150,255,.55)&#x27;; g.lineWidth=1.4; g.stroke();
+    });
+    rastro.forEach(function(r){
+      g.fillStyle=&#x27;rgba(120,225,255,&#x27;+(r.a*0.34)+&#x27;)&#x27;;
+      g.beginPath(); g.arc(r.x,r.y,pl.r*r.a*0.85,0,6.2832); g.fill();
+    });
+    IMPULSOS.forEach(function(im,i){
+      if(im.ok) return;
+      var pu=0.6+0.4*Math.sin(tt*3+i);
+      var gg=g.createRadialGradient(im.x,im.y,0,im.x,im.y,42);
+      gg.addColorStop(0,&#x27;rgba(255,220,120,&#x27;+(0.5*pu)+&#x27;)&#x27;);
+      gg.addColorStop(1,&#x27;rgba(255,220,120,0)&#x27;);
+      g.fillStyle=gg; g.beginPath(); g.arc(im.x,im.y,42,0,6.2832); g.fill();
+      g.strokeStyle=&#x27;rgba(255,235,170,&#x27;+(0.5+0.4*pu)+&#x27;)&#x27;; g.lineWidth=2;
+      g.beginPath(); g.arc(im.x,im.y,15+pu*4,0,6.2832); g.stroke();
+      g.fillStyle=&#x27;#fff3c4&#x27;;
+      g.beginPath();
+      g.moveTo(im.x-4,im.y-11); g.lineTo(im.x+5,im.y-2); g.lineTo(im.x,im.y-1);
+      g.lineTo(im.x+4,im.y+11); g.lineTo(im.x-5,im.y+1); g.lineTo(im.x,im.y);
+      g.closePath(); g.fill();
+    });
+    PERIGOS.forEach(function(pg,i){
+      var pu=0.55+0.45*Math.sin(tt*5+i);
+      var gg=g.createRadialGradient(pg.x,pg.y,0,pg.x,pg.y,pg.r*2.8);
+      gg.addColorStop(0,&#x27;rgba(255,90,130,&#x27;+(0.44*pu)+&#x27;)&#x27;);
+      gg.addColorStop(1,&#x27;rgba(255,90,130,0)&#x27;);
+      g.fillStyle=gg; g.beginPath(); g.arc(pg.x,pg.y,pg.r*2.8,0,6.2832); g.fill();
+      g.fillStyle=&#x27;rgba(255,120,150,.92)&#x27;;
+      g.beginPath(); g.arc(pg.x,pg.y,pg.r*(0.85+pu*0.14),0,6.2832); g.fill();
+      g.strokeStyle=&#x27;rgba(255,200,215,.85)&#x27;; g.lineWidth=1.6;
+      g.beginPath(); g.arc(pg.x,pg.y,pg.r+5+pu*3,0,6.2832); g.stroke();
+    });
+    if(saidaAberta){
+      var pu2=0.5+0.5*Math.sin(tt*2.4);
+      var sg=g.createRadialGradient(saida.x,saida.y,0,saida.x,saida.y,saida.r*2.6);
+      sg.addColorStop(0,&#x27;rgba(120,255,210,&#x27;+(0.55*pu2+0.2)+&#x27;)&#x27;);
+      sg.addColorStop(1,&#x27;rgba(120,255,210,0)&#x27;);
+      g.fillStyle=sg; g.beginPath(); g.arc(saida.x,saida.y,saida.r*2.6,0,6.2832); g.fill();
+      for(var a2=0;a2&lt;3;a2++){
+        g.strokeStyle=&#x27;rgba(180,255,230,&#x27;+(0.7-a2*0.2)+&#x27;)&#x27;; g.lineWidth=2;
+        g.beginPath(); g.arc(saida.x,saida.y,saida.r-a2*8+Math.sin(tt*3+a2)*3,0,6.2832); g.stroke();
+      }
+    }
+    faisca.forEach(function(s){
+      var a=1-s.t/s.vida;
+      g.fillStyle=&#x27;rgba(255,230,150,&#x27;+a+&#x27;)&#x27;;
+      g.beginPath(); g.arc(s.x,s.y,2.6*a+0.6,0,6.2832); g.fill();
+    });
+    var im0=pl.imune&gt;0 &amp;&amp; Math.floor(tt*14)%2===0;
+    if(!im0){
+      var pg2=g.createRadialGradient(pl.x,pl.y,0,pl.x,pl.y,pl.r*4.2);
+      pg2.addColorStop(0,&#x27;rgba(130,230,255,.62)&#x27;); pg2.addColorStop(1,&#x27;rgba(130,230,255,0)&#x27;);
+      g.fillStyle=pg2; g.beginPath(); g.arc(pl.x,pl.y,pl.r*4.2,0,6.2832); g.fill();
+      g.fillStyle=&#x27;#eafcff&#x27;;
+      g.beginPath(); g.arc(pl.x,pl.y,pl.r,0,6.2832); g.fill();
+      g.strokeStyle=&#x27;rgba(120,220,255,.9)&#x27;; g.lineWidth=2;
+      g.beginPath(); g.arc(pl.x,pl.y,pl.r+4+Math.sin(tt*4)*2,0,6.2832); g.stroke();
+    }
+    requestAnimationFrame(loop);
+  }
+  requestAnimationFrame(loop);
+}
+
+var ICONES=[
+  &#x27;&lt;circle cx=&quot;12&quot; cy=&quot;12&quot; r=&quot;8&quot;/&gt;&#x27;,
+  &#x27;&lt;rect x=&quot;4&quot; y=&quot;4&quot; width=&quot;16&quot; height=&quot;16&quot; rx=&quot;3&quot;/&gt;&#x27;,
+  &#x27;&lt;path d=&quot;M12 3l9 17H3z&quot;/&gt;&#x27;,
+  &#x27;&lt;path d=&quot;M12 2l2.6 6.6L21 11l-6.4 2.4L12 20l-2.6-6.6L3 11l6.4-2.4z&quot;/&gt;&#x27;,
+  &#x27;&lt;path d=&quot;M12 21S3 14 3 8.6A4.7 4.7 0 0 1 12 6a4.7 4.7 0 0 1 9 2.6C21 14 12 21 12 21z&quot;/&gt;&#x27;,
+  &#x27;&lt;path d=&quot;M12 2l8 5v10l-8 5-8-5V7z&quot;/&gt;&#x27;,
+  &#x27;&lt;path d=&quot;M4 12h6l2-7 2 14 2-7h4&quot;/&gt;&#x27;,
+  &#x27;&lt;path d=&quot;M12 3a6 6 0 0 1 6 6c0 3-2 4-2 7H8c0-3-2-4-2-7a6 6 0 0 1 6-6z&quot;/&gt;&#x27;,
+  &#x27;&lt;path d=&quot;M5 19L12 5l7 14z&quot; /&gt;&lt;circle cx=&quot;12&quot; cy=&quot;14&quot; r=&quot;2.5&quot; fill=&quot;#0b0820&quot;/&gt;&#x27;,
+  &#x27;&lt;path d=&quot;M3 12a9 9 0 0 1 18 0 9 9 0 0 1-18 0z&quot;/&gt;&lt;path d=&quot;M12 3v18&quot; stroke=&quot;#0b0820&quot; stroke-width=&quot;2&quot; fill=&quot;none&quot;/&gt;&#x27;,
+  &#x27;&lt;path d=&quot;M6 4h12v6a6 6 0 0 1-12 0z&quot;/&gt;&lt;path d=&quot;M9 16h6v4H9z&quot;/&gt;&#x27;,
+  &#x27;&lt;path d=&quot;M12 2l3 7h7l-5.6 4.3L18.6 21 12 16.7 5.4 21l2.2-7.7L2 9h7z&quot;/&gt;&#x27;
+];
+function svgIcone(i){
+  return &#x27;&lt;svg viewBox=&quot;0 0 24 24&quot; fill=&quot;#f3ecff&quot; stroke=&quot;none&quot;&gt;&#x27;+ICONES[i%ICONES.length]+&#x27;&lt;/svg&gt;&#x27;;
+}
+
+function fase2(){
+  var COLS=4, LINS=3, TOTAL=COLS*LINS;
+  var RODADAS=[{n:3,ms:2400},{n:4,ms:2600},{n:5,ms:2900}];
+  var rodada=0, alvo=[], escolhidos=[], travado=true;
+
+  var t=novaTela();
+  t.innerHTML=
+    &#x27;&lt;div class=&quot;eyebrow&quot;&gt;Fase 02 · Laboratório da memória&lt;/div&gt;&#x27;+
+    &#x27;&lt;h2 class=&quot;fase&quot; id=&quot;m-tit&quot;&gt;MEMORIZE&lt;/h2&gt;&#x27;+
+    &#x27;&lt;p class=&quot;sub&quot; id=&quot;m-txt&quot;&gt;Guarde quais células vão se acender.&lt;/p&gt;&#x27;+
+    &#x27;&lt;div id=&quot;gradeMem&quot;&gt;&lt;/div&gt;&#x27;+
+    &#x27;&lt;p class=&quot;pista&quot;&gt;rodada &lt;b id=&quot;m-r&quot;&gt;1&lt;/b&gt;/3 · selecione &lt;b id=&quot;m-n&quot;&gt;3&lt;/b&gt;&lt;/p&gt;&#x27;;
+  mostrar(t);
+
+  var grade=t.querySelector(&#x27;#gradeMem&#x27;);
+  grade.style.gridTemplateColumns=&#x27;repeat(&#x27;+COLS+&#x27;,auto)&#x27;;
+  var celulas=[];
+  for(var i=0;i&lt;TOTAL;i++){
+    var c=el(&#x27;button&#x27;,&#x27;cel bloq&#x27;, svgIcone(i));
+    c.setAttribute(&#x27;type&#x27;,&#x27;button&#x27;);
+    c.dataset.i=i;
+    c.addEventListener(&#x27;click&#x27;, clicar);
+    grade.appendChild(c);
+    celulas.push(c);
+  }
+
+  function limpar(){
+    celulas.forEach(function(c){ c.className=&#x27;cel bloq&#x27;; });
+  }
+  function iniciarRodada(){
+    var r=RODADAS[rodada];
+    t.querySelector(&#x27;#m-r&#x27;).textContent=rodada+1;
+    t.querySelector(&#x27;#m-n&#x27;).textContent=r.n;
+    t.querySelector(&#x27;#m-tit&#x27;).textContent=&#x27;MEMORIZE&#x27;;
+    t.querySelector(&#x27;#m-txt&#x27;).textContent=&#x27;Guarde quais células vão se acender.&#x27;;
+    limpar(); escolhidos=[]; travado=true;
+    var idx=[]; for(var k=0;k&lt;TOTAL;k++) idx.push(k);
+    alvo=embaralhar(idx).slice(0,r.n);
+    setTimeout(function(){
+      alvo.forEach(function(a,j){
+        setTimeout(function(){
+          celulas[a].classList.add(&#x27;mostra&#x27;);
+          Som.tique();
+        }, j*230);
+      });
+      setTimeout(function(){
+        limpar();
+        travado=false;
+        t.querySelector(&#x27;#m-tit&#x27;).textContent=&#x27;AGORA REPRODUZA&#x27;;
+        t.querySelector(&#x27;#m-txt&#x27;).textContent=&#x27;Clique nas &#x27;+r.n+&#x27; células que acenderam.&#x27;;
+        celulas.forEach(function(c){ c.classList.remove(&#x27;bloq&#x27;); });
+      }, r.ms + alvo.length*230);
+    }, 620);
+  }
+
+  function clicar(e){
+    if(travado) return;
+    var c=e.currentTarget, i=+c.dataset.i;
+    if(escolhidos.indexOf(i)&gt;=0) return;
+    escolhidos.push(i);
+    if(alvo.indexOf(i)&gt;=0){
+      c.classList.add(&#x27;certo&#x27;); c.classList.add(&#x27;bloq&#x27;);
+      Som.tique(); addPts(60,&#x27;acerto&#x27;);
+      if(escolhidos.filter(function(x){return alvo.indexOf(x)&gt;=0;}).length===alvo.length){
+        travado=true;
+        celulas.forEach(function(cc){ cc.classList.add(&#x27;bloq&#x27;); });
+        rodada++;
+        if(rodada&gt;=RODADAS.length){
+          setTimeout(function(){
+            ensinar(&#x27;Hipocampo&#x27;,&#x27;O hipocampo é essencial para transformar experiências em memórias &#x27;+
+              &#x27;novas. Sem ele, o cérebro vive o presente, mas não guarda o que acabou de acontecer.&#x27;,
+              &#x27;🧠&#x27;, function(){ concluirFase(2, 220); });
+          },520);
+        } else {
+          aviso(&#x27;rodada completa&#x27;,&#x27;ok&#x27;);
+          setTimeout(iniciarRodada, 900);
+        }
+      }
+    } else {
+      c.classList.add(&#x27;errado&#x27;);
+      travado=true;
+      if(perderVida(&#x27;célula errada&#x27;)) return;
+      setTimeout(function(){
+        aviso(&#x27;tente essa rodada de novo&#x27;,&#x27;&#x27;);
+        iniciarRodada();
+      }, 950);
+    }
+  }
+  iniciarRodada();
+}
+
+function fase3(){
+  var CORES=[
+    {id:&#x27;vermelho&#x27;, nome:&#x27;VERMELHO&#x27;, hex:&#x27;#ff5f6d&#x27;},
+    {id:&#x27;azul&#x27;,     nome:&#x27;AZUL&#x27;,     hex:&#x27;#5fa8ff&#x27;},
+    {id:&#x27;verde&#x27;,    nome:&#x27;VERDE&#x27;,    hex:&#x27;#4ce0a8&#x27;},
+    {id:&#x27;amarelo&#x27;,  nome:&#x27;AMARELO&#x27;,  hex:&#x27;#ffd36b&#x27;}
+  ];
+  var TOTAL=8, n=0, atual=null, tempo=0, LIMITE=4.2, rodando=false, fim4=false;
+
+  var t=novaTela();
+  t.innerHTML=
+    &#x27;&lt;div class=&quot;eyebrow&quot;&gt;Fase 03 · Mente automática&lt;/div&gt;&#x27;+
+    &#x27;&lt;h2 class=&quot;fase&quot;&gt;QUAL É A &lt;b style=&quot;color:var(--ciano)&quot;&gt;COR&lt;/b&gt; DA PALAVRA?&lt;/h2&gt;&#x27;+
+    &#x27;&lt;div id=&quot;stroopPalavra&quot;&gt;—&lt;/div&gt;&#x27;+
+    &#x27;&lt;div id=&quot;tempoWrap&quot;&gt;&lt;div id=&quot;tempoBar&quot;&gt;&lt;/div&gt;&lt;/div&gt;&#x27;+
+    &#x27;&lt;div id=&quot;stroopOpts&quot;&gt;&lt;/div&gt;&#x27;+
+    &#x27;&lt;p class=&quot;pista&quot;&gt;questão &lt;b id=&quot;s-n&quot;&gt;1&lt;/b&gt;/&#x27;+TOTAL+&#x27; · ignore o que está escrito&lt;/p&gt;&#x27;;
+  mostrar(t);
+
+  var elPal=t.querySelector(&#x27;#stroopPalavra&#x27;);
+  var elBar=t.querySelector(&#x27;#tempoBar&#x27;);
+  var elOpts=t.querySelector(&#x27;#stroopOpts&#x27;);
+  var elN=t.querySelector(&#x27;#s-n&#x27;);
+
+  CORES.forEach(function(c,i){
+    var b=el(&#x27;button&#x27;,&#x27;corBtn&#x27;, c.nome+&#x27;&lt;kbd&gt;&#x27;+(i+1)+&#x27;&lt;/kbd&gt;&#x27;);
+    b.type=&#x27;button&#x27;;
+    b.style.background=c.hex;
+    b.dataset.id=c.id;
+    b.addEventListener(&#x27;click&#x27;,function(){ responder(c.id); });
+    elOpts.appendChild(b);
+  });
+
+  function proxima(){
+    if(n&gt;=TOTAL){
+      rodando=false;
+      ensinar(&#x27;Processos automáticos&#x27;,&#x27;Algumas respostas do cérebro acontecem automaticamente — &#x27;+
+        &#x27;ler é uma delas. Por isso precisamos de esforço consciente para ignorar o significado &#x27;+
+        &#x27;da palavra e responder só a cor. Isso é controle inibitório.&#x27;, &#x27;⚙&#x27;,
+        function(){ fim4=true; concluirFase(3, 260); });
+      return;
+    }
+    n++; elN.textContent=n;
+    var iPal=ri(0,3), iCor=ri(0,3);
+    if(iPal===iCor &amp;&amp; Math.random()&lt;0.8) iCor=(iCor+1+ri(0,2))%4;
+    atual=CORES[iCor];
+    elPal.textContent=CORES[iPal].nome;
+    elPal.style.color=CORES[iCor].hex;
+    elPal.animate([{opacity:0,transform:&#x27;scale(.86)&#x27;},{opacity:1,transform:&#x27;none&#x27;}],
+      {duration:260,easing:&#x27;cubic-bezier(.2,.8,.2,1)&#x27;});
+    tempo=LIMITE; rodando=true;
+  }
+  function responder(id){
+    if(!rodando||fim4) return;
+    rodando=false;
+    if(id===atual.id){
+      var b=Math.round(tempo*22);
+      addPts(70+b,&#x27;rápido&#x27;); Som.acerto();
+      aviso(&#x27;correto&#x27;,&#x27;ok&#x27;);
+      setTimeout(proxima,520);
+    } else {
+      if(perderVida(&#x27;essa não era a cor&#x27;)){ fim4=true; return; }
+      setTimeout(proxima,760);
+    }
+  }
+  function tecla(e){
+    if(fim4) return;
+    var k=[&#x27;Digit1&#x27;,&#x27;Digit2&#x27;,&#x27;Digit3&#x27;,&#x27;Digit4&#x27;].indexOf(e.code);
+    if(k&lt;0) k=[&#x27;Numpad1&#x27;,&#x27;Numpad2&#x27;,&#x27;Numpad3&#x27;,&#x27;Numpad4&#x27;].indexOf(e.code);
+    if(k&gt;=0){ e.preventDefault(); responder(CORES[k].id); }
+  }
+  window.addEventListener(&#x27;keydown&#x27;,tecla);
+
+  var ult=performance.now();
+  function loop(now){
+    if(fim4){ window.removeEventListener(&#x27;keydown&#x27;,tecla); return; }
+    var dt=Math.min((now-ult)/1000,0.05); ult=now;
+    if(rodando &amp;&amp; !elInfo.classList.contains(&#x27;on&#x27;)){
+      tempo-=dt;
+      elBar.style.width=clamp(tempo/LIMITE,0,1)*100+&#x27;%&#x27;;
+      if(tempo&lt;=0){
+        rodando=false;
+        if(perderVida(&#x27;tempo esgotado&#x27;)){ fim4=true; return; }
+        setTimeout(proxima,700);
+      }
+    }
+    requestAnimationFrame(loop);
+  }
+  proxima();
+  requestAnimationFrame(loop);
+}
+
+function rostoSVG(emo){
+  var olhos, sobr, boca, extra=&#x27;&#x27;;
+  if(emo===&#x27;alegria&#x27;){
+    sobr=&#x27;&lt;path d=&quot;M52 74q13-11 26-2&quot; /&gt;&lt;path d=&quot;M122 72q13-9 26 2&quot; /&gt;&#x27;;
+    olhos=&#x27;&lt;path d=&quot;M56 96q12-14 24 0&quot; /&gt;&lt;path d=&quot;M120 96q12-14 24 0&quot; /&gt;&#x27;;
+    boca=&#x27;&lt;path d=&quot;M62 126q38 34 76 0&quot; fill=&quot;none&quot;/&gt;&#x27;;
+    extra=&#x27;&lt;path d=&quot;M58 118q42 8 84 0&quot; stroke-width=&quot;0&quot; fill=&quot;rgba(255,255,255,.08)&quot;/&gt;&#x27;;
+  } else if(emo===&#x27;medo&#x27;){
+    sobr=&#x27;&lt;path d=&quot;M52 66q14-14 28-2&quot; /&gt;&lt;path d=&quot;M120 64q14-12 28 2&quot; /&gt;&#x27;;
+    olhos=&#x27;&lt;circle cx=&quot;68&quot; cy=&quot;96&quot; r=&quot;14&quot; fill=&quot;none&quot;/&gt;&lt;circle cx=&quot;68&quot; cy=&quot;98&quot; r=&quot;5&quot; fill=&quot;currentColor&quot; stroke=&quot;none&quot;/&gt;&#x27;+
+          &#x27;&lt;circle cx=&quot;132&quot; cy=&quot;96&quot; r=&quot;14&quot; fill=&quot;none&quot;/&gt;&lt;circle cx=&quot;132&quot; cy=&quot;98&quot; r=&quot;5&quot; fill=&quot;currentColor&quot; stroke=&quot;none&quot;/&gt;&#x27;;
+    boca=&#x27;&lt;ellipse cx=&quot;100&quot; cy=&quot;140&quot; rx=&quot;15&quot; ry=&quot;19&quot; fill=&quot;none&quot;/&gt;&#x27;;
+  } else if(emo===&#x27;raiva&#x27;){
+    sobr=&#x27;&lt;path d=&quot;M52 66l32 16&quot; /&gt;&lt;path d=&quot;M148 66l-32 16&quot; /&gt;&#x27;;
+    olhos=&#x27;&lt;path d=&quot;M56 100q12-8 24 0&quot; /&gt;&lt;path d=&quot;M120 100q12-8 24 0&quot; /&gt;&#x27;;
+    boca=&#x27;&lt;path d=&quot;M64 146q36-28 72 0&quot; fill=&quot;none&quot;/&gt;&#x27;;
+  } else if(emo===&#x27;tristeza&#x27;){
+    sobr=&#x27;&lt;path d=&quot;M54 80q14-14 28-4&quot; /&gt;&lt;path d=&quot;M146 80q-14-14-28-4&quot; /&gt;&#x27;;
+    olhos=&#x27;&lt;path d=&quot;M56 100q12-12 24 0&quot; /&gt;&lt;path d=&quot;M120 100q12-12 24 0&quot; /&gt;&#x27;;
+    boca=&#x27;&lt;path d=&quot;M66 148q34-26 68 0&quot; fill=&quot;none&quot;/&gt;&#x27;;
+    extra=&#x27;&lt;path d=&quot;M74 112q5 12 0 18 -8-3-4-11z&quot; fill=&quot;#7fd8ff&quot; stroke=&quot;none&quot; opacity=&quot;.9&quot;/&gt;&#x27;;
+  } else {
+    sobr=&#x27;&lt;path d=&quot;M50 60q16-14 32-4&quot; /&gt;&lt;path d=&quot;M150 60q-16-14-32-4&quot; /&gt;&#x27;;
+    olhos=&#x27;&lt;circle cx=&quot;68&quot; cy=&quot;98&quot; r=&quot;15&quot; fill=&quot;none&quot;/&gt;&lt;circle cx=&quot;68&quot; cy=&quot;100&quot; r=&quot;6&quot; fill=&quot;currentColor&quot; stroke=&quot;none&quot;/&gt;&#x27;+
+          &#x27;&lt;circle cx=&quot;132&quot; cy=&quot;98&quot; r=&quot;15&quot; fill=&quot;none&quot;/&gt;&lt;circle cx=&quot;132&quot; cy=&quot;100&quot; r=&quot;6&quot; fill=&quot;currentColor&quot; stroke=&quot;none&quot;/&gt;&#x27;;
+    boca=&#x27;&lt;ellipse cx=&quot;100&quot; cy=&quot;142&quot; rx=&quot;19&quot; ry=&quot;22&quot; fill=&quot;none&quot;/&gt;&#x27;;
+  }
+  return &#x27;&lt;svg viewBox=&quot;0 0 200 200&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; &#x27;+
+    &#x27;stroke-width=&quot;7&quot; stroke-linecap=&quot;round&quot; stroke-linejoin=&quot;round&quot;&gt;&#x27;+
+    &#x27;&lt;circle cx=&quot;100&quot; cy=&quot;104&quot; r=&quot;82&quot; fill=&quot;rgba(160,110,255,.10)&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;4&quot;/&gt;&#x27;+
+    extra+sobr+olhos+boca+&#x27;&lt;/svg&gt;&#x27;;
+}
+function fase4(){
+  var EMOS=[
+    {id:&#x27;alegria&#x27;, nome:&#x27;Alegria&#x27;, cor:&#x27;#ffd36b&#x27;},
+    {id:&#x27;medo&#x27;,    nome:&#x27;Medo&#x27;,    cor:&#x27;#9b7bff&#x27;},
+    {id:&#x27;raiva&#x27;,   nome:&#x27;Raiva&#x27;,   cor:&#x27;#ff5f6d&#x27;},
+    {id:&#x27;tristeza&#x27;,nome:&#x27;Tristeza&#x27;,cor:&#x27;#5fa8ff&#x27;},
+    {id:&#x27;surpresa&#x27;,nome:&#x27;Surpresa&#x27;,cor:&#x27;#4ce0a8&#x27;}
+  ];
+  var ordem=embaralhar(EMOS), i=0, travado=false, fim5=false;
+
+  var t=novaTela();
+  t.innerHTML=
+    &#x27;&lt;div class=&quot;eyebrow&quot;&gt;Fase 04 · Sala das emoções&lt;/div&gt;&#x27;+
+    &#x27;&lt;h2 class=&quot;fase&quot;&gt;QUE EMOÇÃO É ESSA?&lt;/h2&gt;&#x27;+
+    &#x27;&lt;div id=&quot;rostoWrap&quot;&gt;&lt;/div&gt;&#x27;+
+    &#x27;&lt;div id=&quot;emoOpts&quot;&gt;&lt;/div&gt;&#x27;+
+    &#x27;&lt;p class=&quot;pista&quot;&gt;rosto &lt;b id=&quot;e-n&quot;&gt;1&lt;/b&gt;/5 · clique ou use &lt;kbd&gt;1&lt;/kbd&gt;–&lt;kbd&gt;4&lt;/kbd&gt;&lt;/p&gt;&#x27;;
+  mostrar(t);
+
+  var wrap=t.querySelector(&#x27;#rostoWrap&#x27;);
+  var opts=t.querySelector(&#x27;#emoOpts&#x27;);
+  var elN=t.querySelector(&#x27;#e-n&#x27;);
+  var atuaisBtns=[];
+
+  function mostrarRosto(){
+    if(i&gt;=ordem.length){
+      ensinar(&#x27;Amígdala cerebral&#x27;,&#x27;A amígdala participa do processamento emocional e é rápida &#x27;+
+        &#x27;em identificar estímulos com carga emocional — principalmente ameaças. Ela reage antes &#x27;+
+        &#x27;mesmo de você ter consciência do que viu.&#x27;, &#x27;◈&#x27;,
+        function(){ fim5=true; concluirFase(4, 260); });
+      return;
+    }
+    var e=ordem[i];
+    elN.textContent=i+1;
+    wrap.style.color=e.cor;
+    wrap.innerHTML=rostoSVG(e.id);
+    wrap.animate([{opacity:0,transform:&#x27;scale(.9)&#x27;},{opacity:1,transform:&#x27;none&#x27;}],
+      {duration:420,easing:&#x27;cubic-bezier(.2,.8,.2,1)&#x27;});
+    efeito(e.id, e.cor);
+
+    var erradas=embaralhar(EMOS.filter(function(x){return x.id!==e.id;})).slice(0,3);
+    var lista=embaralhar([e].concat(erradas));
+    opts.innerHTML=&#x27;&#x27;; atuaisBtns=[];
+    lista.forEach(function(o,k){
+      var b=el(&#x27;button&#x27;,&#x27;emoBtn&#x27;, o.nome);
+      b.type=&#x27;button&#x27;;
+      b.addEventListener(&#x27;click&#x27;,function(){ responder(o,e,b); });
+      opts.appendChild(b); atuaisBtns.push({o:o,b:b});
+    });
+    travado=false;
+  }
+  function efeito(id,cor){
+    wrap.style.filter=&#x27;drop-shadow(0 0 34px &#x27;+cor+&#x27;88)&#x27;;
+    if(id===&#x27;raiva&#x27;){
+      wrap.animate([{transform:&#x27;translateX(0)&#x27;},{transform:&#x27;translateX(-7px)&#x27;},
+        {transform:&#x27;translateX(7px)&#x27;},{transform:&#x27;translateX(0)&#x27;}],{duration:420,iterations:2});
+    } else if(id===&#x27;medo&#x27;){
+      wrap.animate([{transform:&#x27;scale(1)&#x27;},{transform:&#x27;scale(.94)&#x27;},{transform:&#x27;scale(1)&#x27;}],
+        {duration:900,iterations:3});
+    } else if(id===&#x27;alegria&#x27;){
+      wrap.animate([{transform:&#x27;translateY(0)&#x27;},{transform:&#x27;translateY(-11px)&#x27;},
+        {transform:&#x27;translateY(0)&#x27;}],{duration:1100,iterations:3,easing:&#x27;ease-in-out&#x27;});
+    } else if(id===&#x27;tristeza&#x27;){
+      wrap.animate([{transform:&#x27;translateY(0) rotate(0)&#x27;},{transform:&#x27;translateY(7px) rotate(-2deg)&#x27;}],
+        {duration:1800,direction:&#x27;alternate&#x27;,iterations:3,easing:&#x27;ease-in-out&#x27;});
+    } else {
+      wrap.animate([{transform:&#x27;scale(.86)&#x27;},{transform:&#x27;scale(1.06)&#x27;},{transform:&#x27;scale(1)&#x27;}],
+        {duration:520,easing:&#x27;cubic-bezier(.2,1.6,.4,1)&#x27;});
+    }
+  }
+  function responder(escolha, certa, btn){
+    if(travado||fim5) return;
+    travado=true;
+    if(escolha.id===certa.id){
+      btn.classList.add(&#x27;certo&#x27;); addPts(90,&#x27;emoção certa&#x27;); Som.acerto();
+      i++; setTimeout(mostrarRosto,900);
+    } else {
+      btn.classList.add(&#x27;errado&#x27;);
+      atuaisBtns.forEach(function(x){ if(x.o.id===certa.id) x.b.classList.add(&#x27;certo&#x27;); });
+      if(perderVida(&#x27;era &#x27;+certa.nome.toLowerCase())){ fim5=true; return; }
+      i++; setTimeout(mostrarRosto,1300);
+    }
+  }
+  function tecla(e){
+    if(fim5||travado) return;
+    var k=[&#x27;Digit1&#x27;,&#x27;Digit2&#x27;,&#x27;Digit3&#x27;,&#x27;Digit4&#x27;].indexOf(e.code);
+    if(k&gt;=0 &amp;&amp; atuaisBtns[k]){ e.preventDefault(); atuaisBtns[k].b.click(); }
+  }
+  window.addEventListener(&#x27;keydown&#x27;,tecla);
+  var limpar=setInterval(function(){
+    if(fim5){ window.removeEventListener(&#x27;keydown&#x27;,tecla); clearInterval(limpar); }
+  },400);
+  mostrarRosto();
+}
+
+function fase5(){
+  var SITS=[
+    { txt:&#x27;Você tem uma prova amanhã, mas seus amigos chamaram você para sair.&#x27;,
+      ops:[
+        {t:&#x27;Ficar em casa e estudar a noite toda.&#x27;,
+         e:&#x27;Seu córtex pré-frontal assumiu o comando. É a região do controle executivo: ela segura o impulso imediato em nome de um objetivo distante.&#x27;},
+        {t:&#x27;Sair e estudar de manhã bem cedo.&#x27;,
+         e:&#x27;Uma negociação entre recompensa imediata e planejamento. O cérebro faz isso o tempo todo, estimando o risco de cada caminho.&#x27;},
+        {t:&#x27;Sair e resolver depois como der.&#x27;,
+         e:&#x27;O sistema de recompensa falou mais alto. A dopamina não é &quot;prazer&quot; apenas: ela sinaliza expectativa de algo bom, e empurra a escolha para lá.&#x27;}
+      ]},
+    { txt:&#x27;Alguém critica seu trabalho na frente de outras pessoas.&#x27;,
+      ops:[
+        {t:&#x27;Responder na hora, no mesmo tom.&#x27;,
+         e:&#x27;A amígdala reagiu antes do raciocínio — é o caminho rápido, feito para ameaças. Só depois o córtex avalia se valia a pena.&#x27;},
+        {t:&#x27;Respirar e responder mais tarde, com calma.&#x27;,
+         e:&#x27;Você deu tempo ao córtex pré-frontal para entrar na conversa. Regular emoção não é apagá-la: é atrasar a resposta automática.&#x27;},
+        {t:&#x27;Não dizer nada e guardar para si.&#x27;,
+         e:&#x27;Evitar o conflito também é uma decisão. O cérebro pesa o custo social do confronto — e às vezes escolhe o silêncio como proteção.&#x27;}
+      ]},
+    { txt:&#x27;Você está muito cansado, mas ainda falta terminar uma tarefa importante.&#x27;,
+      ops:[
+        {t:&#x27;Forçar e terminar agora.&#x27;,
+         e:&#x27;Com sono, o córtex pré-frontal funciona pior: atenção, memória de trabalho e autocontrole caem justamente quando você mais precisa deles.&#x27;},
+        {t:&#x27;Dormir e acordar mais cedo para terminar.&#x27;,
+         e:&#x27;Durante o sono o cérebro consolida memórias e reorganiza o que foi aprendido. Descansar às vezes é parte do trabalho.&#x27;},
+        {t:&#x27;Fazer só o essencial e dormir.&#x27;,
+         e:&#x27;Isso é priorização — uma função executiva. Decidir o que NÃO fazer também exige o córtex pré-frontal.&#x27;}
+      ]}
+  ];
+  var i=0, travado=false;
+
+  var t=novaTela();
+  t.innerHTML=
+    &#x27;&lt;div class=&quot;eyebrow&quot;&gt;Fase 05 · A decisão&lt;/div&gt;&#x27;+
+    &#x27;&lt;h2 class=&quot;fase&quot;&gt;ESCOLHA UM CAMINHO&lt;/h2&gt;&#x27;+
+    &#x27;&lt;div class=&quot;painel&quot; id=&quot;decCard&quot;&gt;&#x27;+
+      &#x27;&lt;p id=&quot;decSit&quot;&gt;&lt;/p&gt;&#x27;+
+      &#x27;&lt;div id=&quot;decOpts&quot;&gt;&lt;/div&gt;&#x27;+
+    &#x27;&lt;/div&gt;&#x27;+
+    &#x27;&lt;p class=&quot;pista&quot;&gt;situação &lt;b id=&quot;d-n&quot;&gt;1&lt;/b&gt;/3 · não existe resposta totalmente certa&lt;/p&gt;&#x27;;
+  mostrar(t);
+
+  var elSit=t.querySelector(&#x27;#decSit&#x27;), elOpts=t.querySelector(&#x27;#decOpts&#x27;),
+      elN=t.querySelector(&#x27;#d-n&#x27;);
+  var btns=[];
+
+  function mostrarSit(){
+    if(i&gt;=SITS.length){
+      ensinar(&#x27;Tomada de decisão&#x27;,&#x27;Decisões humanas envolvem emoções, experiências anteriores, &#x27;+
+        &#x27;expectativa de recompensa, avaliação de risco e controle executivo — tudo ao mesmo tempo. &#x27;+
+        &#x27;Raramente existe só uma resposta certa.&#x27;, &#x27;⑂&#x27;,
+        function(){ concluirFase(5, 300); });
+      return;
+    }
+    var s=SITS[i]; elN.textContent=i+1;
+    elSit.textContent=s.txt;
+    elOpts.innerHTML=&#x27;&#x27;; btns=[];
+    travado=false;
+    s.ops.forEach(function(o,k){
+      var b=el(&#x27;button&#x27;,&#x27;decBtn&#x27;,&#x27;&lt;span class=&quot;num&quot;&gt;&#x27;+(k+1)+&#x27;&lt;/span&gt;&lt;span&gt;&#x27;+o.t+&#x27;&lt;/span&gt;&#x27;);
+      b.type=&#x27;button&#x27;;
+      b.addEventListener(&#x27;click&#x27;,function(){
+        if(travado) return;
+        travado=true;
+        Som.clique(); addPts(110,&#x27;escolha feita&#x27;);
+        i++;
+        ensinar(&#x27;O que aconteceu no cérebro&#x27;, o.e, &#x27;◈&#x27;, mostrarSit);
+      });
+      elOpts.appendChild(b); btns.push(b);
+    });
+    t.querySelector(&#x27;#decCard&#x27;).animate(
+      [{opacity:0,transform:&#x27;translateY(16px)&#x27;},{opacity:1,transform:&#x27;none&#x27;}],
+      {duration:460,easing:&#x27;cubic-bezier(.2,.8,.2,1)&#x27;});
+  }
+  function tecla(e){
+    if(travado||elInfo.classList.contains(&#x27;on&#x27;)) return;
+    var k=[&#x27;Digit1&#x27;,&#x27;Digit2&#x27;,&#x27;Digit3&#x27;].indexOf(e.code);
+    if(k&gt;=0 &amp;&amp; btns[k]){ e.preventDefault(); btns[k].click(); }
+  }
+  window.addEventListener(&#x27;keydown&#x27;,tecla);
+  mostrarSit();
+}
+
+function telaFinal(){
+  Som.fim();
+  var t=novaTela();
+  t.innerHTML=
+    &#x27;&lt;div class=&quot;eyebrow&quot;&gt;Saída encontrada&lt;/div&gt;&#x27;+
+    &#x27;&lt;h1 class=&quot;titulo&quot; style=&quot;font-size:clamp(24px,5.2vw,50px)&quot;&gt;&#x27;+
+      &#x27;PARABÉNS! VOCÊ CONSEGUIU SAIR DA MENTE.&lt;/h1&gt;&#x27;+
+    &#x27;&lt;div class=&quot;linha&quot;&gt;&lt;/div&gt;&#x27;+
+    &#x27;&lt;p class=&quot;sub&quot;&gt;Mas agora sabe que bilhões de neurônios estavam trabalhando &#x27;+
+      &#x27;durante toda essa jornada.&lt;/p&gt;&#x27;+
+    &#x27;&lt;div id=&quot;fimStats&quot;&gt;&#x27;+
+      &#x27;&lt;div class=&quot;stat&quot;&gt;&lt;div class=&quot;n&quot;&gt;&#x27;+S.pts+&#x27;&lt;/div&gt;&lt;div class=&quot;l&quot;&gt;Pontos&lt;/div&gt;&lt;/div&gt;&#x27;+
+      &#x27;&lt;div class=&quot;stat&quot;&gt;&lt;div class=&quot;n&quot;&gt;&#x27;+S.vidas+&#x27;/&#x27;+VIDAS_INICIAIS+&#x27;&lt;/div&gt;&lt;div class=&quot;l&quot;&gt;Vidas restantes&lt;/div&gt;&lt;/div&gt;&#x27;+
+      &#x27;&lt;div class=&quot;stat&quot;&gt;&lt;div class=&quot;n&quot;&gt;5/5&lt;/div&gt;&lt;div class=&quot;l&quot;&gt;Fases&lt;/div&gt;&lt;/div&gt;&#x27;+
+    &#x27;&lt;/div&gt;&#x27;+
+    &#x27;&lt;button class=&quot;btn grande&quot; id=&quot;btDeNovo&quot;&gt;Jogar novamente&lt;/button&gt;&#x27;;
+  t.querySelector(&#x27;#btDeNovo&#x27;).addEventListener(&#x27;click&#x27;,function(){
+    Som.clique();
+    transicao(function(){ S.pts=0; S.vidas=VIDAS_INICIAIS; setPts(0); pintarVidas(); setFase(0);
+      abrirFase(1); });
+  });
+  mostrar(t);
+  for(var i=0;i&lt;40;i++) setTimeout(pulso, i*45);
+}
+
+function gameOver(){
+  Som.zumbido(false);
+  var t=novaTela();
+  t.innerHTML=
+    &#x27;&lt;div class=&quot;eyebrow&quot; style=&quot;color:var(--erro)&quot;&gt;Sinal perdido&lt;/div&gt;&#x27;+
+    &#x27;&lt;h2 class=&quot;fase&quot;&gt;A CONEXÃO SE DESFEZ&lt;/h2&gt;&#x27;+
+    &#x27;&lt;div class=&quot;linha&quot;&gt;&lt;/div&gt;&#x27;+
+    &#x27;&lt;p class=&quot;sub&quot;&gt;Você ficou sem vidas dentro da mente. Nenhum problema: &#x27;+
+      &#x27;o cérebro aprende justamente errando e tentando de novo.&lt;/p&gt;&#x27;+
+    &#x27;&lt;p class=&quot;sub&quot;&gt;Pontuação alcançada: &lt;b&gt;&#x27;+S.pts+&#x27;&lt;/b&gt;&lt;/p&gt;&#x27;+
+    &#x27;&lt;button class=&quot;btn grande&quot; id=&quot;btRetry&quot;&gt;Tentar de novo&lt;/button&gt;&#x27;+
+    &#x27;&lt;button class=&quot;btn fantasma&quot; id=&quot;btMenu&quot;&gt;Voltar ao início&lt;/button&gt;&#x27;;
+  t.querySelector(&#x27;#btRetry&#x27;).addEventListener(&#x27;click&#x27;,function(){
+    Som.clique(); Som.zumbido(true);
+    transicao(function(){ S.pts=0; S.vidas=VIDAS_INICIAIS; setPts(0); pintarVidas(); setFase(0);
+      abrirFase(1); });
+  });
+  t.querySelector(&#x27;#btMenu&#x27;).addEventListener(&#x27;click&#x27;,function(){
+    Som.clique(); Som.zumbido(false);
+    transicao(function(){ setFase(0); telaInicial(); });
+  });
+  mostrar(t);
+}
+
+window.addEventListener(&#x27;keydown&#x27;,function(e){
+  if(e.__tratado) return;
+  if(e.code===&#x27;KeyM&#x27;){ somBtn.click(); }
+  if((e.code===&#x27;Enter&#x27;||e.code===&#x27;Space&#x27;) &amp;&amp; telaAtual &amp;&amp; !elInfo.classList.contains(&#x27;on&#x27;)){
+    var a=document.activeElement;
+    if(!a || a===document.body){
+      var b=telaAtual.querySelector(&#x27;.btn&#x27;);
+      if(b){ e.preventDefault(); b.click(); }
+    }
+  }
+});
+
+pintarVidas();
+setFase(0);
+telaInicial();
+
+})();
+&lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+"
+                title="Dentro da Mente — jogo educativo de neurociência"
+                allow="autoplay"></iframe>
+        <button id="jogoExpandir" class="jogo-expandir" type="button"
+                title="Expandir para tela cheia">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path class="ic-abrir"
+            d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/><path class="ic-fechar"
+            d="M9 4v5H4M15 4v5h5M9 20v-5H4M15 20v-5h5"/></svg>
+          <span>Expandir</span>
+        </button>
+      </div>
+      <p class="diagram-hint">Clique dentro do quadro para jogar · use o mouse ou o teclado ·
+        <span class="jogo-link" style="border:0;cursor:default">use o botão expandir no canto do quadro</span></p>
+    </div>
+  </section>
+
+  <section id="view-equipe" class="view">
+    <div class="wrap">
+      <p class="eyebrow"><span class="dot"></span>Créditos</p>
+      <h2 class="neuro-title" style="max-width:18ch">FEITO POR CINCO CÉREBROS</h2>
+      <p class="equipe-lead">Escolhemos os assuntos, escrevemos os textos, montamos o cérebro
+      em 3D, desenhamos o jogo — e refizemos quase tudo o que não funcionou na primeira vez.</p>
+
+      <div class="equipe-grid">
+        <article class="membro">
+          <img class="membro-foto" alt="Foto de Eloisa Silveira" src="eloisa-silveira.jpg" alt="Foto de Eloisa Silveira" loading="lazy">
+          <h3 class="membro-nome">Eloisa Silveira</h3>
+        </article>
+        <article class="membro">
+          <img class="membro-foto" alt="Foto de Manuela Munhoz" src="manuela-munhoz.jpg" alt="Foto de Manuela Munhoz" loading="lazy">
+          <h3 class="membro-nome">Manuela Munhoz</h3>
+        </article>
+        <article class="membro">
+          <img class="membro-foto" alt="Foto de Mariana Fernandes" src="mariana-fernandes.jpg" alt="Foto de Mariana Fernandes" loading="lazy">
+          <h3 class="membro-nome">Mariana Fernandes</h3>
+        </article>
+        <article class="membro">
+          <img class="membro-foto" alt="Foto de Maria Rita" src="maria-rita.jpg" alt="Foto de Maria Rita" loading="lazy">
+          <h3 class="membro-nome">Maria Rita</h3>
+        </article>
+        <article class="membro">
+          <img class="membro-foto" alt="Foto de Sophia Pupim" src="sophia-pupim.jpg" alt="Foto de Sophia Pupim" loading="lazy">
+          <h3 class="membro-nome">Sophia Pupim</h3>
+        </article>
+      </div>
+
+      <div class="equipe-fecho">
+        <p>Nada aqui foi feito por um cérebro sozinho — que é, no fundo,
+        <strong>o argumento do site inteiro</strong>.</p>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="brand-lockup">
+  <div class="brand-row"><span class="brand-dot"></span><span class="brand-text">SINAPSE<span class="lab">&nbsp;.lab</span></span></div>
+  <span class="brand-tag">edutec</span>
+</footer>
+
+<div class="overlay" id="authOverlay">
+  <div class="auth-card" id="authCard">
+    <button class="auth-close" id="authClose" aria-label="Fechar">✕</button>
+
+    <form id="loginForm">
+      <h2>Bem-vindo de volta</h2>
+      <div class="field"><label for="loginEmail">E-mail</label><input id="loginEmail" type="email" placeholder="xxx@gmail.com"></div>
+      <div class="field"><label for="loginPass">Senha</label><input id="loginPass" type="password" placeholder="xxxxxxxxxxxxxxxx"></div>
+      <button type="submit" class="auth-submit">Entrar</button>
+      <button type="button" class="auth-switch" data-switch="cadastro">Esqueci minha senha</button>
+    </form>
+
+    <form id="cadastroForm" style="display:none;">
+      <h2>Crie sua conta</h2>
+      <div class="field"><label for="cadEmail">E-mail</label><input id="cadEmail" type="email" placeholder="xxx@gmail.com"></div>
+      <div class="field"><label for="cadPass">Senha</label><input id="cadPass" type="password" placeholder="xxxxxxxxxxxxxxxx"></div>
+      <div class="field"><label for="cadPass2">Confirmar senha</label><input id="cadPass2" type="password" placeholder="xxxxxxxxxxxxxxxx"></div>
+      <button type="submit" class="auth-submit">Cadastrar</button>
+      <button type="button" class="auth-switch" data-switch="login">Já tenho uma conta</button>
+    </form>
+
+    <p class="auth-note">Protótipo — nenhum dado é enviado a um servidor.</p>
+  </div>
+</div>
+
+<div class="popover-backdrop" id="popoverBackdrop"></div>
+<div class="synapse-popover" id="tooltip">
+  <button class="tooltip-close" id="tooltipClose" aria-label="Fechar">✕</button>
+  <h4 id="tooltipTitle"></h4>
+  <p id="tooltipBody"></p>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js"></script>
+<script src="gltf-loader.js"></script>
+<script src="modelo-cerebro.js"></script>
+<script src="app.js"></script>
+</body>
+</html>

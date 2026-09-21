@@ -1,0 +1,26 @@
+SINAPSE.lab — todos os arquivos, sem pastas
+
+Todos os arquivos ficam no mesmo nível, um do lado do outro:
+
+  index.html           a página
+  estilo.css           cores, layout e animações
+  app.js               navegação, jogo, cérebro 3D, moléculas
+  modelo-cerebro.js    o modelo 3D em texto (não precisa editar)
+  gltf-loader.js       leitor de modelos 3D do three.js
+  hero-fundo.jpg       fundo da tela de início
+  eloisa-silveira.jpg  \
+  manuela-munhoz.jpg    |
+  mariana-fernandes.jpg  > fotos da página A Equipe
+  maria-rita.jpg        |
+  sophia-pupim.jpg     /
+  vercel.json          avisa a Vercel que é site estático
+
+COMO USAR
+VS Code: File > Open Folder e escolha esta pasta.
+GitHub: coloque TODOS estes arquivos na raiz do repositório, soltos, sem
+criar pasta nenhuma. Na Vercel, o Root Directory fica EM BRANCO.
+
+ONDE MEXER
+  texto do site   -> index.html, na <section> de cada aba
+  cores/tamanhos  -> estilo.css (cores da marca no :root, no começo)
+  comportamento   -> app.js
