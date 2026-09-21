@@ -61,7 +61,7 @@
     atualizar();
   })();
 
-  /* ---------- Toast ---------- */
+ 
   var toastEl = document.getElementById('toast');
   var toastTimer;
   function showToast(msg){
@@ -71,7 +71,7 @@
     toastTimer = setTimeout(function(){ toastEl.classList.remove('show'); }, 2600);
   }
 
-  /* ---------- Auth overlay ---------- */
+ 
   var overlay = document.getElementById('authOverlay');
   var authCard = document.getElementById('authCard');
   var loginForm = document.getElementById('loginForm');
@@ -97,7 +97,7 @@
   loginForm.addEventListener('submit', function(e){ e.preventDefault(); closeAuth(); showToast('Login simulado — protótipo sem backend.'); });
   cadastroForm.addEventListener('submit', function(e){ e.preventDefault(); closeAuth(); showToast('Cadastro simulado — protótipo sem backend.'); });
 
-  /* ---------- Synapse diagram tooltip ---------- */
+
   var tooltip = document.getElementById('tooltip');
   var tooltipTitle = document.getElementById('tooltipTitle');
   var tooltipBody = document.getElementById('tooltipBody');
