@@ -1,0 +1,33 @@
+SINAPSE.lab — site completo em um arquivo só
+
+Conteúdo deste zip:
+  index.html    o site inteiro (HTML, CSS, JavaScript, imagens e o modelo
+                3D — tudo dentro deste arquivo, sem pastas)
+  vercel.json   avisa a Vercel que é site estático e não precisa de build
+  LEIA-ME.txt   este arquivo
+
+PARA PUBLICAR NA VERCEL (pelo GitHub)
+
+1. No repositório, apague tudo o que está lá dentro: as pastas assets,
+   css, js e qualquer resto da pasta sinapse-lab.
+2. Coloque o index.html e o vercel.json na RAIZ do repositório — o
+   index.html tem que aparecer já na primeira tela do repositório.
+3. Commit e push. A Vercel publica sozinha quando o push chega.
+4. Na Vercel, em Settings > General, o campo Root Directory tem que estar
+   EM BRANCO. Se você tinha escrito "sinapse-lab" ali antes, apague e
+   clique em Redeploy.
+
+PARA ABRIR NO COMPUTADOR
+Dois cliques no index.html que ele abre no Chrome.
+
+PARA EDITAR NO VS CODE
+File > Open Folder e escolha a pasta descompactada. Está tudo no
+index.html:
+  - o visual fica entre <style> e </style>, no começo do arquivo;
+  - os textos ficam em cada <section> (id="view-neuro", "view-emocoes"…);
+  - o comportamento (menu, jogo, cérebro 3D) fica nos <script> do final.
+
+OBSERVAÇÃO
+As fontes (Google Fonts) e a biblioteca three.js dos cérebros 3D vêm da
+internet. Sem conexão o site abre do mesmo jeito, só troca as fontes e os
+dois cérebros 3D não aparecem.
